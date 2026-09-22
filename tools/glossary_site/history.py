@@ -4,9 +4,16 @@ The design shows a per-term timeline. Rather than ask stewards to hand-maintain
 a changelog inside the YAML -- which drifts the moment someone forgets -- the
 history is read out of the commits that touched each definition file.
 
-For every commit touching a definition file, the file is parsed at that commit
-and at its parent, and the two term maps are diffed. That gives a per-term
-history from a per-file log.
+Each file's history is walked separately and attributed only to the terms in
+that file. Scoping matters: the same term id can appear in more than one file
+over a repository's life (copy a term file, forget to change the id, fix it in
+a later commit) and a global id-keyed walk would then splice one file's
+commits into another term's timeline.
+
+With the one-term-per-file layout, every commit touching a file belongs to
+that file's term, so an identifier rename reads as a rename instead of a
+delete plus an unrelated create. Files holding several terms fall back to
+matching by id within that file.
 
 This degrades to an empty history rather than failing: a shallow clone, a
 missing git binary, or a fresh worktree should not break the build. CI uses
@@ -61,7 +68,11 @@ def _terms_at(repo_root: Path, rev: str, rel_path: str) -> dict[str, dict]:
 
 def _describe(before: dict | None, after: dict | None) -> str | None:
     """Plain-language summary of what changed about one term."""
-    if before is None and after is not None:
+    if before is None and after is None:
+        # The file held no terms at either end of this diff -- it was empty,
+        # unparseable, or only carried a subject area. Nothing to report.
+        return None
+    if before is None:
         return "Term created."
     if after is None:
         return "Term removed from the glossary."
@@ -93,81 +104,161 @@ def _describe(before: dict | None, after: dict | None) -> str | None:
 
 def collect(repo_root: Path, definition_paths: list[Path]) -> dict[str, list[Change]]:
     """Map term id -> newest-first list of changes."""
-    rel_paths = [str(p.relative_to(repo_root)) for p in definition_paths]
-    if not rel_paths:
-        return {}
-
-    log = _git(
-        repo_root,
-        "log",
-        "--format=%H%x1f%aI%x1f%an%x1f%s",
-        "--",
-        *rel_paths,
-    )
-    if not log:
-        return {}
-
     history: dict[str, list[Change]] = {}
 
-    for line in log.splitlines():
-        if not line.strip():
-            continue
-        parts = line.split("\x1f")
-        if len(parts) != 4:
-            continue
-        sha, iso, author, subject = parts
-
-        changed = _git(
-            repo_root,
-            "diff-tree",
-            "--no-commit-id",
-            "--name-only",
-            "-r",
-            # Without --root, diff-tree lists nothing for the repository's
-            # first commit, which would silently drop the "Term created"
-            # entry for every term introduced in it.
-            "--root",
-            sha,
-            "--",
-            *rel_paths,
-        )
-        touched = [p for p in (changed or "").splitlines() if p.strip()]
-        if not touched or len(touched) > MAX_FILES_PER_COMMIT:
+    for path in definition_paths:
+        rel_path = str(path.relative_to(repo_root))
+        current = _current_term_ids(path)
+        if not current:
             continue
 
-        parent = (_git(repo_root, "rev-parse", "--verify", f"{sha}^") or "").strip()
+        for commit in _file_commits(repo_root, rel_path):
+            after = _terms_at(repo_root, commit["sha"], commit["path_after"])
+            before = (
+                _terms_at(repo_root, commit["parent"], commit["path_before"])
+                if commit["parent"] and commit["path_before"]
+                else {}
+            )
 
-        try:
-            date = datetime.fromisoformat(iso).strftime("%d %b %Y")
-        except ValueError:
-            date = iso[:10]
+            for term_id, summary in _changes_in_file(before, after, single=len(current) == 1):
+                # When the file holds one term, every change to it belongs to
+                # that term, even across an identifier rename.
+                if len(current) == 1:
+                    term_id = current[0]
 
-        for rel_path in touched:
-            after = _terms_at(repo_root, sha, rel_path)
-            before = _terms_at(repo_root, parent, rel_path) if parent else {}
-
-            for term_id in set(before) | set(after):
-                summary = _describe(before.get(term_id), after.get(term_id))
-                if summary is None:
-                    continue
-                # Prefer the commit subject when the author wrote a real one;
-                # fall back to the derived summary.
                 detail = summary
+                subject = commit["subject"]
                 if subject and not subject.lower().startswith(("wip", "fixup!", "merge ")):
                     detail = f"{summary} ({subject})"
+
                 history.setdefault(term_id, []).append(
                     Change(
-                        date=date,
-                        iso=iso,
-                        author=author,
+                        date=commit["date"],
+                        iso=commit["iso"],
+                        author=commit["author"],
                         summary=detail,
-                        commit=sha[:8],
+                        commit=commit["sha"][:8],
                     )
                 )
 
     for entries in history.values():
         entries.sort(key=lambda c: c.iso, reverse=True)
     return history
+
+
+def _current_term_ids(path: Path) -> list[str]:
+    """Term ids in the file as it stands now, in file order."""
+    try:
+        doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError):
+        return []
+    if not isinstance(doc, dict):
+        return []
+    return [t["id"] for t in doc.get("terms") or [] if isinstance(t, dict) and "id" in t]
+
+
+def _changes_in_file(before: dict, after: dict, *, single: bool):
+    """Yield (term_id, summary) for one commit's effect on one file."""
+    if single:
+        # One term per file: compare the sole entry on each side, so an
+        # identifier rename reads as a rename rather than as a delete and an
+        # unrelated create.
+        old = next(iter(before.values()), None)
+        new = next(iter(after.values()), None)
+        summary = _describe(old, new)
+        if summary is None:
+            return
+        if old is not None and new is not None and old.get("id") != new.get("id"):
+            summary = f"Identifier changed from {old['id']} to {new['id']}. {summary}"
+        # Attributed to the file's current term by the caller.
+        yield (new or old)["id"], summary
+        return
+
+    for term_id in set(before) | set(after):
+        summary = _describe(before.get(term_id), after.get(term_id))
+        if summary is not None:
+            yield term_id, summary
+
+
+def _file_commits(repo_root: Path, rel_path: str) -> list[dict]:
+    """Commits touching one file, newest first, with its historical paths.
+
+    `--follow` keeps a file's history across renames, which matters because
+    renaming a term's file must not reset its timeline. It also means the path
+    differs at older commits, so the path to read at each end of the diff is
+    taken from the name-status output rather than assumed.
+    """
+    log = _git(
+        repo_root,
+        "log",
+        "--follow",
+        "--name-status",
+        "--format=%x00%H%x1f%aI%x1f%an%x1f%s",
+        "--",
+        rel_path,
+    )
+    if not log:
+        return []
+
+    commits: list[dict] = []
+    for chunk in log.split("\x00"):
+        if not chunk.strip():
+            continue
+        lines = [ln for ln in chunk.splitlines() if ln.strip()]
+        if not lines:
+            continue
+        header = lines[0].split("\x1f")
+        if len(header) != 4:
+            continue
+        sha, iso, author, subject = header
+
+        path_after = rel_path
+        path_before = rel_path
+        is_origin = False
+        for status_line in lines[1:]:
+            parts = status_line.split("\t")
+            code = parts[0]
+            if code.startswith("R") and len(parts) >= 3:
+                # Rename: the same file under a new name, so its earlier
+                # history still belongs to it.
+                path_before, path_after = parts[1], parts[2]
+            elif code.startswith("C") and len(parts) >= 3:
+                # Copy: a NEW file seeded from another that still exists
+                # independently. --follow traces into the source's history,
+                # but those commits are not this term's, so this is where the
+                # timeline starts.
+                path_before, path_after = None, parts[2]
+                is_origin = True
+            elif code.startswith("A") and len(parts) >= 2:
+                path_after, path_before = parts[1], None
+                is_origin = True
+            elif len(parts) >= 2:
+                path_after = path_before = parts[1]
+            break
+
+        try:
+            date = datetime.fromisoformat(iso).strftime("%d %b %Y")
+        except ValueError:
+            date = iso[:10]
+
+        commits.append(
+            {
+                "sha": sha,
+                "iso": iso,
+                "author": author,
+                "subject": subject,
+                "date": date,
+                "path_after": path_after,
+                "path_before": path_before,
+                "parent": (
+                    _git(repo_root, "rev-parse", "--verify", f"{sha}^") or ""
+                ).strip(),
+            }
+        )
+        if is_origin:
+            # Commits are newest-first, so this file's story starts here.
+            break
+    return commits
 
 
 def attach(repo_root: Path, definition_paths: list[Path], glossary) -> None:

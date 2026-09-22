@@ -111,6 +111,114 @@ def test_adding_a_term_does_not_create_history_for_its_siblings(repo):
     assert not any("Add Two" in s for s in subjects)
 
 
+def test_history_does_not_leak_between_files_sharing_an_id(tmp_path):
+    """Copying a term file and forgetting to change the id is a real mistake:
+    for a few commits the same id lives in two files. History must stay scoped
+    to each file, or the original term absorbs the copy's commits."""
+    repo = tmp_path / "repo"
+    terms = repo / "src" / "definitions" / "sp" / "terms"
+    terms.mkdir(parents=True)
+    _git(repo.parent, "init", "-q", "repo")
+    _git(repo, "config", "user.email", "tester@example.edu")
+    _git(repo, "config", "user.name", "Test Author")
+
+    def term(term_id, label, status):
+        return f"""
+terms:
+  - id: {term_id}
+    pref_label: {label}
+    definition: A definition.
+    in_subject_area: unmc:A
+    responsibilities:
+      - {{agent: 'unmc:role/OfficeA', governance_role: definition_owner}}
+    status: {status}
+"""
+
+    direct = terms / "direct_cost.yaml"
+    indirect = terms / "indirect_cost.yaml"
+
+    direct.write_text(term("unmc:DirectCost", "Direct Cost", "draft"), encoding="utf-8")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "Creates direct cost term")
+
+    # Copied from direct_cost.yaml, id not yet corrected.
+    indirect.write_text(term("unmc:DirectCost", "Indirect Cost", "draft"), encoding="utf-8")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "Creates indirect cost term")
+
+    direct.write_text(term("unmc:DirectCost", "Direct Cost", "approved"), encoding="utf-8")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "Approve direct cost")
+
+    indirect.write_text(term("unmc:IndirectCost", "Indirect Cost", "draft"), encoding="utf-8")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "Approve indirect cost")
+
+    collected = history.collect(repo, [direct, indirect])
+
+    direct_subjects = " ".join(c.summary for c in collected["unmc:DirectCost"])
+    assert "indirect" not in direct_subjects.lower(), direct_subjects
+    assert "Term removed" not in direct_subjects
+    assert len(collected["unmc:DirectCost"]) == 2  # created, approved
+
+    # The renamed term keeps the whole history of its own file -- and only its
+    # own. git reports the copied file as C<score> and --follow traces into the
+    # source's history; those commits belong to the source, not to this term.
+    indirect_entries = collected["unmc:IndirectCost"]
+    assert len(indirect_entries) == 2
+    assert "Identifier changed from unmc:DirectCost to unmc:IndirectCost" in (
+        indirect_entries[0].summary
+    )
+    assert indirect_entries[1].summary == "Term created. (Creates indirect cost term)"
+
+
+def test_history_survives_a_file_rename(tmp_path):
+    """Renaming a term's file must not reset its timeline."""
+    repo = tmp_path / "repo"
+    terms = repo / "src" / "definitions" / "cr" / "terms"
+    terms.mkdir(parents=True)
+    _git(repo.parent, "init", "-q", "repo")
+    _git(repo, "config", "user.email", "tester@example.edu")
+    _git(repo, "config", "user.name", "Test Author")
+
+    typo = terms / "clincal_study.yaml"
+    typo.write_text(TERM_A, encoding="utf-8")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "Creates clinical study term")
+
+    fixed = terms / "clinical_study.yaml"
+    _git(repo, "mv", str(typo.relative_to(repo)), str(fixed.relative_to(repo)))
+    _git(repo, "commit", "-q", "-m", "Fixes typo in filename")
+
+    collected = history.collect(repo, [fixed])
+    assert any(c.summary.startswith("Term created.") for c in collected["unmc:One"])
+
+
+def test_file_with_no_terms_at_an_earlier_commit(tmp_path):
+    """A term file that started life empty (or holding only a subject area)
+    must not crash the walk or emit a phantom entry."""
+    repo = tmp_path / "repo"
+    terms = repo / "src" / "definitions" / "cr" / "terms"
+    terms.mkdir(parents=True)
+    _git(repo.parent, "init", "-q", "repo")
+    _git(repo, "config", "user.email", "tester@example.edu")
+    _git(repo, "config", "user.name", "Test Author")
+
+    path = terms / "later.yaml"
+    path.write_text("# placeholder, no terms yet\n", encoding="utf-8")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "Placeholder")
+
+    path.write_text(TERM_A, encoding="utf-8")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "Adds the term")
+
+    collected = history.collect(repo, [path])
+    assert [c.summary for c in collected["unmc:One"]] == [
+        "Term created. (Adds the term)"
+    ]
+
+
 def test_missing_git_degrades_to_empty(tmp_path):
     """A non-repository must not break the build."""
     (tmp_path / "src" / "definitions").mkdir(parents=True)
