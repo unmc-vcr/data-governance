@@ -3,7 +3,7 @@
   "trailingSlash": "auto",
   "routes": [
     {
-      "route": "/.auth/login/aad",
+      "route": "/.auth/login/github",
       "allowedRoles": ["anonymous", "authenticated"]
     },
     {
@@ -14,7 +14,7 @@
   "responseOverrides": {
     "401": {
       "statusCode": 302,
-      "redirect": "/.auth/login/aad"
+      "redirect": "/.auth/login/github"
     },
     "404": {
       "rewrite": "/404.html",
