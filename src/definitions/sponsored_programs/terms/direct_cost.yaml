@@ -1,6 +1,6 @@
 terms:
   - id: unmc:DirectCost
-    code: SP.C.001
+    code: SP.COST.001
     pref_label: Direct Cost
     definition: >-
       A cost that can be identified specifically with a particular sponsored project, an
@@ -13,4 +13,4 @@ terms:
         governance_role: definition_owner
       - agent: unmc:role/ResearchAnalytics
         governance_role: data_steward
-    status: draft
+    status: approved
