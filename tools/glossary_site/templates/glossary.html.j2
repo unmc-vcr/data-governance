@@ -35,5 +35,26 @@
     {%- endfor %}
     <div class="empty-state" data-empty hidden>No terms match that filter.</div>
   </div>
+
+  {#- Pagination is a progressive enhancement: every row is rendered above and
+      is a real link, so with JavaScript off the whole dictionary is one page.
+      The script reveals these controls and pages the list only when there are
+      more terms than fit on a page. -#}
+  <nav class="pager" data-pager aria-label="Glossary pages" hidden>
+    <div class="pager__size">
+      <label for="page-size">Per page</label>
+      <select id="page-size" data-page-size>
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+    <div class="pager__nav" data-pager-nav hidden>
+      <button class="pager__btn" type="button" data-pager-prev>&lsaquo; Previous</button>
+      <span class="pager__status" data-pager-status aria-live="polite"></span>
+      <button class="pager__btn" type="button" data-pager-next>Next &rsaquo;</button>
+    </div>
+  </nav>
 </div>
 {% endblock %}

@@ -271,41 +271,143 @@
     if (input) input.addEventListener("input", renderPage);
   }
 
-  /* ---------- Glossary filter pills ---------- */
+  /* ---------- Glossary filter pills + pagination ---------- */
 
   var filterBarEl = document.querySelector("[data-filter-bar]");
   if (filterBarEl) {
+    /* How many terms show at once. The dictionary is expected to reach the
+       hundreds; a window keeps the page short to scan and quick to paint
+       without dropping any term from the document. The reader picks the size;
+       these are the offered values, smallest first. */
+    var PAGE_SIZES = [10, 25, 50, 100];
+    var DEFAULT_PAGE_SIZE = 25;
+    var SIZE_KEY = "unmc-dg-page-size";
+
     var rows = Array.prototype.slice.call(document.querySelectorAll(".term-row[data-area]"));
     var countEl = document.querySelector("[data-term-count]");
     var emptyEl = document.querySelector("[data-empty]");
+    var table = document.querySelector(".term-table");
+    var pager = document.querySelector("[data-pager]");
+    var pagerNav = pager && pager.querySelector("[data-pager-nav]");
+    var pagerPrev = pager && pager.querySelector("[data-pager-prev]");
+    var pagerNext = pager && pager.querySelector("[data-pager-next]");
+    var pagerStatus = pager && pager.querySelector("[data-pager-status]");
+    var sizeSelect = pager && pager.querySelector("[data-page-size]");
+
+    var activeFilter = "all";
+    var page = 1;
+    var pageSize = DEFAULT_PAGE_SIZE;
+
+    /* Restore the reader's saved page size, the way the theme is restored. A
+       stale or tampered value that is not one of the offered sizes is ignored. */
+    try {
+      var saved = parseInt(localStorage.getItem(SIZE_KEY), 10);
+      if (PAGE_SIZES.indexOf(saved) > -1) pageSize = saved;
+    } catch (e) {
+      /* Private browsing, or site data blocked -- fall back to the default. */
+    }
+    if (sizeSelect) sizeSelect.value = String(pageSize);
+
+    function keeps(row) {
+      if (activeFilter === "all") return true;
+      if (activeFilter === "attention") {
+        var status = row.getAttribute("data-status");
+        return status === "draft" || status === "in_review";
+      }
+      return "area:" + row.getAttribute("data-area") === activeFilter;
+    }
+
+    function render() {
+      var matched = rows.filter(keeps);
+      var total = matched.length;
+      var pageCount = Math.max(1, Math.ceil(total / pageSize));
+      if (page > pageCount) page = pageCount;
+      if (page < 1) page = 1;
+      var start = (page - 1) * pageSize;
+      var end = Math.min(start + pageSize, total);
+
+      /* Hide everything, then reveal only the current page's slice. Rows that
+         fail the filter stay hidden regardless of page. */
+      rows.forEach(function (row) {
+        row.hidden = true;
+      });
+      matched.slice(start, end).forEach(function (row) {
+        row.hidden = false;
+      });
+
+      if (emptyEl) emptyEl.hidden = total !== 0;
+
+      if (countEl) {
+        if (total === 0) {
+          countEl.textContent = "No terms";
+        } else if (total <= pageSize) {
+          countEl.textContent = total + (total === 1 ? " term" : " terms");
+        } else {
+          countEl.textContent =
+            "Showing " + (start + 1) + "–" + end + " of " + total + " terms";
+        }
+      }
+
+      if (pager) {
+        /* Offer the whole control once choosing a smaller size could split the
+           list; below the smallest size every choice shows everything, so it
+           has nothing to do. The prev/next nav appears only with real pages. */
+        pager.hidden = total <= PAGE_SIZES[0];
+        if (pagerNav) pagerNav.hidden = pageCount <= 1;
+        if (pagerStatus) pagerStatus.textContent = "Page " + page + " of " + pageCount;
+        if (pagerPrev) pagerPrev.disabled = page <= 1;
+        if (pagerNext) pagerNext.disabled = page >= pageCount;
+      }
+    }
+
+    function goTo(next) {
+      page = next;
+      render();
+      /* Bring the top of the list back into view so the reader is not left
+         mid-page after the rows swap out. */
+      if (table && table.scrollIntoView) {
+        table.scrollIntoView({ block: "start", behavior: "smooth" });
+      }
+    }
 
     filterBarEl.addEventListener("click", function (event) {
       var button = event.target.closest("[data-filter]");
       if (!button) return;
-      var filter = button.getAttribute("data-filter");
-
+      activeFilter = button.getAttribute("data-filter");
+      page = 1;
       filterBarEl.querySelectorAll("[data-filter]").forEach(function (b) {
         b.setAttribute("aria-pressed", String(b === button));
       });
-
-      var shown = 0;
-      rows.forEach(function (row) {
-        var visible;
-        if (filter === "all") {
-          visible = true;
-        } else if (filter === "attention") {
-          var status = row.getAttribute("data-status");
-          visible = status === "draft" || status === "in_review";
-        } else {
-          visible = "area:" + row.getAttribute("data-area") === filter;
-        }
-        row.hidden = !visible;
-        if (visible) shown++;
-      });
-
-      if (countEl) countEl.textContent = shown + (shown === 1 ? " term" : " terms");
-      if (emptyEl) emptyEl.hidden = shown !== 0;
+      render();
     });
+
+    if (pagerPrev) {
+      pagerPrev.addEventListener("click", function () {
+        if (page > 1) goTo(page - 1);
+      });
+    }
+    if (pagerNext) {
+      pagerNext.addEventListener("click", function () {
+        goTo(page + 1);
+      });
+    }
+
+    if (sizeSelect) {
+      sizeSelect.addEventListener("change", function () {
+        var chosen = parseInt(sizeSelect.value, 10);
+        if (PAGE_SIZES.indexOf(chosen) === -1) return;
+        pageSize = chosen;
+        page = 1;
+        try {
+          localStorage.setItem(SIZE_KEY, String(chosen));
+        } catch (e) {
+          /* Preference just will not carry to the next visit. */
+        }
+        render();
+      });
+    }
+
+    render();
   }
 
   /* ---------- Copy to clipboard ---------- */

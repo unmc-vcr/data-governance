@@ -78,15 +78,15 @@
         <div class="fact__k">Authoritative system</div>
         <div style="font-size:15px">{{ term.source_of_record.system }}</div>
       </div>
-      {%- if term.source_of_record.refresh or term.source_of_record.field or term.source_of_record.format %}
+      {%- if term.source_of_record.get('refresh') or term.source_of_record.get('field') or term.source_of_record.get('format') %}
       <div class="fact-box__grid">
-        {%- if term.source_of_record.refresh %}
+        {%- if term.source_of_record.get('refresh') %}
         <div class="fact"><div class="fact__k">Refresh</div><div class="fact__v">{{ term.source_of_record.refresh }}</div></div>
         {%- endif %}
-        {%- if term.source_of_record.field %}
+        {%- if term.source_of_record.get('field') %}
         <div class="fact"><div class="fact__k">Field</div><div class="fact__v fact__v--mono">{{ term.source_of_record.field }}</div></div>
         {%- endif %}
-        {%- if term.source_of_record.format %}
+        {%- if term.source_of_record.get('format') %}
         <div class="fact"><div class="fact__k">Format</div><div class="fact__v">{{ term.source_of_record.format }}</div></div>
         {%- endif %}
       </div>
