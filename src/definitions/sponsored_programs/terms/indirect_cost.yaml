@@ -1,0 +1,16 @@
+terms:
+  - id: unmc:DirectCost
+    code: SP.C.002
+    pref_label: Indirect Cost
+    alt_labels: [Facilities and Administrative costs (F&A)]
+    definition: >-
+      Necessary costs incurred for a common or joint purpose that cannot be readily
+      identified with an individual project or program.
+    definition_source: https://grants.nih.gov/grants/policy/nihgps/HTML5/section_7/7.3_direct_costs_and_indirect_costs.htm
+    in_subject_area: unmc:SponsoredPrograms
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft
