@@ -1,5 +1,9 @@
 # Clinical Research subject area.
 #
+# This file declares the subject area only. Its terms live one-per-file under
+# terms/, so a commit changing a definition touches just that term's file and
+# the term's change history stays clean.
+#
 # Validated against src/schema/glossary.yaml as a Glossary document.
 # Every edit here is a governance change: open a pull request, let the steward
 # office review the rendered preview, and merge. The merged PR is the approval
@@ -14,38 +18,3 @@ subject_areas:
         governance_role: definition_owner
       - agent: unmc:role/ResearchAnalytics
         governance_role: data_steward
-
-terms:
-  - id: unmc:ClinicalStudy
-    code: CR.STU.001
-    pref_label: Clinical Study
-    definition: TODO - local operational definition (e.g. what counts as a study in the CTMS).
-    in_subject_area: unmc:ClinicalResearch
-    responsibilities:
-      - agent: unmc:role/ClinicalResearchOffice
-        governance_role: definition_owner
-      - agent: unmc:role/ResearchAnalytics
-        governance_role: data_steward
-    guidance:
-      - guidance_kind: draft
-        guidance_text: >-
-          This definition has not been written yet. Do not build reporting on it
-          until the Clinical Research Office has settled what counts as a study
-          in the CTMS.
-    status: draft
-
-  - id: unmc:ClinicalTrial
-    code: CR.TRI.002
-    pref_label: Clinical Trial
-    alt_labels: [Interventional Study]
-    definition: A clinical study in which participants are prospectively assigned
-      to an intervention to evaluate its effects on health-related outcomes.
-    definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
-    in_subject_area: unmc:ClinicalResearch
-    broader: [unmc:ClinicalStudy]
-    responsibilities:
-      - agent: unmc:role/ClinicalResearchOffice
-        governance_role: definition_owner
-      - agent: unmc:role/ResearchAnalytics
-        governance_role: data_steward
-    status: in_review
