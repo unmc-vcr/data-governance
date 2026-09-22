@@ -92,8 +92,9 @@ def test_glossary_rows_carry_filter_attributes(built):
 def test_relative_paths_are_depth_correct(built):
     term = (built / "terms" / "fully-loaded.html").read_text(encoding="utf-8")
     root = (built / "index.html").read_text(encoding="utf-8")
-    assert 'href="../assets/site.css"' in term
-    assert 'href="assets/site.css"' in root
+    # Assets carry a ?v=<digest> cache buster, so match the path prefix only.
+    assert 'href="../assets/site.css?v=' in term
+    assert 'href="assets/site.css?v=' in root
     assert 'href="../glossary.html"' in term
 
 

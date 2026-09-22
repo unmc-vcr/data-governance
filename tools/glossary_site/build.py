@@ -33,11 +33,16 @@ DEFAULT_AGENTS = REPO_ROOT / "src" / "agents.yaml"
 DEFAULT_CONTENT = REPO_ROOT / "docs" / "content"
 DEFAULT_OUT = REPO_ROOT / "site"
 
+REPO_URL = "https://github.com/unmc-vcr/data-governance"
+
 CONTACT_EMAIL = "datagovernance@unmc.edu"
 SUGGEST_CHANGE_URL = (
-    "https://github.com/unmc-vcr/data-governance/issues/new"
+    f"{REPO_URL}/issues/new"
     "?template=term-change.yml&labels=glossary&title=Change+request%3A+&term="
 )
+# Source links point at the default branch rather than a commit, so they keep
+# working as the file changes. A reader following one wants the current file.
+REPO_BLOB_URL = f"{REPO_URL}/blob/main/"
 
 RECENT_CHANGE_LIMIT = 6
 
@@ -128,6 +133,7 @@ def build(
         schema=schema_doc,
         contact_email=CONTACT_EMAIL,
         suggest_change_url=SUGGEST_CHANGE_URL,
+        repo_blob_url=REPO_BLOB_URL,
     )
 
     reference_url = None
@@ -135,12 +141,12 @@ def build(
         # Nav needs to know whether the reference exists, but the reference
         # renders through the same Renderer, so build nav twice: once without
         # it to render the reference pages, once with it for everything else.
-        renderer.nav = render.build_nav(glossary, pages, has_reference=True)
+        renderer.nav = render.build_nav(pages, has_reference=True)
         reference_url = reference.build(schema, renderer)
         if reference_url is None:
             print("  gen-doc produced nothing; skipping the schema reference")
 
-    renderer.nav = render.build_nav(glossary, pages, has_reference=reference_url is not None)
+    renderer.nav = render.build_nav(pages, has_reference=reference_url is not None)
 
     renderer.hub(
         hub_page,

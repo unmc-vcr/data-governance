@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import shutil
@@ -106,6 +107,20 @@ def _badge_slug(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
 
 
+def _asset_version() -> str:
+    """Short digest of the static assets, appended to their URLs.
+
+    Without this, a browser that cached site.css keeps using it after a
+    deploy, so a steward reloading the site sees new content in old styling.
+    The digest only changes when an asset changes, so caching still works.
+    """
+    digest = hashlib.sha256()
+    for item in sorted(STATIC.iterdir()):
+        if item.is_file():
+            digest.update(item.read_bytes())
+    return digest.hexdigest()[:10]
+
+
 def _rel_for(out_path: str) -> str:
     """Relative prefix from a page back to the site root."""
     depth = out_path.count("/")
@@ -127,9 +142,7 @@ def make_env() -> Environment:
     return env
 
 
-def build_nav(
-    glossary: Glossary, pages: list[ContentPage], has_reference: bool
-) -> list[NavGroup]:
+def build_nav(pages: list[ContentPage], has_reference: bool) -> list[NavGroup]:
     """Sidebar nav: authored groups first, then the generated reference."""
     groups: dict[str, list[tuple[int, NavItem]]] = {}
     group_order: list[str] = []
@@ -163,12 +176,14 @@ def build_nav(
             )
         )
 
+    # Subject areas are deliberately not listed here: they are reachable from
+    # the glossary, and duplicating them in the sidebar makes the nav grow
+    # without bound as subject areas are added.
     reference_items = [
         NavItem("Glossary & dictionary", "glossary.html"),
         NavItem("How to read a term", "how-to-read-a-term.html"),
+        NavItem("Search", "search.html"),
     ]
-    reference_items += [NavItem(a.pref_label, a.url) for a in glossary.areas]
-    reference_items.append(NavItem("Search", "search.html"))
     nav.append(NavGroup(label="Reference", items=reference_items))
 
     if has_reference:
@@ -189,6 +204,7 @@ class Renderer:
         *,
         contact_email: str,
         suggest_change_url: str | None,
+        repo_blob_url: str | None = None,
     ) -> None:
         self.out = out_dir
         self.env = make_env()
@@ -197,8 +213,10 @@ class Renderer:
         self.schema = schema
         self.contact_email = contact_email
         self.suggest_change_url = suggest_change_url
+        self.repo_blob_url = repo_blob_url
         self.built_on = date.today().strftime("%d %b %Y")
         self.written: list[str] = []
+        self.asset_version = _asset_version()
 
     def _base_context(self, out_path: str, title: str, breadcrumb=None, description=None):
         return {
@@ -213,6 +231,8 @@ class Renderer:
             "schema_name": self.schema.get("name", "unmc_glossary"),
             "schema_version": self.schema.get("version", "0"),
             "suggest_change_url": self.suggest_change_url,
+            "repo_blob_url": self.repo_blob_url,
+            "asset_version": self.asset_version,
         }
 
     def write(self, out_path: str, template: str, **context) -> None:

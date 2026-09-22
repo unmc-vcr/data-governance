@@ -11,7 +11,9 @@
     <div class="meta-row">
       <span>{{ area.terms | length }} term{{ "" if area.terms | length == 1 else "s" }}</span>
       {%- if area.owner %}<span>Owned by {{ area.owner.pref_label }}</span>{% endif %}
-      <span>Defined in <code>{{ area.source_file }}</code></span>
+      {%- if repo_blob_url %}
+      <span><a href="{{ repo_blob_url }}{{ area.source_file }}" rel="noopener">View source on GitHub &rarr;</a></span>
+      {%- endif %}
     </div>
 
     <h2 class="subhead">Terms</h2>

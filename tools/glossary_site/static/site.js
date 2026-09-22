@@ -308,6 +308,62 @@
     });
   }
 
+  /* ---------- Copy to clipboard ---------- */
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    /* file:// and plain http are not secure contexts, and a steward opening
+       the PR-preview artifact out of a downloaded zip is on file://. */
+    return new Promise(function (resolve, reject) {
+      var scratch = document.createElement("textarea");
+      scratch.value = text;
+      scratch.setAttribute("readonly", "");
+      scratch.style.cssText = "position:fixed;top:-1000px;opacity:0";
+      document.body.appendChild(scratch);
+      scratch.select();
+      var ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch (e) {
+        ok = false;
+      }
+      document.body.removeChild(scratch);
+      ok ? resolve() : reject(new Error("copy failed"));
+    });
+  }
+
+  document.querySelectorAll("[data-copy-target]").forEach(function (button) {
+    var source = document.getElementById(button.getAttribute("data-copy-target"));
+    if (!source) return;
+
+    var resetTimer = null;
+    button.addEventListener("click", function () {
+      copyText(source.textContent.trim()).then(
+        function () {
+          button.textContent = "Copied";
+          button.setAttribute("data-copied", "");
+        },
+        function () {
+          /* Say so rather than silently doing nothing; the value is on screen
+             and can still be selected by hand. */
+          button.textContent = "Press Ctrl+C to copy";
+          var range = document.createRange();
+          range.selectNodeContents(source);
+          var selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      );
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(function () {
+        button.textContent = button.getAttribute("data-copy-label");
+        button.removeAttribute("data-copied");
+      }, 2000);
+    });
+  });
+
   /* ---------- On-this-page rail ---------- */
 
   var railLinks = Array.prototype.slice.call(document.querySelectorAll(".toc-rail a[href^='#']"));

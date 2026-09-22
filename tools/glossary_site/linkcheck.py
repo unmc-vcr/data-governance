@@ -42,6 +42,9 @@ def check(root: Path) -> list[str]:
                 continue
 
             target, fragment = urldefrag(raw)
+            # Static assets carry a ?v=<digest> cache buster; the file on disk
+            # is the part before the query.
+            target = target.split("?", 1)[0]
             if not target:
                 # Same-page anchor.
                 if fragment and fragment not in anchors:

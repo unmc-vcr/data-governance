@@ -25,6 +25,9 @@
     <div class="term-ids">
       {%- if term.code %}<code class="term-code">{{ term.code }}</code>{% endif %}
       <code class="term-code">{{ term.id }}</code>
+      {%- if repo_blob_url %}
+      <a href="{{ repo_blob_url }}{{ term.source_file }}" rel="noopener">View source on GitHub &rarr;</a>
+      {%- endif %}
     </div>
 
     <div class="definition-box">
@@ -143,7 +146,7 @@
     </div>
     {%- else %}
     <p class="history__empty">No recorded changes. History is read from the commits that touched
-    <code>{{ term.source_file }}</code>; a shallow clone will show nothing here.</p>
+    this term's definition file; a shallow clone will show nothing here.</p>
     {%- endif %}
   </article>
 
@@ -195,9 +198,11 @@
 
     <div class="panel">
       <div class="panel__label">Permanent link</div>
-      <p class="provisional" style="margin:0 0 8px;font-style:normal;color:var(--ink-2);font-size:13px">
-        Cite this term by its IRI, not by this page's URL.</p>
-      <code class="term-code" style="word-break:break-all">{{ term.iri }}</code>
+      <code class="permalink" id="permalink-value">{{ term.iri }}</code>
+      <button class="permalink__copy" type="button"
+              data-copy-target="permalink-value"
+              data-copy-label="Copy this value"
+              aria-live="polite">Copy this value</button>
     </div>
   </aside>
 </div>

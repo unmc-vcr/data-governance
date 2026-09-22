@@ -359,10 +359,14 @@ input { font: inherit; }
 /* The rail takes its natural width and no more, so the article keeps the
    space. Without flex-grow:0 the two columns split evenly and the prose ends
    up needlessly narrow on a wide screen. */
+/* The rail takes its natural width and no more, so the article keeps the
+   space. Without flex-grow:0 the two columns split evenly and the prose ends
+   up needlessly narrow on a wide screen. The basis has to clear a long shared
+   mailbox address (researchanalytics@unmc.edu) beside a 34px avatar. */
 .split__aside {
   position: sticky;
   top: 96px;
-  flex: 0 1 250px;
+  flex: 0 1 310px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -616,7 +620,9 @@ h2.subhead--term { font-size: 20px; letter-spacing: .03em; }
 .avatar {
   width: 38px;
   height: 38px;
-  flex-shrink: 0;
+  /* Never grow or shrink: the circle has to stay a circle. */
+  flex: 0 0 auto;
+  aspect-ratio: 1;
   border-radius: 50%;
   color: #fff;
   display: flex;
@@ -666,6 +672,9 @@ h2.subhead--term { font-size: 20px; letter-spacing: .03em; }
   border-bottom: 1px solid var(--line-2);
 }
 .term-row:hover { background: var(--bg-sub); text-decoration: none; color: var(--ink); }
+/* `display: grid` above out-specifies the user agent's `[hidden]` rule, so
+   without this a filtered-out row stays on screen. */
+.term-row[hidden] { display: none; }
 .term-row--head {
   font-family: var(--font-display);
   font-size: 11px;
@@ -786,10 +795,47 @@ code.term-code {
 .person { display: flex; gap: 12px; align-items: flex-start; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--line-2); }
 .person:last-of-type { border-bottom: 0; }
 .person__name { font-size: 14px; margin-top: 6px; }
+/* Long shared-mailbox addresses must wrap inside the panel rather than push
+   past its border. */
+.person a,
+.contact a { overflow-wrap: anywhere; font-size: 12.5px; }
+/* Only the text column flexes. Matching every child would also stretch the
+   avatar, turning the circle into an ellipse and halving the text width. */
+.person > div:not(.avatar),
+.contact > div:not(.avatar) { flex: 1; min-width: 0; }
 .kv { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line-2); font-size: 13.5px; }
 .kv:last-of-type { border-bottom: 0; }
 .kv__k { color: var(--ink-3); }
 .kv__v { color: var(--ink-2); text-align: right; }
+
+/* The IRI is a value to be copied, not a keystroke, so it gets monospace
+   without the bordered-chip treatment `.term-code` uses. */
+.permalink {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  word-break: break-all;
+}
+.permalink__copy {
+  margin-top: 12px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--red-text);
+}
+.permalink__copy:hover { text-decoration: underline; }
+.permalink__copy[data-copied] { color: var(--teal); text-decoration: none; }
+[data-theme="dark"] .permalink__copy[data-copied] { color: #4FC3C9; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .permalink__copy[data-copied] { color: #4FC3C9; }
+}
 
 .panel-link { display: block; padding: 8px 0; border-bottom: 1px solid var(--line-2); color: var(--ink); text-decoration: none; }
 .panel-link:last-of-type { border-bottom: 0; }

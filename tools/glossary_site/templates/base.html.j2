@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ rel }}assets/site.css">
+<link rel="stylesheet" href="{{ rel }}assets/site.css?v={{ asset_version }}">
 <script>
 /* Applied before first paint so a dark-mode reader never sees a white flash. */
 try {
@@ -106,7 +106,7 @@ try {
 </footer>
 
 <script>window.UNMC_DG_BASE = {{ rel | tojson }};</script>
-<script src="{{ rel }}assets/site.js" defer></script>
+<script src="{{ rel }}assets/site.js?v={{ asset_version }}" defer></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>
