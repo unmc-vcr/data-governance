@@ -1,0 +1,16 @@
+terms:
+  - id: unmc:DirectCost
+    code: SP.C.001
+    pref_label: Direct Cost
+    definition: >-
+      A cost that can be identified specifically with a particular sponsored project, an
+      instructional activity, or any other institutional activity, or that can be directly
+      assigned to such activities relatively easily with a high degree of accuracy.
+    definition_source: https://grants.nih.gov/grants/policy/nihgps/HTML5/section_7/7.3_direct_costs_and_indirect_costs.htm
+    in_subject_area: unmc:SponsoredPrograms
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft
