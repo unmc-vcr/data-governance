@@ -1,41 +1,58 @@
-# Validate the glossary and build the site.
-#
-# On a pull request: validate, build, and upload the site as an artifact so a
-# steward can review rendered term pages instead of a YAML diff. Nothing
+# Azure Static Web Apps CI/CD, extended to validate the glossary before it
 # deploys.
 #
-# On a push to main: the same, then deploy to GitHub Pages.
+# Structure, job ids and deploy inputs follow the workflow Azure generated for
+# this Static Web App so the two stay comparable. What is added: a full-depth
+# checkout, the test/build/link-check gate, and the site build itself, because
+# the deployed content is generated rather than committed.
 #
-# The build is the gate. It fails on a schema violation, a dangling reference,
-# a term without exactly one definition owner, an approved term with no
-# definition source, or a deprecated term with no replacement.
+# GitHub Pages is not used: this repository is private, and Pages on a private
+# repository requires GitHub Team or Enterprise Cloud.
+#
+# On a pull request: validate, build, and deploy to a per-PR staging site, with
+# the preview URL commented on the PR. Stewards review rendered term pages
+# rather than a YAML diff. Closing the PR tears the staging site down.
+#
+# On a push to main: the same, then deploy to the production site.
 
-name: Build glossary site
+name: Azure Static Web Apps CI/CD
 
+# Deliberately no `paths:` filter. If this workflow is ever made a required
+# status check, a filtered run that is skipped never reports a result and the
+# pull request blocks forever. The build takes about a minute, so running it on
+# every change is the cheaper failure mode.
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
   workflow_dispatch:
 
-# Let a newer commit cancel an in-flight run on the same ref, except on main,
-# where every deploy should complete.
 concurrency:
   group: site-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 permissions:
   contents: read
+  pull-requests: write # for the preview-URL comment
 
 jobs:
-  build:
+  build_and_deploy_job:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
+    name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v4
         with:
-          # Term change history is read from git log, so the build needs the
-          # whole history rather than the default shallow clone.
+          # Azure's generated workflow uses the default shallow clone. This
+          # site needs the full history: each term's change history is read
+          # from the commits touching its own file, and a shallow clone
+          # renders every timeline empty without erroring.
           fetch-depth: 0
+          lfs: false
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -43,7 +60,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --group dev
+        run: uv sync --frozen --group dev
 
       - name: Run tests
         run: uv run pytest -q
@@ -54,49 +71,90 @@ jobs:
       - name: Check for broken internal links
         run: uv run python -m glossary_site.linkcheck site
 
-      - name: Upload site
+      - name: Add Static Web App config
+        # staticwebapp.config.json must sit at the root of the deployed
+        # content. site/ is gitignored and rebuilt each run, so copy the
+        # tracked config in rather than committing it inside the output.
+        run: cp staticwebapp.config.json site/staticwebapp.config.json
+
+      - name: Upload site artifact
+        # Keeps the build downloadable, so a reviewer can open index.html
+        # straight out of the zip without signing in to the staging site.
         uses: actions/upload-artifact@v4
         with:
           name: glossary-site
           path: site
           retention-days: 14
 
-      - name: Upload Pages artifact
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: actions/upload-pages-artifact@v3
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          path: site
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_GLACIER_0E6778E10 }}
+          # repo_token is deliberately left out. With it set, the action posts
+          # its own preview comment, which would duplicate the richer one
+          # below.
+          action: "upload"
+          ###### Repository/Build Configurations ######
+          app_location: "/site" # Prebuilt site content
+          api_location: "" # Api source code path - optional
+          output_location: "/site" # Built app content directory - optional
+          # The site is built by the steps above; do not let Oryx detect the
+          # Python project at the repo root and try to rebuild it.
+          skip_app_build: true
+          ###### End of Repository/Build Configurations ######
+
+      - name: Comment preview URL on PR
+        # A hidden marker lets the same comment be updated in place on each
+        # push instead of adding a new one per commit.
+        if: github.event_name == 'pull_request' && steps.builddeploy.outputs.static_web_app_url != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.builddeploy.outputs.static_web_app_url }}';
+            const marker = '<!-- glossary-preview -->';
+            const body = [
+              marker,
+              '📘 **Glossary preview deployed**',
+              '',
+              url,
+              '',
+              'Review the rendered term pages, not the YAML diff. Merging this pull',
+              'request is the approval record.',
+              '',
+              `_Updated for commit ${context.sha.slice(0, 7)}._`,
+            ].join('\n');
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number });
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
 
       - name: Summarise
+        if: always()
         run: |
           {
-            echo "### Glossary site built"
+            echo "### Glossary site"
             echo
-            echo "- Terms: $(find src/definitions -name '*.yaml' | wc -l | tr -d ' ') definition file(s)"
-            echo "- Pages: $(find site -name '*.html' | wc -l | tr -d ' ')"
-            echo
-            if [ "${{ github.event_name }}" = "pull_request" ]; then
-              echo "Download the **glossary-site** artifact below and open \`index.html\`"
-              echo "to review the rendered pages. The site works straight out of the zip —"
-              echo "no server needed."
+            echo "- Terms: $(find src/definitions -path '*/terms/*.yaml' | wc -l | tr -d ' ')"
+            echo "- Pages: $(find site -name '*.html' 2>/dev/null | wc -l | tr -d ' ')"
+            if [ -n "${{ steps.builddeploy.outputs.static_web_app_url }}" ]; then
+              echo "- Preview: ${{ steps.builddeploy.outputs.static_web_app_url }}"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
-  deploy:
-    # Pages on a private repository needs GitHub Team or Enterprise Cloud. If
-    # this job fails with a Pages-not-enabled error, either enable Pages in
-    # repository settings (Settings -> Pages -> Source: GitHub Actions) or
-    # delete this job and publish the `glossary-site` artifact by hand.
-    needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    name: Close Pull Request Job
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_GLACIER_0E6778E10 }}
+          action: "close"

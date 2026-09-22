@@ -220,4 +220,9 @@ __marimo__/
 # Generated site output
 /site/
 
+# Editor cache of JSON schemas fetched from the network (schemastore and
+# friends). Populated by the `$schema` reference in staticwebapp.config.json.
+# Machine-local, timestamped, and re-fetched on demand.
+/.asm_cache/
+
 .DS_Store

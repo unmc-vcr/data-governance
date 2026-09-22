@@ -53,7 +53,12 @@ def check(root: Path) -> list[str]:
                     )
                 continue
 
-            resolved = (page.parent / unquote(target)).resolve()
+            # 404.html uses root-absolute paths because it is served in
+            # response to any URL, at any depth. Those resolve against the site
+            # root, not the page's directory.
+            path = unquote(target)
+            base = root if path.startswith("/") else page.parent
+            resolved = (base / path.lstrip("/")).resolve()
             if not resolved.exists():
                 problems.append(
                     f"{page.relative_to(root)}: {raw} -> missing {_display(resolved, root)}"

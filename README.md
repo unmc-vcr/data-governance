@@ -129,15 +129,50 @@ three flat slots so a fourth role can be added without a schema change.
 
 ## CI/CD
 
-`.github/workflows/site.yml`:
+`.github/workflows/site.yml` deploys to **Azure Static Web Apps**. GitHub Pages
+is not used: this repository is private, and Pages on a private repository
+requires GitHub Team or Enterprise Cloud.
 
 - **Every pull request** — run tests, validate, build, check internal links,
-  upload the site as the `glossary-site` artifact. Download it and open
-  `index.html` to review; it works straight out of the zip.
-- **Push to `main`** — the same, then deploy to GitHub Pages.
+  then deploy to a per-PR staging site. The preview URL is posted as a comment
+  on the PR and updated in place on each push. Closing the PR tears the staging
+  site down. The build is also uploaded as the `glossary-site` artifact, so a
+  reviewer can open `index.html` from the zip without signing in.
+- **Push to `main`** — the same, then deploy to the production site.
 
-The checkout uses `fetch-depth: 0` because term change history is read from
-git. With a shallow clone the history panels render empty rather than failing.
+The checkout uses `fetch-depth: 0` because each term's change history is read
+from the commits touching its own file. With a shallow clone every timeline
+renders empty.
+
+### One-time setup
+
+1. Create the Static Web App in Azure (the Free plan is enough for a static
+   site of this size).
+2. Confirm the repository secret
+   `AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_GLACIER_0E6778E10` exists. Azure
+   creates it automatically when the Static Web App is linked to the
+   repository, naming it after the resource. If the resource is ever recreated
+   the name changes, and both `azure_static_web_apps_api_token` lines in the
+   workflow have to be updated to match.
+3. Configure the Azure AD identity provider, because `staticwebapp.config.json`
+   requires authentication (see below).
+
+### Access control
+
+`staticwebapp.config.json` is deliberately **closed by default**: every route
+requires an authenticated user, and a 401 redirects to `/.auth/login/aad`. This
+repository is private and the glossary carries internal operational
+definitions, so publishing it anonymously should be a deliberate act, not a
+default.
+
+To open the site to anyone with the link, change the `/*` route's
+`allowedRoles` to `["anonymous"]`. To restrict further, assign a custom role in
+Azure and require that instead of `authenticated` — otherwise any account in
+the configured directory can read the site.
+
+The file is tracked at the repository root and copied into `site/` during the
+build, because it has to sit at the root of the deployed content and `site/` is
+gitignored.
 
 ## Known gaps
 
@@ -155,10 +190,13 @@ These are real and deliberate, not oversights:
 - **`CODEOWNERS` uses placeholder team handles.** GitHub does not warn about an
   unknown owner — the rule is silently ineffective. Create the teams and verify
   with a test PR.
-- **GitHub Pages on a private repository** requires GitHub Team or Enterprise
-  Cloud. If the deploy job fails, either enable Pages under
-  Settings → Pages → Source: GitHub Actions, or delete the `deploy` job and
-  publish the artifact another way. Everything up to deployment still works.
+- **The Azure Static Web App has to exist before the first deploy.** Until
+  `AZURE_STATIC_WEB_APPS_API_TOKEN` is set, the deploy step fails while every
+  step before it — tests, validation, build, link check — still runs, and the
+  `glossary-site` artifact is still produced.
+- **Anyone in the Azure AD tenant can read the site** once authenticated. The
+  config requires sign-in, not membership of a particular group. Narrow it with
+  a custom role if the glossary should be restricted further.
 - **Fonts load from Google Fonts.** On a network that blocks them the site
   falls back to system fonts and still reads fine, but the typography is not
   the designed one. Self-host the three families if that matters.

@@ -158,6 +158,7 @@ def build(
     )
     renderer.glossary_index()
     renderer.search_page()
+    renderer.not_found_page()
     renderer.how_to_read(reference_url)
 
     for area in glossary.areas:

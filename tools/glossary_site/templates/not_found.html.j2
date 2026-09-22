@@ -1,0 +1,65 @@
+{#- Standalone 404, referenced by staticwebapp.config.json.
+
+    This page deliberately does NOT extend base.html.j2. Every other page
+    computes relative asset paths from its own depth, but a 404 is served in
+    response to any URL -- /terms/nope, /a/b/c/nope -- so a relative
+    "assets/site.css" would resolve differently each time. Root-absolute paths
+    are correct here because Azure Static Web Apps serves from the domain root.
+    That makes this the one page that does not work over file://, which is
+    fine: nothing in a downloaded artifact can 404. -#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found · UNMC Data Governance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v={{ asset_version }}">
+<script>
+try {
+  var t = localStorage.getItem("unmc-dg-theme");
+  if (t) document.documentElement.setAttribute("data-theme", t);
+} catch (e) {}
+</script>
+</head>
+<body>
+<header class="header">
+  <a class="brand" href="/index.html">
+    <span class="brand__mark" aria-hidden="true">N</span>
+    <span class="brand__text">
+      <span class="brand__name">Data Governance</span>
+      <span class="brand__org">University of Nebraska Medical Center</span>
+    </span>
+  </a>
+</header>
+
+<div class="layout">
+  <main class="main" id="main" style="flex-basis:100%">
+    <div style="max-width:680px">
+      <div class="eyebrow">Not found</div>
+      <h1 class="page-title">That page isn't here</h1>
+      <p class="lede">The link may be out of date, or the term may have been renamed.
+      Terms are never deleted &mdash; a deprecated one keeps its page and points at
+      whatever replaced it.</p>
+      <div class="button-row">
+        <a class="btn btn--primary" href="/glossary.html">Browse the dictionary</a>
+        <a class="btn btn--secondary" href="/index.html">Governance home</a>
+      </div>
+      <p style="margin-top:32px;font-size:13px;color:var(--ink-3)">
+        If you followed a link from inside the site, that's a bug worth reporting to
+        <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <span>University of Nebraska Medical Center &middot; Data Governance Program</span>
+    <div class="footer__spacer"></div>
+    <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+  </div>
+</footer>
+</body>
+</html>

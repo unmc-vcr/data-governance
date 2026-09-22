@@ -440,6 +440,15 @@ class Renderer:
             ),
         )
 
+    def not_found_page(self) -> None:
+        """Served by Azure Static Web Apps for any unmatched URL."""
+        self.write(
+            "404.html",
+            "not_found.html.j2",
+            asset_version=self.asset_version,
+            contact_email=self.contact_email,
+        )
+
     def reference_page(
         self, out_path: str, title: str, body: str, siblings, *, has_diagram: bool = False
     ) -> None:
