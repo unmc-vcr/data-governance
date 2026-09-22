@@ -3,7 +3,7 @@ title: How data governance works here
 eyebrow: Start here
 lede: >-
   A term becomes official when a definition owner writes it, a steward validates
-  it against real data, and the change is merged. This page walks the whole path.
+  it against real data, and the change is merged.
 nav_group: Start here
 nav_label: How data governance works
 order: 10
@@ -82,9 +82,3 @@ reviewer, the timestamp, and the diff all attached to it.
 > was written here rather than adopted from an external standard, cite the
 > internal decision that settled it. The build refuses an approved term with no
 > source.
-
-## Escalation
-
-Blocked more than five business days? Email the Data Governance Program at
-[datagovernance@unmc.edu](mailto:datagovernance@unmc.edu). Governance that slows
-the work down is governance we have to fix.

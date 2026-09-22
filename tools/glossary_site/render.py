@@ -251,7 +251,7 @@ class Renderer:
             {"n": len(self.glossary.agents), "label": "Offices holding a governance role"},
             {
                 "n": counts.get("draft", 0) + counts.get("in_review", 0),
-                "label": "Terms still moving through review",
+                "label": "Terms under review",
             },
         ]
         self.write(
