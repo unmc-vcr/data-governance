@@ -1,0 +1,33 @@
+# Clinical Research subject area.
+#
+# Validated against src/schema/glossary.yaml as a Glossary document.
+# Every edit here is a governance change: open a pull request, let the steward
+# office review the rendered preview, and merge. The merged PR is the approval
+# record.
+
+subject_areas:
+  - id: unmc:ClinicalResearch
+    pref_label: Clinical Research
+    definition: Research involving human participants, their data, or their specimens.
+    responsibilities:
+      - agent: unmc:role/ClinicalResearchOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+
+terms:
+  - id: unmc:ClinicalTrial
+    code: CR.TRI.002
+    pref_label: Clinical Trial
+    alt_labels: [Interventional Study]
+    definition: A clinical study in which participants are prospectively assigned
+      to an intervention to evaluate its effects on health-related outcomes.
+    definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
+    in_subject_area: unmc:ClinicalResearch
+    broader: [unmc:ClinicalStudy]
+    responsibilities:
+      - agent: unmc:role/ClinicalResearchOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: in_review
