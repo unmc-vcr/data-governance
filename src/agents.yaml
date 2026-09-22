@@ -1,0 +1,23 @@
+# Registry of offices that can hold a governance role.
+#
+# Agents are offices, not people. An office IRI survives staff turnover; a
+# person's name does not. The `contact_name` field is presentation only --
+# it renders on the site so a reader knows who to ask for, but the office
+# remains accountable.
+#
+# Validated as a Glossary document (agents only) against src/schema/glossary.yaml.
+# Every `agent:` IRI used in src/definitions/ must resolve to an entry here;
+# tools/glossary_site/checks.py fails the build otherwise.
+
+agents:
+  - id: unmc:role/ClinicalResearchOffice
+    pref_label: Clinical Research Office
+    email: clinicalresearch@unmc.edu
+
+  - id: unmc:role/ResearchAnalytics
+    pref_label: Research Analytics
+    email: researchanalytics@unmc.edu
+
+  - id: unmc:role/SponsoredProgramsOffice
+    pref_label: Sponsored Programs Administration
+    email: spa@unmc.edu

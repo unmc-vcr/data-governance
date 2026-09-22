@@ -1,0 +1,340 @@
+id: https://w3id.org/unmc/glossary
+name: unmc_glossary
+title: UNMC Research Data Glossary
+description: >-
+  Governed business terms, organized by subject area. Terms are data files
+  validated against this schema. The schema describes the shape of a term;
+  the terms themselves live in src/definitions/.
+version: 0.2.0
+license: https://creativecommons.org/publicdomain/zero/1.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  skos: http://www.w3.org/2004/02/skos/core#
+  dcterms: http://purl.org/dc/terms/
+  prov: http://www.w3.org/ns/prov#
+  foaf: http://xmlns.com/foaf/0.1/
+  unmc: https://w3id.org/unmc/glossary/
+default_prefix: unmc
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+
+  Glossary:
+    description: >-
+      Per-file container for validation only; not part of the published
+      vocabulary. Its blank node is stripped before the vocabulary is published
+      as RDF.
+    tree_root: true
+    slots: [subject_areas, terms, agents]
+
+  SubjectArea:
+    class_uri: skos:ConceptScheme
+    description: A governed grouping of terms, owned end to end by one office.
+    slots: [id, pref_label, definition, responsibilities]
+
+  Term:
+    class_uri: skos:Concept
+    description: >-
+      One governed business term. Exactly one definition, one accountable
+      definition owner, and a status that says how far it has moved through
+      review.
+    slots:
+      - id
+      - code
+      - pref_label
+      - alt_labels
+      - definition
+      - definition_source
+      - in_subject_area
+      - broader
+      - classification
+      - source_of_record
+      - rules
+      - used_in
+      - guidance
+      - responsibilities
+      - status
+      - exact_match
+      - close_match
+      - realized_by
+      - replaced_by
+
+  Responsibility:
+    class_uri: prov:Attribution
+    description: >-
+      One office or role holding one governance role for a term or subject
+      area. A value object, not an identified thing.
+    slots: [agent, governance_role]
+    slot_usage:
+      agent:
+        required: true
+      governance_role:
+        required: true
+
+  SourceOfRecord:
+    description: >-
+      The system that is authoritative for the values behind this term, and
+      where in that system the values live.
+    slots: [system, field, format, refresh]
+    slot_usage:
+      system:
+        required: true
+
+  Usage:
+    description: A report, dashboard, or extract that depends on this term.
+    slots: [usage_name, usage_owner]
+    slot_usage:
+      usage_name:
+        required: true
+
+  Guidance:
+    description: >-
+      A single callout shown with the term. Used for a handling rule, a
+      caveat, or a warning that the definition is still moving.
+    slots: [guidance_kind, guidance_text]
+    slot_usage:
+      guidance_kind:
+        required: true
+      guidance_text:
+        required: true
+
+  Agent:
+    class_uri: prov:Agent
+    description: >-
+      An office, role, or committee that can hold a governance role. Agents
+      are offices, not individuals, so that ownership survives staff turnover.
+      Named individuals belong in the office's own directory, not here.
+    slots: [id, pref_label, email, contact_name]
+
+slots:
+
+  id:
+    identifier: true
+    range: uriorcurie
+
+  code:
+    description: >-
+      Short human-quotable identifier, e.g. CR.AE.001. Subject-area prefix,
+      concept abbreviation, sequence. Stable for the life of the term.
+    slot_uri: skos:notation
+    pattern: '^[A-Z]{2}\.[A-Z]{2,4}\.[0-9]{3}$'
+
+  pref_label:
+    slot_uri: skos:prefLabel
+    required: true
+
+  alt_labels:
+    description: >-
+      Other names people actually use for this term. Indexed by site search,
+      so add the wrong-but-common names too.
+    slot_uri: skos:altLabel
+    multivalued: true
+
+  definition:
+    slot_uri: skos:definition
+    required: true
+
+  definition_source:
+    description: Where the wording came from, if it was adopted rather than written here.
+    slot_uri: dcterms:source
+    range: uri
+
+  in_subject_area:
+    slot_uri: skos:inScheme
+    range: SubjectArea
+    required: true
+
+  broader:
+    slot_uri: skos:broader
+    range: Term
+    multivalued: true
+
+  classification:
+    description: >-
+      Handling tier for data implementing this term. PROVISIONAL - the four
+      tiers below are carried over from the site design and have not been
+      confirmed by Compliance and Privacy. Do not cite them as policy.
+    range: DataClassification
+
+  source_of_record:
+    description: The authoritative system for this term's values.
+    range: SourceOfRecord
+    inlined: true
+
+  rules:
+    description: >-
+      Qualifiers that change how the term is counted or applied. One rule per
+      entry, written as an instruction rather than a description.
+    multivalued: true
+
+  used_in:
+    description: Reports and extracts known to depend on this term.
+    range: Usage
+    multivalued: true
+    inlined_as_list: true
+
+  guidance:
+    description: Callouts shown alongside the definition.
+    range: Guidance
+    multivalued: true
+    inlined_as_list: true
+
+  status:
+    range: TermStatus
+    required: true
+
+  exact_match:
+    description: An external concept that means the same thing.
+    slot_uri: skos:exactMatch
+    range: uriorcurie
+    multivalued: true
+
+  close_match:
+    description: An external concept that is similar but not interchangeable.
+    slot_uri: skos:closeMatch
+    range: uriorcurie
+    multivalued: true
+
+  realized_by:
+    description: Schema class, slot, or warehouse column that implements this term.
+    slot_uri: dcterms:isReferencedBy
+    range: uriorcurie
+    multivalued: true
+
+  replaced_by:
+    description: For deprecated terms, the term that supersedes this one.
+    slot_uri: dcterms:isReplacedBy
+    range: Term
+
+  responsibilities:
+    description: >-
+      Who is accountable for this term. Exactly one definition_owner is
+      required; the check in tools/glossary_site/checks.py enforces that,
+      because LinkML cannot express it.
+    slot_uri: prov:qualifiedAttribution
+    range: Responsibility
+    multivalued: true
+    inlined_as_list: true
+    required: true
+
+  agent:
+    description: Office, group, or role IRI. Not an individual.
+    slot_uri: prov:agent
+    range: uriorcurie
+
+  governance_role:
+    slot_uri: prov:hadRole
+    range: GovernanceRole
+
+  system:
+    description: Name of the authoritative system, e.g. "OnCore - adverse event module".
+
+  field:
+    description: Column or field name within the source system.
+
+  format:
+    description: Shape of the stored value, in plain language.
+
+  refresh:
+    description: How often the warehouse copy is refreshed.
+
+  usage_name:
+    description: Name of the report, dashboard, or extract.
+
+  usage_owner:
+    description: Office that owns that report.
+
+  guidance_kind:
+    range: GuidanceKind
+
+  guidance_text:
+    description: The callout body. One short paragraph.
+
+  email:
+    description: Shared office mailbox. Never an individual's address.
+    slot_uri: foaf:mbox
+
+  contact_name:
+    description: >-
+      Optional display name for the office's current contact. Presentation
+      only - accountability rests with the office, not this person.
+
+  subject_areas:
+    range: SubjectArea
+    multivalued: true
+    inlined_as_list: true
+
+  terms:
+    range: Term
+    multivalued: true
+    inlined_as_list: true
+
+  agents:
+    range: Agent
+    multivalued: true
+    inlined_as_list: true
+
+enums:
+
+  GovernanceRole:
+    description: What an office is on the hook for.
+    permissible_values:
+      definition_owner:
+        meaning: unmc:DefinitionOwner
+        description: Accountable for approving the definition.
+      data_steward:
+        meaning: unmc:DataSteward
+        description: Responsible for quality of implementing data.
+      business_sme:
+        meaning: unmc:BusinessSME
+        description: Consulted on meaning and use in practice.
+
+  TermStatus:
+    description: How far a term has moved through review.
+    permissible_values:
+      draft:
+        meaning: unmc:status/Draft
+        description: Written but not yet checked against real data.
+      in_review:
+        meaning: unmc:status/InReview
+        description: Steward and SME are validating it. Not citable in reporting.
+      approved:
+        meaning: unmc:status/Approved
+        description: Signed off. Reports may cite it.
+      deprecated:
+        meaning: unmc:status/Deprecated
+        description: Superseded. Retained for historical reconciliation only.
+
+  DataClassification:
+    description: >-
+      PROVISIONAL handling tier. Carried over from the site design pending
+      confirmation by Compliance and Privacy. Not policy yet.
+    permissible_values:
+      public:
+        meaning: unmc:classification/Public
+        description: Cleared for open release.
+      internal:
+        meaning: unmc:classification/Internal
+        description: Routine operating data. UNMC login required.
+      sensitive:
+        meaning: unmc:classification/Sensitive
+        description: Disclosure would cause real harm. Access granted per project.
+      restricted:
+        meaning: unmc:classification/Restricted
+        description: Regulated identifiable data. Approved enclave only.
+
+  GuidanceKind:
+    description: Tone of a callout, which decides how it is styled.
+    permissible_values:
+      required:
+        description: A rule that must be followed.
+      good_to_know:
+        description: Context that helps but does not gate the task.
+      in_review:
+        description: Warning that this content may change before approval.
+      draft:
+        description: Warning that this term has no approved basis yet.
