@@ -1,0 +1,463 @@
+"""Jinja environment, navigation, and page rendering."""
+
+from __future__ import annotations
+
+import json
+import re
+import shutil
+from dataclasses import dataclass
+from datetime import date
+from pathlib import Path
+from urllib.parse import urlparse
+
+import yaml
+from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
+
+from .content import ContentPage
+from .model import (
+    CLASSIFICATION_LABELS,
+    Glossary,
+    ROLE_LABELS,
+    STATUS_LABELS,
+)
+
+TEMPLATES = Path(__file__).parent / "templates"
+STATIC = Path(__file__).parent / "static"
+
+ROLE_COLOURS = {
+    "definition_owner": "var(--navy)",
+    "data_steward": "var(--teal)",
+    "business_sme": "var(--ink-3)",
+}
+
+# Order of Term slots on the "How to read a term" page. Follows the order a
+# reader meets them on an actual term page rather than the schema's order.
+FIELD_ORDER = [
+    "pref_label",
+    "alt_labels",
+    "code",
+    "definition",
+    "definition_source",
+    "status",
+    "in_subject_area",
+    "classification",
+    "responsibilities",
+    "rules",
+    "source_of_record",
+    "used_in",
+    "broader",
+    "replaced_by",
+    "exact_match",
+    "close_match",
+    "realized_by",
+    "guidance",
+]
+
+FIELD_LABELS = {
+    "pref_label": "Name",
+    "alt_labels": "Also called",
+    "code": "Code",
+    "definition": "Definition",
+    "definition_source": "Definition source",
+    "status": "Status",
+    "in_subject_area": "Subject area",
+    "classification": "Classification",
+    "responsibilities": "Responsibility",
+    "rules": "Rules & qualifiers",
+    "source_of_record": "Source of record",
+    "used_in": "Where it is used",
+    "broader": "Broader term",
+    "replaced_by": "Replaced by",
+    "exact_match": "Same as",
+    "close_match": "Similar to",
+    "realized_by": "Implemented in",
+    "guidance": "Callouts",
+}
+
+
+@dataclass
+class NavItem:
+    label: str
+    url: str
+
+
+@dataclass
+class NavGroup:
+    label: str
+    items: list[NavItem]
+
+
+def _domain(url: str) -> str:
+    try:
+        host = urlparse(url).netloc
+    except ValueError:
+        return url
+    return host.removeprefix("www.") or url
+
+
+def _as_link(value: str) -> str:
+    """Render a CURIE or URL as a link when it is dereferenceable."""
+    if value.startswith(("http://", "https://")):
+        return f'<a href="{value}" rel="noopener">{value}</a>'
+    return f'<code class="term-code">{value}</code>'
+
+
+def _badge_slug(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
+
+
+def _rel_for(out_path: str) -> str:
+    """Relative prefix from a page back to the site root."""
+    depth = out_path.count("/")
+    return "../" * depth
+
+
+def make_env() -> Environment:
+    env = Environment(
+        loader=FileSystemLoader(str(TEMPLATES)),
+        autoescape=select_autoescape(["html", "j2"]),
+        undefined=StrictUndefined,
+        trim_blocks=True,
+        lstrip_blocks=True,
+    )
+    env.filters["domain"] = _domain
+    env.filters["as_link"] = _as_link
+    env.filters["badge_slug"] = _badge_slug
+    env.filters["role_colour"] = lambda role: ROLE_COLOURS.get(role, "var(--ink-3)")
+    return env
+
+
+def build_nav(
+    glossary: Glossary, pages: list[ContentPage], has_reference: bool
+) -> list[NavGroup]:
+    """Sidebar nav: authored groups first, then the generated reference."""
+    groups: dict[str, list[tuple[int, NavItem]]] = {}
+    group_order: list[str] = []
+
+    for page in pages:
+        if page.is_hub or not page.nav_group:
+            continue
+        if page.nav_group not in groups:
+            groups[page.nav_group] = []
+            group_order.append(page.nav_group)
+        groups[page.nav_group].append((page.order, NavItem(page.nav_label, page.url)))
+
+    nav = [
+        NavGroup(
+            label="Start here",
+            items=[NavItem("Governance home", "index.html")]
+            + [
+                item
+                for _, item in sorted(groups.pop("Start here", []), key=lambda p: p[0])
+            ],
+        )
+    ]
+    if "Start here" in group_order:
+        group_order.remove("Start here")
+
+    for label in group_order:
+        nav.append(
+            NavGroup(
+                label=label,
+                items=[item for _, item in sorted(groups[label], key=lambda p: p[0])],
+            )
+        )
+
+    reference_items = [
+        NavItem("Glossary & dictionary", "glossary.html"),
+        NavItem("How to read a term", "how-to-read-a-term.html"),
+    ]
+    reference_items += [NavItem(a.pref_label, a.url) for a in glossary.areas]
+    reference_items.append(NavItem("Search", "search.html"))
+    nav.append(NavGroup(label="Reference", items=reference_items))
+
+    if has_reference:
+        nav.append(
+            NavGroup(label="System", items=[NavItem("Schema reference", "reference/index.html")])
+        )
+
+    return nav
+
+
+class Renderer:
+    def __init__(
+        self,
+        out_dir: Path,
+        glossary: Glossary,
+        nav: list[NavGroup],
+        schema: dict,
+        *,
+        contact_email: str,
+        suggest_change_url: str | None,
+    ) -> None:
+        self.out = out_dir
+        self.env = make_env()
+        self.glossary = glossary
+        self.nav = nav
+        self.schema = schema
+        self.contact_email = contact_email
+        self.suggest_change_url = suggest_change_url
+        self.built_on = date.today().strftime("%d %b %Y")
+        self.written: list[str] = []
+
+    def _base_context(self, out_path: str, title: str, breadcrumb=None, description=None):
+        return {
+            "rel": _rel_for(out_path),
+            "current_url": out_path,
+            "nav": self.nav,
+            "page_title": title,
+            "page_description": description,
+            "breadcrumb": breadcrumb or [],
+            "built_on": self.built_on,
+            "contact_email": self.contact_email,
+            "schema_name": self.schema.get("name", "unmc_glossary"),
+            "schema_version": self.schema.get("version", "0"),
+            "suggest_change_url": self.suggest_change_url,
+        }
+
+    def write(self, out_path: str, template: str, **context) -> None:
+        destination = self.out / out_path
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(self.env.get_template(template).render(**context), encoding="utf-8")
+        self.written.append(out_path)
+
+    # ---------- pages ----------
+
+    def hub(self, page: ContentPage, recent_changes, contacts) -> None:
+        counts = self.glossary.counts
+        stats = [
+            {"n": counts.get("approved", 0), "label": "Approved terms in the dictionary"},
+            {"n": len(self.glossary.areas), "label": "Subject areas under governance"},
+            {"n": len(self.glossary.agents), "label": "Offices holding a governance role"},
+            {
+                "n": counts.get("draft", 0) + counts.get("in_review", 0),
+                "label": "Terms still moving through review",
+            },
+        ]
+        self.write(
+            "index.html",
+            "hub.html.j2",
+            page=page,
+            stats=stats,
+            areas=self.glossary.areas,
+            recent_changes=recent_changes,
+            contacts=contacts,
+            **self._base_context("index.html", page.title, description=page.lede),
+        )
+
+    def glossary_index(self) -> None:
+        self.write(
+            "glossary.html",
+            "glossary.html.j2",
+            terms=self.glossary.terms,
+            areas=self.glossary.areas,
+            **self._base_context(
+                "glossary.html",
+                "Glossary & data dictionary",
+                breadcrumb=[{"label": "Glossary & data dictionary", "url": None}],
+                description="Every governed business term at UNMC, with its definition, status, and accountable office.",
+            ),
+        )
+
+    def term_page(self, term) -> None:
+        self.write(
+            term.url,
+            "term.html.j2",
+            term=term,
+            **self._base_context(
+                term.url,
+                term.pref_label,
+                breadcrumb=[
+                    {"label": "Glossary", "url": "glossary.html"},
+                    {"label": term.area.pref_label, "url": term.area.url},
+                    {"label": term.pref_label, "url": None},
+                ],
+                description=term.definition[:180],
+            ),
+        )
+
+    def area_page(self, area) -> None:
+        counts: dict[str, int] = {}
+        for term in area.terms:
+            counts[term.status_label] = counts.get(term.status_label, 0) + 1
+        ordered = [
+            (label, counts[label])
+            for label in STATUS_LABELS.values()
+            if label in counts
+        ]
+        self.write(
+            area.url,
+            "area.html.j2",
+            area=area,
+            status_counts=ordered,
+            **self._base_context(
+                area.url,
+                area.pref_label,
+                breadcrumb=[
+                    {"label": "Glossary", "url": "glossary.html"},
+                    {"label": area.pref_label, "url": None},
+                ],
+                description=area.definition[:180],
+            ),
+        )
+
+    def content_page(self, page: ContentPage) -> None:
+        self.write(
+            page.url,
+            "page.html.j2",
+            page=page,
+            **self._base_context(
+                page.url,
+                page.title,
+                breadcrumb=[{"label": page.title, "url": None}],
+                description=page.lede,
+            ),
+        )
+
+    def how_to_read(self, reference_url: str | None) -> None:
+        slots = self.schema.get("slots", {})
+        term_slots = self.schema.get("classes", {}).get("Term", {}).get("slots", [])
+        fields = []
+        for name in FIELD_ORDER:
+            if name not in term_slots:
+                continue
+            spec = slots.get(name, {})
+            description = (spec.get("description") or "").strip()
+            if not description:
+                description = f"The term's {FIELD_LABELS.get(name, name).lower()}."
+            fields.append(
+                {
+                    "label": FIELD_LABELS.get(name, name.replace("_", " ").title()),
+                    "description": " ".join(description.split()),
+                    "required": bool(spec.get("required")),
+                    "uri": spec.get("slot_uri"),
+                }
+            )
+
+        def enum_values(enum_name: str, labels: dict[str, str]):
+            values = self.schema.get("enums", {}).get(enum_name, {}).get("permissible_values", {})
+            return [
+                {
+                    "name": key,
+                    "label": labels.get(key, key.replace("_", " ").title()),
+                    "description": " ".join((spec or {}).get("description", "").split())
+                    or "No description recorded in the schema.",
+                }
+                for key, spec in values.items()
+            ]
+
+        self.write(
+            "how-to-read-a-term.html",
+            "how_to_read.html.j2",
+            fields=fields,
+            statuses=enum_values("TermStatus", STATUS_LABELS),
+            roles=enum_values("GovernanceRole", ROLE_LABELS),
+            classifications=enum_values("DataClassification", CLASSIFICATION_LABELS),
+            reference_url=reference_url,
+            **self._base_context(
+                "how-to-read-a-term.html",
+                "How to read a term",
+                breadcrumb=[{"label": "How to read a term", "url": None}],
+                description="What each field on a term page means.",
+            ),
+        )
+
+    def search_page(self) -> None:
+        self.write(
+            "search.html",
+            "search.html.j2",
+            **self._base_context(
+                "search.html",
+                "Search",
+                breadcrumb=[{"label": "Search", "url": None}],
+            ),
+        )
+
+    def reference_page(
+        self, out_path: str, title: str, body: str, siblings, *, has_diagram: bool = False
+    ) -> None:
+        self.write(
+            out_path,
+            "reference.html.j2",
+            body=body,
+            siblings=siblings,
+            has_diagram=has_diagram,
+            **self._base_context(
+                out_path,
+                title,
+                breadcrumb=[
+                    {"label": "Schema reference", "url": "reference/index.html"},
+                    {"label": title, "url": None},
+                ],
+            ),
+        )
+
+    # ---------- assets ----------
+
+    def copy_static(self) -> None:
+        assets = self.out / "assets"
+        assets.mkdir(parents=True, exist_ok=True)
+        for item in STATIC.iterdir():
+            if item.is_file():
+                shutil.copy2(item, assets / item.name)
+
+    def write_search_index(self, pages: list[ContentPage]) -> None:
+        entries = []
+
+        for term in self.glossary.terms:
+            entries.append(
+                {
+                    "kind": "term",
+                    "kindLabel": "Term",
+                    "title": term.pref_label,
+                    "alt": term.alt_labels,
+                    "url": term.url,
+                    "path": f"Glossary / {term.area.pref_label}",
+                    "meta": f"{term.status_label}"
+                    + (f" · Steward: {term.steward.pref_label}" if term.steward else ""),
+                    "snippet": term.definition,
+                    "text": term.search_text(),
+                }
+            )
+
+        for area in self.glossary.areas:
+            entries.append(
+                {
+                    "kind": "area",
+                    "kindLabel": "Subject area",
+                    "title": area.pref_label,
+                    "alt": [],
+                    "url": area.url,
+                    "path": "Glossary",
+                    "meta": f"{len(area.terms)} term{'' if len(area.terms) == 1 else 's'}"
+                    + (f" · {area.owner.pref_label}" if area.owner else ""),
+                    "snippet": area.definition,
+                    "text": f"{area.pref_label} {area.definition}",
+                }
+            )
+
+        for page in pages:
+            entries.append(
+                {
+                    "kind": "page",
+                    "kindLabel": "Standard or guide",
+                    "title": page.title,
+                    "alt": [],
+                    "url": page.url,
+                    "path": page.nav_group or "Data Governance",
+                    "meta": " · ".join(page.meta) if page.meta else "",
+                    "snippet": page.lede or page.summary,
+                    "text": f"{page.title} {page.lede or ''} {page.summary}",
+                }
+            )
+
+        destination = self.out / "assets" / "search-index.json"
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(
+            json.dumps(entries, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+        )
+
+
+def load_schema(path: Path) -> dict:
+    with path.open(encoding="utf-8") as fh:
+        return yaml.safe_load(fh) or {}

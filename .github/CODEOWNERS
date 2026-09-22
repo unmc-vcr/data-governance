@@ -1,0 +1,28 @@
+# Route each subject area's definitions to the office accountable for it, so
+# the right reviewers are required automatically and the merged pull request
+# becomes the approval record.
+#
+# TODO: replace the placeholder team handles below with real GitHub teams.
+# Until a team exists, a review requirement pointing at it is silently
+# ineffective -- GitHub does not warn about an unknown owner. Verify with
+# Settings -> Branches -> require review from Code Owners, then open a test PR.
+#
+# The office named here must match the definition_owner in the file itself.
+# Nothing enforces that automatically; it is checked at review time.
+
+# Schema changes affect every subject area.
+/src/schema/                @unmc-vcr/data-governance-program
+
+# The agent registry decides who can hold a role at all.
+/src/agents.yaml            @unmc-vcr/data-governance-program
+
+# Subject areas, one line per definition file.
+/src/definitions/clinical_research.yaml     @unmc-vcr/clinical-research-office
+/src/definitions/sponsored_programs.yaml    @unmc-vcr/sponsored-programs-office
+
+# Published narrative and standards.
+/docs/content/              @unmc-vcr/data-governance-program
+
+# The build itself.
+/tools/                     @unmc-vcr/data-governance-program
+/.github/                   @unmc-vcr/data-governance-program

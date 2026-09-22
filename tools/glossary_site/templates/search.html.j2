@@ -1,0 +1,26 @@
+{% extends "base.html.j2" %}
+{#- Full search results page. The header box does type-ahead; this page handles
+    ?q= links, which is what people paste to each other. -#}
+
+{% block content %}
+<div style="max-width:900px">
+  <h1 class="page-title" id="search-heading" style="font-size:30px;margin-bottom:8px">Search</h1>
+  <p style="margin:0 0 26px;font-size:13.5px;color:var(--ink-3)" data-search-summary>
+    Type in the box above, or press <span class="search__key">/</span> from anywhere on the site.
+  </p>
+
+  <div class="filter-bar" data-search-filters>
+    <button class="pill" type="button" data-kind="all" aria-pressed="true">All results</button>
+    <button class="pill" type="button" data-kind="term" aria-pressed="false">Terms</button>
+    <button class="pill" type="button" data-kind="area" aria-pressed="false">Subject areas</button>
+    <button class="pill" type="button" data-kind="page" aria-pressed="false">Standards &amp; guides</button>
+  </div>
+
+  <div data-search-page-results></div>
+
+  <noscript>
+    <p style="color:var(--ink-2)">Search needs JavaScript. Without it, browse the
+    <a href="{{ rel }}glossary.html">full dictionary</a> instead &mdash; every term is listed there.</p>
+  </noscript>
+</div>
+{% endblock %}

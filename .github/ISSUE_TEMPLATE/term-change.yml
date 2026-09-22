@@ -1,0 +1,62 @@
+name: Suggest a change to a term
+description: Report a definition that is wrong, unclear, or missing.
+title: "Change request: "
+labels: [glossary]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The *Suggest a change* link on a term page brings you here with the
+        term already identified. If you got here another way, name the term
+        below.
+
+        This opens a discussion, not a change. The definition owner for the
+        term decides what happens next and opens the pull request that
+        actually changes it.
+
+  - type: input
+    id: term
+    attributes:
+      label: Which term?
+      description: The term's name or its ID, e.g. `unmc:ClinicalTrial`.
+      placeholder: Clinical Trial
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of change?
+      options:
+        - The definition is wrong
+        - The definition is unclear or ambiguous
+        - The source of record is wrong or missing
+        - The wrong office is listed as accountable
+        - A term is missing entirely
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What did you see?
+      description: >-
+        Where did the definition disagree with the data? A specific report,
+        query, or number is far more useful than a general concern.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should it say instead?
+      description: Optional. A concrete proposal speeds this up considerably.
+
+  - type: input
+    id: impact
+    attributes:
+      label: What depends on this?
+      description: >-
+        Reports, dashboards, or decisions affected. This sets the priority.
+      placeholder: Monthly Safety Summary, Protocol Deviation Dashboard

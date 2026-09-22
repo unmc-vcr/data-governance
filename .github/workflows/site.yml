@@ -1,0 +1,102 @@
+# Validate the glossary and build the site.
+#
+# On a pull request: validate, build, and upload the site as an artifact so a
+# steward can review rendered term pages instead of a YAML diff. Nothing
+# deploys.
+#
+# On a push to main: the same, then deploy to GitHub Pages.
+#
+# The build is the gate. It fails on a schema violation, a dangling reference,
+# a term without exactly one definition owner, an approved term with no
+# definition source, or a deprecated term with no replacement.
+
+name: Build glossary site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Let a newer commit cancel an in-flight run on the same ref, except on main,
+# where every deploy should complete.
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Term change history is read from git log, so the build needs the
+          # whole history rather than the default shallow clone.
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Run tests
+        run: uv run pytest -q
+
+      - name: Build site
+        run: uv run python -m glossary_site.build --out site
+
+      - name: Check for broken internal links
+        run: uv run python -m glossary_site.linkcheck site
+
+      - name: Upload site
+        uses: actions/upload-artifact@v4
+        with:
+          name: glossary-site
+          path: site
+          retention-days: 14
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Summarise
+        run: |
+          {
+            echo "### Glossary site built"
+            echo
+            echo "- Terms: $(find src/definitions -name '*.yaml' | wc -l | tr -d ' ') definition file(s)"
+            echo "- Pages: $(find site -name '*.html' | wc -l | tr -d ' ')"
+            echo
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              echo "Download the **glossary-site** artifact below and open \`index.html\`"
+              echo "to review the rendered pages. The site works straight out of the zip —"
+              echo "no server needed."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  deploy:
+    # Pages on a private repository needs GitHub Team or Enterprise Cloud. If
+    # this job fails with a Pages-not-enabled error, either enable Pages in
+    # repository settings (Settings -> Pages -> Source: GitHub Actions) or
+    # delete this job and publish the `glossary-site` artifact by hand.
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

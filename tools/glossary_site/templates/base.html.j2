@@ -1,0 +1,112 @@
+{#- Page shell: header, sidebar nav, breadcrumb, footer.
+
+    Every href goes through `rel`, the relative path back to the site root for
+    this page. That keeps the site working both on GitHub Pages under a project
+    subpath and from file:// when a steward opens the PR-preview artifact
+    straight out of the downloaded zip. -#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ page_title }}{% endblock %} · UNMC Data Governance</title>
+{%- if page_description %}
+<meta name="description" content="{{ page_description }}">
+{%- endif %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ rel }}assets/site.css">
+<script>
+/* Applied before first paint so a dark-mode reader never sees a white flash. */
+try {
+  var t = localStorage.getItem("unmc-dg-theme");
+  if (t) document.documentElement.setAttribute("data-theme", t);
+} catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="header">
+  <a class="brand" href="{{ rel }}index.html">
+    <span class="brand__mark" aria-hidden="true">N</span>
+    <span class="brand__text">
+      <span class="brand__name">Data Governance</span>
+      <span class="brand__org">University of Nebraska Medical Center</span>
+    </span>
+  </a>
+
+  <div class="search" role="search">
+    <span class="search__icon" aria-hidden="true">&#8981;</span>
+    <input
+      class="search__input"
+      type="search"
+      id="site-search"
+      autocomplete="off"
+      placeholder="Search terms, stewards, standards"
+      aria-label="Search the glossary"
+      aria-expanded="false"
+      aria-controls="search-results">
+    <span class="search__key" aria-hidden="true">/</span>
+    <div class="search__results" id="search-results" role="listbox" aria-label="Search results"></div>
+  </div>
+
+  <div class="header__meta">
+    <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch colour theme">
+      <span data-theme-label>&#9790; Dark</span>
+    </button>
+    <span>Built {{ built_on }}</span>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" aria-label="Site sections">
+    {%- for group in nav %}
+    <div class="nav-group">
+      <div class="nav-group__label">{{ group.label }}</div>
+      {%- for item in group.items %}
+      <a class="nav-item" href="{{ rel }}{{ item.url }}"{% if item.url == current_url %} aria-current="page"{% endif %}>{{ item.label }}</a>
+      {%- endfor %}
+    </div>
+    {%- endfor %}
+    <div class="sidebar-note">
+      <div class="sidebar-note__title">Something wrong?</div>
+      <p>If a definition doesn't match what you see in the data, tell the steward for that subject area.</p>
+      <a href="mailto:{{ contact_email }}">Report a discrepancy &rarr;</a>
+    </div>
+  </nav>
+
+  <main class="main" id="main">
+    {%- if breadcrumb %}
+    <div class="breadcrumb">
+      <a href="{{ rel }}index.html">Data Governance</a>
+      {%- for crumb in breadcrumb %}
+      <span aria-hidden="true">/</span>
+      {%- if crumb.url %}
+      <a href="{{ rel }}{{ crumb.url }}">{{ crumb.label }}</a>
+      {%- else %}
+      <span class="breadcrumb__current">{{ crumb.label }}</span>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <span>University of Nebraska Medical Center &middot; Data Governance Program</span>
+    <div class="footer__spacer"></div>
+    <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+    <span>Generated from <code>{{ schema_name }}</code> v{{ schema_version }}</span>
+  </div>
+</footer>
+
+<script>window.UNMC_DG_BASE = {{ rel | tojson }};</script>
+<script src="{{ rel }}assets/site.js" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

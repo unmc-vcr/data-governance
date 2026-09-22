@@ -1,0 +1,79 @@
+{% extends "base.html.j2" %}
+{#- The bridge between the two audiences. Generated from the schema itself, so
+    it cannot drift from what a term page actually shows. `gen-doc` output is
+    the full technical reference; this is the plain-language version. -#}
+
+{% block content %}
+<div class="split">
+  <article class="split__body">
+    <div class="eyebrow">Start here</div>
+    <h1 class="page-title">How to read a term</h1>
+    <p class="lede">Every term page is built from the same set of fields. This page says what each
+    one means, in the order you meet it.</p>
+
+    <div class="meta-row">
+      <span>Generated from <code>{{ schema_name }}</code> v{{ schema_version }}</span>
+      <span>{{ fields | length }} fields</span>
+    </div>
+
+    <h2 class="subhead" id="status">What the status means</h2>
+    <p style="color:var(--ink-2)">A term's status tells you whether you can build on it.</p>
+    <div class="fact-box">
+      {%- for value in statuses %}
+      <div class="fact-box__lead">
+        <span class="badge badge--{{ value.name }}">{{ value.label }}</span>
+        <p style="margin:8px 0 0;font-size:14.5px;color:var(--ink-2)">{{ value.description }}</p>
+      </div>
+      {%- endfor %}
+    </div>
+
+    <h2 class="subhead" id="roles">Who is accountable</h2>
+    <p style="color:var(--ink-2)">Responsibility sits with an office, never with an individual, so
+    that it survives staff turnover. Every term names exactly one definition owner.</p>
+    <div class="fact-box">
+      {%- for value in roles %}
+      <div class="fact-box__lead">
+        <span class="badge badge--{{ value.name }}">{{ value.label }}</span>
+        <p style="margin:8px 0 0;font-size:14.5px;color:var(--ink-2)">{{ value.description }}</p>
+      </div>
+      {%- endfor %}
+    </div>
+
+    <h2 class="subhead" id="fields">Every field on a term</h2>
+    <div class="fact-box">
+      {%- for field in fields %}
+      <div class="fact-box__lead">
+        <div class="fact__k">{{ field.label }}{% if field.required %} &middot; required{% endif %}</div>
+        <p style="margin:4px 0 0;font-size:14.5px;color:var(--ink-2)">{{ field.description }}</p>
+        {%- if field.uri %}
+        <p style="margin:6px 0 0"><code class="term-code">{{ field.uri }}</code></p>
+        {%- endif %}
+      </div>
+      {%- endfor %}
+    </div>
+
+    <div class="callout callout--good_to_know">
+      <div class="callout__label">Good to know</div>
+      <p>Terms are data, not schema. Rewording a definition does not require a schema release, and
+      local concepts never leak into the community research-administration model.</p>
+    </div>
+
+    {%- if reference_url %}
+    <h2 class="subhead" id="technical">For the technical reader</h2>
+    <p style="color:var(--ink-2)">The full schema reference &mdash; classes, slots, ranges, URIs, and
+    the generated diagrams &mdash; is published alongside this site.</p>
+    <a class="link-cta" href="{{ rel }}{{ reference_url }}">Open the schema reference &rarr;</a>
+    {%- endif %}
+  </article>
+
+  <aside class="split__aside">
+    <div class="toc-rail">
+      <div class="toc-rail__label">On this page</div>
+      <a href="#status">What the status means</a>
+      <a href="#roles">Who is accountable</a>
+      <a href="#fields">Every field on a term</a>
+      {%- if reference_url %}<a href="#technical">For the technical reader</a>{% endif %}
+    </div>
+  </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends "base.html.j2" %}
+{#- One governed term. Sections with no backing data are omitted entirely
+    rather than rendered empty -- a blank "Source of record" panel reads as a
+    site bug, whereas its absence reads as "not recorded yet", which is true. -#}
+
+{% block content %}
+<div class="split">
+  <article class="split__body split__body--wide">
+    <a class="back-link" href="{{ rel }}glossary.html">&larr; All terms</a>
+
+    <div class="term-tags">
+      <span class="badge badge--{{ term.status }}">{{ term.status_label }}</span>
+      {%- if term.classification %}
+      <span class="badge badge--{{ term.classification }}">{{ term.classification_label }}</span>
+      {%- endif %}
+      <a href="{{ rel }}{{ term.area.url }}">{{ term.area.pref_label }}</a>
+    </div>
+
+    <h1 class="page-title page-title--term">{{ term.pref_label }}</h1>
+
+    {%- if term.alt_labels %}
+    <p class="term-row__sub" style="margin:0 0 14px">Also called {{ term.alt_labels | join(", ") }}</p>
+    {%- endif %}
+
+    <div class="term-ids">
+      {%- if term.code %}<code class="term-code">{{ term.code }}</code>{% endif %}
+      <code class="term-code">{{ term.id }}</code>
+    </div>
+
+    <div class="definition-box">
+      <div class="definition-box__label">
+        {%- if term.status == "approved" %}Approved definition
+        {%- elif term.status == "deprecated" %}Definition (deprecated)
+        {%- else %}Proposed definition{% endif %}
+      </div>
+      <p>{{ term.definition }}</p>
+      {%- if term.definition_source %}
+      <div class="definition-box__source">
+        Adopted from <a href="{{ term.definition_source }}" rel="noopener">{{ term.definition_source | domain }}</a>
+      </div>
+      {%- endif %}
+    </div>
+
+    {%- if term.status == "deprecated" and term.replaced_by %}
+    <div class="callout callout--required">
+      <div class="callout__label">Deprecated</div>
+      <p>Use <a href="{{ rel }}{{ term.replaced_by.url }}">{{ term.replaced_by.pref_label }}</a> instead.
+      This term is retained for historical reconciliation only.</p>
+    </div>
+    {%- endif %}
+
+    {%- for note in term.guidance %}
+    <div class="callout callout--{{ note.kind }}">
+      <div class="callout__label">{{ note.label }}</div>
+      <p>{{ note.text }}</p>
+    </div>
+    {%- endfor %}
+
+    {%- if term.rules %}
+    <h2 class="subhead subhead--term" id="rules">Rules &amp; qualifiers</h2>
+    <div class="rule-list">
+      {%- for rule in term.rules %}
+      <div class="rule-list__item">
+        <div class="rule-list__dot" aria-hidden="true"></div>
+        <p>{{ rule }}</p>
+      </div>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    {%- if term.source_of_record %}
+    <h2 class="subhead subhead--term" id="source">Source of record</h2>
+    <div class="fact-box">
+      <div class="fact-box__lead">
+        <div class="fact__k">Authoritative system</div>
+        <div style="font-size:15px">{{ term.source_of_record.system }}</div>
+      </div>
+      {%- if term.source_of_record.refresh or term.source_of_record.field or term.source_of_record.format %}
+      <div class="fact-box__grid">
+        {%- if term.source_of_record.refresh %}
+        <div class="fact"><div class="fact__k">Refresh</div><div class="fact__v">{{ term.source_of_record.refresh }}</div></div>
+        {%- endif %}
+        {%- if term.source_of_record.field %}
+        <div class="fact"><div class="fact__k">Field</div><div class="fact__v fact__v--mono">{{ term.source_of_record.field }}</div></div>
+        {%- endif %}
+        {%- if term.source_of_record.format %}
+        <div class="fact"><div class="fact__k">Format</div><div class="fact__v">{{ term.source_of_record.format }}</div></div>
+        {%- endif %}
+      </div>
+      {%- endif %}
+    </div>
+    {%- endif %}
+
+    {%- if term.used_in %}
+    <h2 class="subhead subhead--term" id="used-in">Where it is used</h2>
+    <div class="list-box">
+      {%- for use in term.used_in %}
+      <div class="list-box__row">
+        <div class="list-box__name">{{ use.usage_name }}</div>
+        {%- if use.usage_owner %}<div class="list-box__owner">{{ use.usage_owner }}</div>{% endif %}
+      </div>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    {%- if term.realized_by %}
+    <h2 class="subhead subhead--term" id="implemented">Implemented in</h2>
+    <div class="list-box">
+      {%- for target in term.realized_by %}
+      <div class="list-box__row"><div class="list-box__name"><code class="term-code">{{ target }}</code></div></div>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    {%- if term.exact_match or term.close_match %}
+    <h2 class="subhead subhead--term" id="matches">Related standards</h2>
+    <div class="list-box">
+      {%- for match in term.exact_match %}
+      <div class="list-box__row">
+        <div class="list-box__name">{{ match | as_link | safe }}</div>
+        <div class="list-box__owner">Same as</div>
+      </div>
+      {%- endfor %}
+      {%- for match in term.close_match %}
+      <div class="list-box__row">
+        <div class="list-box__name">{{ match | as_link | safe }}</div>
+        <div class="list-box__owner">Similar to</div>
+      </div>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    <h2 class="subhead subhead--term" id="history">Change history</h2>
+    {%- if term.history %}
+    <div class="history">
+      {%- for change in term.history %}
+      <div class="history__entry">
+        <div class="history__dot" aria-hidden="true"></div>
+        <div class="history__meta">{{ change.date }} &middot; {{ change.author }} &middot; <code>{{ change.commit }}</code></div>
+        <div class="history__what">{{ change.summary }}</div>
+      </div>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <p class="history__empty">No recorded changes. History is read from the commits that touched
+    <code>{{ term.source_file }}</code>; a shallow clone will show nothing here.</p>
+    {%- endif %}
+  </article>
+
+  <aside class="split__aside">
+    <div class="panel">
+      <div class="panel__label">Responsibility</div>
+      {%- for r in term.responsibilities %}
+      <div class="person">
+        <div class="avatar avatar--sm" style="background:{{ r.role | role_colour }}" aria-hidden="true">{{ r.agent.initials }}</div>
+        <div style="min-width:0">
+          <span class="badge badge--{{ r.role }}">{{ r.role_label }}</span>
+          <div class="person__name">{{ r.agent.pref_label }}</div>
+          {%- if r.agent.contact_name %}
+          <div class="contact__role">Ask for {{ r.agent.contact_name }}</div>
+          {%- endif %}
+          {%- if r.agent.email %}
+          <a href="mailto:{{ r.agent.email }}">{{ r.agent.email }}</a>
+          {%- endif %}
+        </div>
+      </div>
+      {%- endfor %}
+      {%- if suggest_change_url %}
+      <a class="link-cta" href="{{ suggest_change_url }}{{ term.id | urlencode }}" rel="noopener">Suggest a change &rarr;</a>
+      {%- endif %}
+    </div>
+
+    {%- if term.handling %}
+    <div class="panel">
+      <div class="panel__label">Handling at a glance</div>
+      {%- for key, value in term.handling %}
+      <div class="kv"><span class="kv__k">{{ key }}</span><span class="kv__v">{{ value }}</span></div>
+      {%- endfor %}
+      <p class="provisional" style="margin:12px 0 0">Provisional. The four-tier scheme has not been
+      confirmed by Compliance &amp; Privacy — do not cite it as policy.</p>
+    </div>
+    {%- endif %}
+
+    {%- if term.related %}
+    <div class="panel">
+      <div class="panel__label">Related terms</div>
+      {%- for related, relationship in term.related %}
+      <a class="panel-link" href="{{ rel }}{{ related.url }}">
+        <div class="panel-link__name">{{ related.pref_label }}</div>
+        <div class="panel-link__rel">{{ relationship }} &middot; {{ related.status_label }}</div>
+      </a>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    <div class="panel">
+      <div class="panel__label">Permanent link</div>
+      <p class="provisional" style="margin:0 0 8px;font-style:normal;color:var(--ink-2);font-size:13px">
+        Cite this term by its IRI, not by this page's URL.</p>
+      <code class="term-code" style="word-break:break-all">{{ term.iri }}</code>
+    </div>
+  </aside>
+</div>
+{% endblock %}

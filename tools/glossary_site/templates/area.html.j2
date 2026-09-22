@@ -1,0 +1,59 @@
+{% extends "base.html.j2" %}
+{#- One subject area: its scope, who owns it, and every term filed under it. -#}
+
+{% block content %}
+<div class="split">
+  <article class="split__body split__body--wide">
+    <div class="eyebrow">Subject area</div>
+    <h1 class="page-title">{{ area.pref_label }}</h1>
+    {%- if area.definition %}<p class="lede">{{ area.definition }}</p>{% endif %}
+
+    <div class="meta-row">
+      <span>{{ area.terms | length }} term{{ "" if area.terms | length == 1 else "s" }}</span>
+      {%- if area.owner %}<span>Owned by {{ area.owner.pref_label }}</span>{% endif %}
+      <span>Defined in <code>{{ area.source_file }}</code></span>
+    </div>
+
+    <h2 class="subhead">Terms</h2>
+    <div class="term-table">
+      <div class="term-row term-row--head" aria-hidden="true">
+        <div>Term</div><div>Code</div><div>Status</div><div>Steward</div><div></div>
+      </div>
+      {%- for term in area.terms %}
+      <a class="term-row" href="{{ rel }}{{ term.url }}">
+        <span class="term-row__name{% if term.status == 'deprecated' %} term-row__name--deprecated{% endif %}">{{ term.pref_label }}</span>
+        <span class="term-row__sub">{{ term.code or "—" }}</span>
+        <span><span class="badge badge--{{ term.status }}">{{ term.status_label }}</span></span>
+        <span class="term-row__sub">{{ term.steward.pref_label if term.steward else "—" }}</span>
+        <span class="term-row__chev" aria-hidden="true">&rsaquo;</span>
+      </a>
+      {%- else %}
+      <div class="empty-state">No terms are filed under this subject area yet.</div>
+      {%- endfor %}
+    </div>
+  </article>
+
+  <aside class="split__aside">
+    <div class="panel">
+      <div class="panel__label">Responsibility</div>
+      {%- for r in area.responsibilities %}
+      <div class="person">
+        <div class="avatar avatar--sm" style="background:{{ r.role | role_colour }}" aria-hidden="true">{{ r.agent.initials }}</div>
+        <div style="min-width:0">
+          <span class="badge badge--{{ r.role }}">{{ r.role_label }}</span>
+          <div class="person__name">{{ r.agent.pref_label }}</div>
+          {%- if r.agent.email %}<a href="mailto:{{ r.agent.email }}">{{ r.agent.email }}</a>{% endif %}
+        </div>
+      </div>
+      {%- endfor %}
+    </div>
+
+    <div class="panel">
+      <div class="panel__label">Status breakdown</div>
+      {%- for status, count in status_counts %}
+      <div class="kv"><span class="kv__k">{{ status }}</span><span class="kv__v">{{ count }}</span></div>
+      {%- endfor %}
+    </div>
+  </aside>
+</div>
+{% endblock %}

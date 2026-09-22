@@ -1,0 +1,71 @@
+# Test fixture. Deliberately exercises every optional slot and every status,
+# across two subject areas, so filters and templates have something to
+# discriminate on. Not real governance content.
+
+subject_areas:
+  - id: unmc:Alpha
+    pref_label: Alpha Area
+    definition: First test subject area.
+    responsibilities:
+      - agent: unmc:role/OfficeA
+        governance_role: definition_owner
+
+terms:
+  - id: unmc:FullyLoaded
+    code: AL.FUL.001
+    pref_label: Fully Loaded
+    alt_labels: [Everything Term, Kitchen Sink]
+    definition: A term that fills in every optional slot the schema offers.
+    definition_source: https://example.edu/standards/fully-loaded
+    in_subject_area: unmc:Alpha
+    classification: sensitive
+    source_of_record:
+      system: Test System — main module
+      field: FULL_ID
+      format: Integer, system-assigned
+      refresh: Nightly, 02:00 CT
+    rules:
+      - Counted once per occurrence, not once per report.
+      - Severity and relatedness are separate attributes.
+    used_in:
+      - usage_name: Monthly Test Summary
+        usage_owner: Office A
+      - usage_name: Quarterly Rollup
+        usage_owner: Office B
+    guidance:
+      - guidance_kind: required
+        guidance_text: Never join this to identifiable fields outside an approved environment.
+    responsibilities:
+      - agent: unmc:role/OfficeA
+        governance_role: definition_owner
+      - agent: unmc:role/OfficeB
+        governance_role: data_steward
+    exact_match:
+      - https://example.org/vocab/FullyLoaded
+    close_match:
+      - unmc:SomethingSimilar
+    realized_by:
+      - ra:Study.identifier
+    status: approved
+
+  - id: unmc:NarrowerThing
+    code: AL.NAR.002
+    pref_label: Narrower Thing
+    definition: A term whose broader term is Fully Loaded.
+    in_subject_area: unmc:Alpha
+    broader: [unmc:FullyLoaded]
+    responsibilities:
+      - agent: unmc:role/OfficeA
+        governance_role: definition_owner
+    status: draft
+
+  - id: unmc:OldThing
+    code: AL.OLD.003
+    pref_label: Old Thing
+    definition: Superseded identifier, retained for reconciliation only.
+    in_subject_area: unmc:Alpha
+    replaced_by: unmc:FullyLoaded
+    responsibilities:
+      - agent: unmc:role/OfficeA
+        governance_role: definition_owner
+    status: deprecated

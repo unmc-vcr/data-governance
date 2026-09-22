@@ -1,0 +1,44 @@
+{% extends "base.html.j2" %}
+{#- The full dictionary. Filtering is client-side and progressive: without
+    JavaScript every term is still listed and every row is still a link. -#}
+
+{% block content %}
+<div style="max-width:980px">
+  <div class="eyebrow">Reference</div>
+  <h1 class="page-title">Glossary &amp; data dictionary</h1>
+  <p class="lede">One definition per term, one office accountable for it. If a term you need is
+  missing, open a request &mdash; a definition owner is assigned within two business days.</p>
+
+  <div class="filter-bar" data-filter-bar>
+    <button class="pill" type="button" data-filter="all" aria-pressed="true">All</button>
+    {%- for area in areas %}
+    <button class="pill" type="button" data-filter="area:{{ area.slug }}" aria-pressed="false">{{ area.pref_label }}</button>
+    {%- endfor %}
+    <button class="pill" type="button" data-filter="attention" aria-pressed="false">Needs attention</button>
+    <span class="filter-bar__count" data-term-count>{{ terms | length }} term{{ "" if terms | length == 1 else "s" }}</span>
+  </div>
+
+  <div class="term-table">
+    <div class="term-row term-row--head" aria-hidden="true">
+      <div>Term</div><div>Subject area</div><div>Status</div><div>Steward</div><div></div>
+    </div>
+    {%- for term in terms %}
+    <a class="term-row"
+       href="{{ rel }}{{ term.url }}"
+       data-area="{{ term.area.slug }}"
+       data-status="{{ term.status }}"
+       data-name="{{ term.pref_label | lower }}">
+      <span class="term-row__name{% if term.status == 'deprecated' %} term-row__name--deprecated{% endif %}">{{ term.pref_label }}</span>
+      <span class="term-row__sub">{{ term.area.pref_label }}</span>
+      <span><span class="badge badge--{{ term.status }}">{{ term.status_label }}</span></span>
+      <span class="term-row__sub">{{ term.steward.pref_label if term.steward else "—" }}</span>
+      <span class="term-row__chev" aria-hidden="true">&rsaquo;</span>
+    </a>
+    {%- endfor %}
+    <div class="empty-state" data-empty hidden>No terms match that filter.</div>
+  </div>
+
+  <p style="margin:20px 0 0;font-size:13px;color:var(--ink-3)">Every row opens a full term page:
+  definition, rules, source of record, responsibility, and change history.</p>
+</div>
+{% endblock %}
