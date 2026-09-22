@@ -464,6 +464,7 @@ h2.subhead--term { font-size: 20px; letter-spacing: .03em; }
 .badge--term { background: var(--teal-soft); color: var(--teal); border: 1px solid rgba(0, 94, 99, .25); }
 .badge--page { background: var(--red-soft); color: var(--red-text); border: 1px solid rgba(173, 18, 42, .25); }
 .badge--area { background: var(--blue-soft); color: var(--navy); border: 1px solid rgba(0, 41, 87, .2); }
+.badge--office { background: var(--bg-sub); color: var(--ink-2); border: 1px solid var(--line); }
 
 [data-theme="dark"] .badge--internal,
 [data-theme="dark"] .badge--area { color: #9CC4E4; }

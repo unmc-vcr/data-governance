@@ -43,7 +43,7 @@
         <div class="avatar avatar--sm" style="background:{{ r.role | role_colour }}" aria-hidden="true">{{ r.agent.initials }}</div>
         <div style="min-width:0">
           <span class="badge badge--{{ r.role }}">{{ r.role_label }}</span>
-          <div class="person__name">{{ r.agent.pref_label }}</div>
+          <div class="person__name"><a href="{{ rel }}{{ r.agent.url }}">{{ r.agent.pref_label }}</a></div>
           {%- if r.agent.email %}<a href="mailto:{{ r.agent.email }}">{{ r.agent.email }}</a>{% endif %}
         </div>
       </div>

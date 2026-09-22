@@ -146,6 +146,14 @@ class Agent:
     def initials(self) -> str:
         return _initials(self.pref_label)
 
+    @property
+    def slug(self) -> str:
+        return slugify(self.id)
+
+    @property
+    def url(self) -> str:
+        return f"offices/{self.slug}.html"
+
 
 @dataclass
 class Responsibility:

@@ -1,0 +1,48 @@
+{% extends "base.html.j2" %}
+{#- One responsible office: who currently staffs it, and what it is
+    accountable for. Accountability rests with the office; the people are a
+    directory so a reader knows who to ask for. -#}
+
+{% block content %}
+<div class="split">
+  <article class="split__body split__body--wide">
+    <div class="eyebrow">Office</div>
+    <h1 class="page-title">{{ office.pref_label }}</h1>
+    <p class="lede">These individuals represent the governance committee for the listed accountable subject
+    areas.</p>
+
+    <div class="meta-row">
+      {%- if office.email %}<span><a href="mailto:{{ office.email }}">{{ office.email }}</a></span>{% endif %}
+      {%- if roles %}<span>{{ roles | join(", ") }}</span>{% endif %}
+    </div>
+
+    <h2 class="subhead">People</h2>
+    {%- for c in office.contacts %}
+    <div class="contact">
+      <div class="avatar" style="background:var(--navy)" aria-hidden="true">{{ c.initials }}</div>
+      <div style="min-width:0">
+        <div class="contact__name">{{ c.name }}</div>
+        {%- if c.title %}<div class="contact__role">{{ c.title }}</div>{% endif %}
+        {%- if c.email %}<a href="mailto:{{ c.email }}">{{ c.email }}</a>{% endif %}
+      </div>
+    </div>
+    {%- else %}
+    <div class="empty-state">No named contacts are listed yet. Reach the office at its shared inbox above.</div>
+    {%- endfor %}
+  </article>
+
+  <aside class="split__aside">
+    <div class="panel">
+      <div class="panel__label">Accountable for</div>
+      {%- for item in accountable_for %}
+      <a class="panel-link" href="{{ rel }}{{ item.url }}">
+        <div class="panel-link__name">{{ item.label }}</div>
+        <div class="panel-link__rel">{{ item.role_label }}</div>
+      </a>
+      {%- else %}
+      <div class="empty-state">This office is not accountable for a subject area yet.</div>
+      {%- endfor %}
+    </div>
+  </aside>
+</div>
+{% endblock %}

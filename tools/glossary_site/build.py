@@ -164,6 +164,8 @@ def build(
         renderer.area_page(area)
     for term in glossary.terms:
         renderer.term_page(term)
+    for office in glossary.agents.values():
+        renderer.office_page(office)
     for page in pages:
         if not page.is_hub:
             renderer.content_page(page)

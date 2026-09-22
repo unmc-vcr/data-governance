@@ -61,7 +61,10 @@ def test_term_page_renders_every_section(built):
     assert "Encrypted only" in html  # handling matrix
     assert "https://w3id.org/unmc/glossary/FullyLoaded" in html  # permanent link
     assert "Office A" in html and "Office B" in html
-    assert "Ask for Sam Rivera" in html  # contact_name on Office B
+    # The stub links to each office's detail page; the named contacts live
+    # there, not on the term page.
+    assert "offices/office-b.html" in html
+    assert "Sam Rivera" not in html
 
 
 def test_sections_are_omitted_when_there_is_no_data(built):
@@ -101,7 +104,7 @@ def test_relative_paths_are_depth_correct(built):
 def test_search_index_contents(built):
     entries = json.loads((built / "assets" / "search-index.json").read_text(encoding="utf-8"))
     kinds = {e["kind"] for e in entries}
-    assert kinds == {"term", "area", "page"}
+    assert kinds == {"term", "area", "office", "page"}
 
     loaded = next(e for e in entries if e["title"] == "Fully Loaded")
     assert "Kitchen Sink" in loaded["alt"]
@@ -110,6 +113,23 @@ def test_search_index_contents(built):
 
     assert any(e["title"] == "Fixture Guide" for e in entries)
     assert any(e["title"] == "Alpha Area" for e in entries)
+
+
+def test_office_page_lists_contacts_and_accountability(built):
+    html = (built / "offices" / "office-b.html").read_text(encoding="utf-8")
+    # The named contact, their title, and personal email live here.
+    assert "Sam Rivera" in html
+    assert "Data Steward" in html
+    assert "sam.rivera@example.edu" in html
+    # And the office's shared inbox and the subject areas it is accountable
+    # for -- areas only, so the sidebar cannot grow without bound.
+    assert "office-b@example.edu" in html
+    assert "Accountable for" in html
+    assert "Beta Area" in html and "areas/beta.html" in html
+    # Individual terms are not listed here, even ones the office owns or
+    # stewards -- they are reachable from the term pages themselves.
+    assert "fully-loaded.html" not in html
+    assert "beta-term.html" not in html
 
 
 def test_how_to_read_is_generated_from_the_schema(built):

@@ -73,11 +73,8 @@
     <div class="contact">
       <div class="avatar" style="background:{{ contact.colour }}" aria-hidden="true">{{ contact.agent.initials }}</div>
       <div style="min-width:0">
-        <div class="contact__name">{{ contact.agent.pref_label }}</div>
+        <div class="contact__name"><a href="{{ contact.agent.url }}">{{ contact.agent.pref_label }}</a></div>
         <div class="contact__role">{{ contact.roles | join(", ") }}</div>
-        {%- for c in contact.agent.contacts %}
-        <div class="contact__role">Ask for {{ c.name }}{% if c.title %}, {{ c.title }}{% endif %}</div>
-        {%- endfor %}
         {%- if contact.agent.email %}
         <a href="mailto:{{ contact.agent.email }}">{{ contact.agent.email }}</a>
         {%- endif %}

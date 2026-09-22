@@ -321,6 +321,53 @@ class Renderer:
             ),
         )
 
+    def office_page(self, office) -> None:
+        # `roles` reflects everything the office does, area- or term-level, so
+        # the meta row is complete. The "Accountable for" list, though, stays
+        # at the subject-area level: listing every term makes the sidebar grow
+        # without bound, and a term's office is reachable from the term itself.
+        roles: set[str] = set()
+        for items in (self.glossary.areas, self.glossary.terms):
+            for item in items:
+                for r in item.responsibilities:
+                    if r.agent.id == office.id:
+                        roles.add(r.role)
+
+        accountable_for: list[dict] = []
+        for area in self.glossary.areas:
+            for r in area.responsibilities:
+                if r.agent.id != office.id:
+                    continue
+                accountable_for.append(
+                    {
+                        "label": area.pref_label,
+                        "url": area.url,
+                        "role_label": ROLE_LABELS.get(r.role, r.role),
+                    }
+                )
+        accountable_for.sort(key=lambda a: a["label"].lower())
+        ordered_roles = [
+            ROLE_LABELS.get(role, role)
+            for role in ("definition_owner", "data_steward", "business_sme")
+            if role in roles
+        ]
+        self.write(
+            office.url,
+            "office.html.j2",
+            office=office,
+            roles=ordered_roles,
+            accountable_for=accountable_for,
+            **self._base_context(
+                office.url,
+                office.pref_label,
+                breadcrumb=[
+                    {"label": "Glossary", "url": "glossary.html"},
+                    {"label": office.pref_label, "url": None},
+                ],
+                description=f"Who to contact at {office.pref_label} and the terms it is accountable for.",
+            ),
+        )
+
     def content_page(self, page: ContentPage) -> None:
         self.write(
             page.url,
@@ -453,6 +500,23 @@ class Renderer:
                     + (f" · {area.owner.pref_label}" if area.owner else ""),
                     "snippet": area.definition,
                     "text": f"{area.pref_label} {area.definition}",
+                }
+            )
+
+        for office in self.glossary.agents.values():
+            names = [c.name for c in office.contacts]
+            entries.append(
+                {
+                    "kind": "office",
+                    "kindLabel": "Office",
+                    "title": office.pref_label,
+                    "alt": names,
+                    "url": office.url,
+                    "path": "Glossary",
+                    "meta": office.email or "",
+                    "snippet": "Who to contact and the terms this office is accountable for."
+                    + (f" Contacts: {', '.join(names)}." if names else ""),
+                    "text": f"{office.pref_label} {office.email or ''} {' '.join(names)}",
                 }
             )
 
