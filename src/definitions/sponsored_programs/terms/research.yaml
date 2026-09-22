@@ -1,0 +1,14 @@
+terms:
+  - id: unmc:Research Project
+    code: SP.RS.001
+    pref_label: Research Project
+    definition: An activity specifically organized and separately budgeted to produce research outcomes, whether
+      commissioned by an agency external to the institution or separately by an organizational unit within the institution.
+    #definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
+    in_subject_area: unmc:SponsoredPrograms
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft
