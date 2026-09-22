@@ -111,17 +111,40 @@ def slugify(value: str) -> str:
     return slug
 
 
+def _initials(text: str) -> str:
+    words = [w for w in re.split(r"[\s&]+", text) if w and w[0].isalpha()]
+    return "".join(w[0] for w in words[:2]).upper() or "??"
+
+
+@dataclass
+class Person:
+    """A named individual who staffs one or more offices.
+
+    People are a directory, never the target of a Responsibility. A term is
+    owned by an office; the office resolves to whoever currently staffs it, so
+    ownership survives staff turnover. See Agent.
+    """
+
+    id: str
+    name: str
+    email: str | None = None
+    title: str | None = None
+
+    @property
+    def initials(self) -> str:
+        return _initials(self.name)
+
+
 @dataclass
 class Agent:
     id: str
     pref_label: str
     email: str | None = None
-    contact_name: str | None = None
+    contacts: list[Person] = field(default_factory=list)
 
     @property
     def initials(self) -> str:
-        words = [w for w in re.split(r"[\s&]+", self.pref_label) if w and w[0].isalpha()]
-        return "".join(w[0] for w in words[:2]).upper() or "??"
+        return _initials(self.pref_label)
 
 
 @dataclass
@@ -282,6 +305,7 @@ class Glossary:
     areas: list[SubjectArea]
     terms: list[Term]
     agents: dict[str, Agent]
+    people: dict[str, Person] = field(default_factory=dict)
     prefixes: dict[str, str] = field(default_factory=dict)
 
     def term_by_id(self, term_id: str) -> Term | None:
@@ -316,13 +340,37 @@ def load(
     here and fail the build.
     """
     prefixes = prefixes or {}
+    registry = _read(agents_path)
+
+    people: dict[str, Person] = {}
+    for raw in registry.get("people") or []:
+        person = Person(
+            id=raw["id"],
+            name=raw["name"],
+            email=raw.get("email"),
+            title=raw.get("title"),
+        )
+        if person.id in people:
+            raise GlossaryError(f"{agents_path}: duplicate person {person.id}")
+        people[person.id] = person
+
     agents: dict[str, Agent] = {}
-    for raw in _read(agents_path).get("agents") or []:
+    for raw in registry.get("agents") or []:
+        contacts = []
+        for person_id in raw.get("contacts") or []:
+            person = people.get(person_id)
+            if person is None:
+                raise GlossaryError(
+                    f"{agents_path}: agent {raw['id']} lists contact {person_id!r}, "
+                    "which is not in the people registry. Add the person there, "
+                    "or fix the IRI."
+                )
+            contacts.append(person)
         agent = Agent(
             id=raw["id"],
             pref_label=raw["pref_label"],
             email=raw.get("email"),
-            contact_name=raw.get("contact_name"),
+            contacts=contacts,
         )
         if agent.id in agents:
             raise GlossaryError(f"{agents_path}: duplicate agent {agent.id}")
@@ -458,5 +506,6 @@ def load(
         areas=sorted(areas.values(), key=lambda a: a.pref_label.lower()),
         terms=ordered_terms,
         agents=agents,
+        people=people,
         prefixes=prefixes,
     )

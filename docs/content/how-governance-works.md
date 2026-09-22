@@ -46,8 +46,9 @@ changes; not accountable for approval.
 > **Good to know**
 > Responsibility sits with an office, never with a named individual. An office
 > IRI survives staff turnover; a person's name does not. If you need to know who
-> to ask for by name, the office's entry can carry a current contact — but
-> accountability stays with the office.
+> to ask for by name, the office lists the people who currently staff it — a
+> directory only. A person can staff more than one office, and moving between
+> offices changes nothing about what an office is accountable for.
 
 ## The lifecycle of a term
 
@@ -77,8 +78,8 @@ reviewer, the timestamp, and the diff all attached to it.
 4. **Merge is approval.** `CODEOWNERS` routes each subject-area file to its
    steward office, so the right people are required reviewers automatically.
 
-> **Required**
-> A term cannot be marked Approved without a `definition_source`. If the wording
-> was written here rather than adopted from an external standard, cite the
-> internal decision that settled it. The build refuses an approved term with no
-> source.
+> **Good to know**
+> `definition_source` records where wording was *adopted from* — an NIH policy
+> page, Uniform Guidance, a professional standard. Most local definitions are
+> written here and correctly have none. Its absence is not a gap; the merged
+> pull request is what records the approval.

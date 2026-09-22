@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from glossary_site import checks
-from glossary_site.model import load
+from glossary_site.model import GlossaryError, load
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -102,14 +102,17 @@ def test_two_offices_in_the_same_role_is_flagged(tmp_path, fixture_agents):
     assert any("exactly one definition_owner" in p for p in problems)
 
 
-def test_approved_term_needs_a_definition_source(tmp_path, fixture_agents):
+def test_approved_term_needs_no_definition_source(tmp_path, fixture_agents):
+    """`definition_source` means "adopted from elsewhere", so a definition
+    authored at UNMC correctly has none. Requiring one would force stewards to
+    invent a URL to get a finished definition approved."""
     g = _load(
         tmp_path,
         AREA
         + """
   - id: unmc:T
     pref_label: T
-    definition: A real definition.
+    definition: A definition written here rather than adopted.
     in_subject_area: unmc:A
     responsibilities:
       - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
@@ -117,7 +120,7 @@ def test_approved_term_needs_a_definition_source(tmp_path, fixture_agents):
 """,
         fixture_agents,
     )
-    assert any("no definition_source" in str(p) for p in checks.check_governance(g))
+    assert checks.check_governance(g) == []
 
 
 def test_approved_term_cannot_be_a_todo(tmp_path, fixture_agents):
@@ -249,3 +252,82 @@ def test_missing_steward_warns_on_a_live_term(tmp_path, fixture_agents):
     )
     assert checks.check_governance(g) == []
     assert any("no data_steward" in str(p) for p in checks.warnings(g))
+
+
+TERM = """
+  - id: unmc:T
+    pref_label: T
+    definition: d
+    in_subject_area: unmc:A
+    responsibilities:
+      - {agent: 'unmc:role/OfficeB', governance_role: definition_owner}
+    status: draft
+"""
+
+
+def test_office_contacts_resolve_to_people(glossary):
+    # The fixture staffs Office B with Sam Rivera via `contacts`.
+    office_b = glossary.agents["unmc:role/OfficeB"]
+    assert [p.name for p in office_b.contacts] == ["Sam Rivera"]
+    assert office_b.contacts[0].id in glossary.people
+
+
+def test_dangling_contact_reference_fails(tmp_path):
+    agents = tmp_path / "agents.yaml"
+    agents.write_text(
+        """
+agents:
+  - id: unmc:role/OfficeA
+    pref_label: Office A
+  - id: unmc:role/OfficeB
+    pref_label: Office B
+    contacts: [unmc:person/Ghost]
+""",
+        encoding="utf-8",
+    )
+    term = tmp_path / "case.yaml"
+    term.write_text(AREA + TERM, encoding="utf-8")
+    with pytest.raises(GlossaryError, match="unmc:person/Ghost"):
+        load([term], agents, tmp_path)
+
+
+def test_duplicate_person_fails(tmp_path):
+    agents = tmp_path / "agents.yaml"
+    agents.write_text(
+        """
+people:
+  - {id: unmc:person/Jane, name: Jane Doe}
+  - {id: unmc:person/Jane, name: Jane Roe}
+agents:
+  - id: unmc:role/OfficeA
+    pref_label: Office A
+  - id: unmc:role/OfficeB
+    pref_label: Office B
+""",
+        encoding="utf-8",
+    )
+    term = tmp_path / "case.yaml"
+    term.write_text(AREA + TERM, encoding="utf-8")
+    with pytest.raises(GlossaryError, match="duplicate person"):
+        load([term], agents, tmp_path)
+
+
+def test_unstaffed_person_warns_but_does_not_fail(tmp_path):
+    agents = tmp_path / "agents.yaml"
+    agents.write_text(
+        """
+people:
+  - {id: unmc:person/Jane, name: Jane Doe}
+agents:
+  - id: unmc:role/OfficeA
+    pref_label: Office A
+  - id: unmc:role/OfficeB
+    pref_label: Office B
+""",
+        encoding="utf-8",
+    )
+    term = tmp_path / "case.yaml"
+    term.write_text(AREA + TERM, encoding="utf-8")
+    g = load([term], agents, tmp_path)
+    assert checks.check_governance(g) == []
+    assert any("staffs no office yet" in str(p) for p in checks.warnings(g))

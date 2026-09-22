@@ -104,14 +104,10 @@ def check_governance(glossary: Glossary) -> list[Problem]:
                     )
                 )
 
-        if term.status == "approved" and not term.definition_source:
-            problems.append(
-                Problem(
-                    where,
-                    "is approved but has no definition_source. An approved term "
-                    "has to say where its wording came from.",
-                )
-            )
+        # No rule requiring `definition_source` on an approved term. The slot
+        # means "adopted from elsewhere", so a definition UNMC authored itself
+        # correctly has none, and demanding one would force stewards to invent
+        # a URL. Approval is evidenced by the merged pull request.
 
         if term.status == "approved" and term.definition.lower().startswith("todo"):
             problems.append(
@@ -178,6 +174,16 @@ def warnings(glossary: Glossary) -> list[Problem]:
                 Problem(
                     f"agents.yaml / {agent_id}",
                     f"{agent.pref_label} holds no governance role yet.",
+                )
+            )
+
+    staffed = {p.id for agent in glossary.agents.values() for p in agent.contacts}
+    for person_id, person in glossary.people.items():
+        if person_id not in staffed:
+            notes.append(
+                Problem(
+                    f"agents.yaml / {person_id}",
+                    f"{person.name} staffs no office yet.",
                 )
             )
 

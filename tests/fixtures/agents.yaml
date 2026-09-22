@@ -1,3 +1,9 @@
+people:
+  - id: unmc:person/SamRivera
+    name: Sam Rivera
+    email: sam.rivera@example.edu
+    title: Data Steward
+
 agents:
   - id: unmc:role/OfficeA
     pref_label: Office A
@@ -5,4 +11,4 @@ agents:
   - id: unmc:role/OfficeB
     pref_label: Office B
     email: office-b@example.edu
-    contact_name: Sam Rivera
+    contacts: [unmc:person/SamRivera]

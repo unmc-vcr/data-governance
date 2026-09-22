@@ -52,7 +52,7 @@ failure:
    not the graph — a `broader:` pointing at a term that does not exist passes
    validation and fails here.
 3. **Apply governance rules** LinkML cannot express: exactly one
-   `definition_owner` per term, approved terms cite a `definition_source`,
+   `definition_owner` per term, identifiers that expand to usable IRIs,
    deprecated terms point at a replacement, no cycles in `broader`.
 4. **Read change history** from `git log` over the definition files, diffing
    each commit against its parent to attribute changes to individual terms.
@@ -113,7 +113,8 @@ the right reviewers are requested automatically.
 | `approved` | Signed off. | Yes |
 | `deprecated` | Superseded; `replaced_by` points at the successor. | Historical only |
 
-An `approved` term without a `definition_source` fails the build.
+`definition_source` is optional at every status. It records where wording was
+*adopted from*, so a definition authored at UNMC correctly has none.
 
 ### Governance roles
 
