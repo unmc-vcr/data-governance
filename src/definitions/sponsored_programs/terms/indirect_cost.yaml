@@ -1,6 +1,6 @@
 terms:
-  - id: unmc:DirectCost
-    code: SP.C.002
+  - id: unmc:IndirectCost
+    code: SP.COST.002
     pref_label: Indirect Cost
     alt_labels: [Facilities and Administrative costs (F&A)]
     definition: >-
