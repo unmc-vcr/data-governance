@@ -34,7 +34,8 @@ python3 -m http.server 8765 --directory site
 | Path | What it is |
 | --- | --- |
 | `src/schema/glossary.yaml` | The LinkML schema. Defines `Term`, `SubjectArea`, and the enums. |
-| `src/definitions/*.yaml` | The governed terms, one file per subject area. |
+| `src/definitions/<area>/<area>.yaml` | A subject area declaration. |
+| `src/definitions/<area>/terms/*.yaml` | The governed terms, **one file per term**. |
 | `src/agents.yaml` | Registry of offices that can hold a governance role. |
 | `docs/content/**.md` | Authored narrative: the hub, the governance guide, standards. |
 | `tools/glossary_site/` | The site generator. |
@@ -82,9 +83,19 @@ care about the terms. So the site has two halves:
 for every element type, which is more work than rendering the Markdown
 ourselves.
 
+### Why one file per term
+
+Term change history is derived from the commits that touch a term's file. If
+several terms shared a file, editing one would appear in every other term's
+timeline, and `git log` could not tell them apart. One file per term keeps the
+history — and the *View source on GitHub* link — precise. Definition files are
+discovered recursively, so adding a subject area is just adding a directory.
+
 ## Adding or changing a term
 
-1. Edit the subject area's file in `src/definitions/`.
+1. Edit the term's file under `src/definitions/<area>/terms/`, or add a new
+   one. To add a subject area, create `src/definitions/<area>/<area>.yaml`
+   with a `subject_areas:` block and a `terms/` directory beside it.
 2. Run the build locally. Fix whatever it complains about.
 3. Open a pull request. CI validates and publishes a preview artifact.
 4. The steward office reviews the **rendered pages**, not the YAML diff.

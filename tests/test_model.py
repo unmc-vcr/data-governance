@@ -33,6 +33,21 @@ def test_loads_all_terms_and_areas(glossary):
     ]
 
 
+def test_each_term_is_attributed_to_its_own_file(glossary):
+    """The point of the per-term layout: a term's source_file drives both its
+    GitHub source link and which commits count as its history. If two terms
+    shared a file, editing one would show up in the other's timeline."""
+    sources = {t.id: t.source_file for t in glossary.terms}
+    assert sources["unmc:FullyLoaded"].endswith("alpha/terms/fully_loaded.yaml")
+    assert sources["unmc:BetaTerm"].endswith("beta/terms/beta_term.yaml")
+    assert len(set(sources.values())) == len(sources), "terms share a file"
+
+    # Subject areas are declared separately from their terms.
+    areas = {a.id: a.source_file for a in glossary.areas}
+    assert areas["unmc:Alpha"].endswith("alpha/alpha.yaml")
+    assert not set(areas.values()) & set(sources.values())
+
+
 def test_broader_is_inverted_into_narrower(glossary):
     full = glossary.term_by_id("unmc:FullyLoaded")
     narrower = glossary.term_by_id("unmc:NarrowerThing")

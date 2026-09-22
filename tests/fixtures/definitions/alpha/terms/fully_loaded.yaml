@@ -1,15 +1,3 @@
-# Test fixture. Deliberately exercises every optional slot and every status,
-# across two subject areas, so filters and templates have something to
-# discriminate on. Not real governance content.
-
-subject_areas:
-  - id: unmc:Alpha
-    pref_label: Alpha Area
-    definition: First test subject area.
-    responsibilities:
-      - agent: unmc:role/OfficeA
-        governance_role: definition_owner
-
 terms:
   - id: unmc:FullyLoaded
     code: AL.FUL.001
@@ -47,25 +35,3 @@ terms:
     realized_by:
       - ra:Study.identifier
     status: approved
-
-  - id: unmc:NarrowerThing
-    code: AL.NAR.002
-    pref_label: Narrower Thing
-    definition: A term whose broader term is Fully Loaded.
-    in_subject_area: unmc:Alpha
-    broader: [unmc:FullyLoaded]
-    responsibilities:
-      - agent: unmc:role/OfficeA
-        governance_role: definition_owner
-    status: draft
-
-  - id: unmc:OldThing
-    code: AL.OLD.003
-    pref_label: Old Thing
-    definition: Superseded identifier, retained for reconciliation only.
-    in_subject_area: unmc:Alpha
-    replaced_by: unmc:FullyLoaded
-    responsibilities:
-      - agent: unmc:role/OfficeA
-        governance_role: definition_owner
-    status: deprecated

@@ -20,7 +20,14 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
+import re
+
 from .model import Glossary, ROLE_LABELS
+
+# `uriorcurie` is checked loosely, so `unmc:Research Project` validates
+# cleanly and then expands to an IRI containing a space, which is invalid and
+# will not resolve. Identifiers are checked here instead.
+VALID_ID = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._~/\-]+$")
 
 
 @dataclass
@@ -62,6 +69,17 @@ def validate_against_schema(
 def check_governance(glossary: Glossary) -> list[Problem]:
     """Rules LinkML expressions cannot state."""
     problems: list[Problem] = []
+
+    for item in [*glossary.terms, *glossary.areas]:
+        if not VALID_ID.match(item.id):
+            problems.append(
+                Problem(
+                    f"{item.source_file} / {item.id}",
+                    f"{item.id!r} is not a usable CURIE. It expands to an IRI "
+                    "that will not resolve -- remove spaces and any other "
+                    "character not allowed in an IRI (e.g. unmc:ResearchProject).",
+                )
+            )
 
     for term in glossary.terms:
         where = f"{term.source_file} / {term.id}"

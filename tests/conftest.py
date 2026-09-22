@@ -13,7 +13,9 @@ def schema() -> Path:
 
 @pytest.fixture
 def fixture_definitions() -> list[Path]:
-    return sorted((FIXTURES / "definitions").glob("*.yaml"))
+    # Recursive, matching the production layout: one directory per subject
+    # area, with terms/ holding one file per term.
+    return sorted((FIXTURES / "definitions").rglob("*.yaml"))
 
 
 @pytest.fixture

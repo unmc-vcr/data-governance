@@ -66,7 +66,10 @@ def build(
     skip_reference: bool = False,
     repo_root: Path = REPO_ROOT,
 ) -> int:
-    definition_files = sorted(definitions_dir.glob("*.yaml"))
+    # Recursive: subject areas are laid out as one directory each, with a
+    # terms/ subdirectory holding one file per term, so that a commit touching
+    # a term touches only that term's file.
+    definition_files = sorted(definitions_dir.rglob("*.yaml"))
     if not definition_files:
         return _fail(
             "No definition files found.",

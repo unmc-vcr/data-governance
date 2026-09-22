@@ -1,0 +1,11 @@
+# Test fixture. Deliberately exercises every optional slot and every status,
+# across two subject areas, so filters and templates have something to
+# discriminate on. Not real governance content.
+
+subject_areas:
+  - id: unmc:Alpha
+    pref_label: Alpha Area
+    definition: First test subject area.
+    responsibilities:
+      - agent: unmc:role/OfficeA
+        governance_role: definition_owner

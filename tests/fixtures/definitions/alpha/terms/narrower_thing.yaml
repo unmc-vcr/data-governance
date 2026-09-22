@@ -1,0 +1,11 @@
+terms:
+  - id: unmc:NarrowerThing
+    code: AL.NAR.002
+    pref_label: Narrower Thing
+    definition: A term whose broader term is Fully Loaded.
+    in_subject_area: unmc:Alpha
+    broader: [unmc:FullyLoaded]
+    responsibilities:
+      - agent: unmc:role/OfficeA
+        governance_role: definition_owner
+    status: draft

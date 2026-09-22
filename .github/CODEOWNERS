@@ -16,9 +16,11 @@
 # The agent registry decides who can hold a role at all.
 /src/agents.yaml            @unmc-vcr/data-governance-program
 
-# Subject areas, one line per definition file.
-/src/definitions/clinical_research.yaml     @unmc-vcr/clinical-research-office
-/src/definitions/sponsored_programs.yaml    @unmc-vcr/sponsored-programs-office
+# Subject areas, one line per directory. The directory pattern covers the
+# subject-area file and every term file under terms/, so a new term is routed
+# to the right office without touching this file.
+/src/definitions/clinical_research/     @unmc-vcr/clinical-research-office
+/src/definitions/sponsored_programs/    @unmc-vcr/sponsored-programs-office
 
 # Published narrative and standards.
 /docs/content/              @unmc-vcr/data-governance-program

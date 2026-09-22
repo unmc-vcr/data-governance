@@ -1,13 +1,3 @@
-# Second subject area, so subject-area filtering has something to filter.
-
-subject_areas:
-  - id: unmc:Beta
-    pref_label: Beta Area
-    definition: Second test subject area.
-    responsibilities:
-      - agent: unmc:role/OfficeB
-        governance_role: definition_owner
-
 terms:
   - id: unmc:BetaTerm
     code: BE.TRM.001
