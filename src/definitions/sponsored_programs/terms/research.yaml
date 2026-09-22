@@ -11,4 +11,4 @@ terms:
         governance_role: definition_owner
       - agent: unmc:role/ResearchAnalytics
         governance_role: data_steward
-    status: draft
+    status: approved
