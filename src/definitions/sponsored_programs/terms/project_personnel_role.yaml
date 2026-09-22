@@ -1,0 +1,19 @@
+terms:
+  - id: unmc:ProjectPersonnelRole
+    code: SP.PERS.004
+    pref_label: Project Personnel Role
+    alt_labels: [Staff Role, Personnel Role, Staff Code]
+    definition: >-
+      The role an individual holds on a sponsored project -- principal investigator,
+      co-investigator, key personnel, and so on.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Staff.Staff_Code (resolved against dbo.GA_Staff_Code)
+      format: Role code with description.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

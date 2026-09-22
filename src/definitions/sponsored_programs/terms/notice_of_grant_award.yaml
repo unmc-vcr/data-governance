@@ -1,0 +1,20 @@
+terms:
+  - id: unmc:NoticeOfGrantAward
+    code: SP.AWD.003
+    pref_label: Notice of Grant Award (NGA)
+    alt_labels: [NGA, Notice of Award, NoA]
+    definition: >-
+      The sponsor's official document obligating funds to an award and stating its terms and
+      conditions. Its date marks the point from which the award is active and costs may be
+      charged.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Awards.NGA_Date
+      format: The date the sponsor issued the notice.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

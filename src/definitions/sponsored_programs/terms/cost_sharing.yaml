@@ -1,0 +1,24 @@
+terms:
+  - id: unmc:CostSharing
+    code: SP.COST.004
+    pref_label: Cost Sharing
+    alt_labels: [Match, Matching, Cost Match]
+    definition: >-
+      The portion of a sponsored project's costs borne by UNMC or a third party rather than
+      the sponsor. Mandatory cost sharing is required as a condition of the award; voluntary
+      cost sharing is offered by the institution.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: >-
+        dbo.GA_Awards.Direct_UNMC_Cost and dbo.GA_Awards.Indirect_UNMC_Cost; committed
+        effort in dbo.GA_Staff.Mandatory and dbo.GA_Staff.Voluntary
+      format: Cost amounts and committed-effort amounts.
+    rules:
+      - Distinguish mandatory cost sharing (award-required) from voluntary cost sharing (institution-offered).
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

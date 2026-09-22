@@ -1,0 +1,16 @@
+terms:
+  - id: unmc:PublicServiceProject
+    code: SP.PS.001
+    pref_label: Public Service Project
+    alt_labels: [Public Service, Other Sponsored Activity]
+    definition: An activity specifically organized and separately budgeted to provide non-instructional
+      public services beneficial to groups external to the institution, whether commissioned by an agency
+      external to the institution or separately by an organizational unit within the institution.
+    broader: [unmc:SponsoredProject]
+    in_subject_area: unmc:SponsoredPrograms
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

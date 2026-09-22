@@ -1,0 +1,19 @@
+terms:
+  - id: unmc:IndirectCostRate
+    code: SP.COST.003
+    pref_label: Indirect Cost Rate
+    alt_labels: [F&A Cost Rate, IDC Rate, F&A Rate, Facilities and Administrative Rate]
+    definition: >-
+      The negotiated percentage applied to a defined cost base to recover indirect (facilities and
+      administrative) costs on an award.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Awards.Indirect_Cost_Rate (subaward rate in dbo.GA_Subout.IDC_Rate)
+      format: A percentage rate.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

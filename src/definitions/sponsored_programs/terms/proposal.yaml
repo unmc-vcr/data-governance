@@ -1,0 +1,20 @@
+terms:
+  - id: unmc:Proposal
+    code: SP.PROP.001
+    pref_label: Proposal
+    alt_labels: [Funding Request, Request, Research Administration Request]
+    definition: >-
+      A request submitted to a sponsor to establish, continue, or modify funding for a
+      sponsored project. The research-administration (RA) type distinguishes the kind of
+      request -- new, renewal, supplement, continuation, and so on.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Request, typed by dbo.GA_Request.RA_Type_Code (dbo.GA_RA_Type_Codes)
+      format: One record per request against a sponsored project's GID.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

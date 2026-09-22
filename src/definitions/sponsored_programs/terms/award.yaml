@@ -1,0 +1,20 @@
+terms:
+  - id: unmc:Award
+    code: SP.AWD.001
+    pref_label: Award
+    alt_labels: [Grant Award, Funded Award]
+    definition: >-
+      A sponsor's authorized commitment of funds to a sponsored project for a defined scope
+      and period, distinct from the proposal that requested it. A single sponsored project
+      may accrue several awards over its life.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Awards, with lifecycle state in dbo.GA_Awards.Award_Status
+      format: One record per award action against a sponsored project's GID.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

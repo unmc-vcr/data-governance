@@ -1,0 +1,19 @@
+terms:
+  - id: unmc:Effort
+    code: SP.PERS.003
+    pref_label: Effort
+    alt_labels: [Committed Effort, Percent Effort, FTE Commitment]
+    definition: >-
+      The proportion of an individual's total institutional professional activity committed
+      to a sponsored project, expressed as a full-time equivalent (FTE) or percentage.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Staff.FTE (against the department FTE base in dbo.GA_Staff.FTE_Dept)
+      format: Full-time-equivalent fraction of committed time.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

@@ -1,0 +1,19 @@
+terms:
+  - id: unmc:ConfidentialDisclosureAgreement
+    code: SP.AGR.003
+    pref_label: Confidential Disclosure Agreement (CDA)
+    alt_labels: [CDA, Non-Disclosure Agreement, NDA]
+    definition: >-
+      An agreement protecting confidential information exchanged between UNMC and a potential
+      sponsor or collaborator while a possible project is evaluated.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Master.CDA_ID
+      format: Identifier of the associated confidential disclosure agreement.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

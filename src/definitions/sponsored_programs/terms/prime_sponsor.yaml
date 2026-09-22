@@ -1,0 +1,20 @@
+terms:
+  - id: unmc:PrimeSponsor
+    code: SP.SPON.002
+    pref_label: Prime Sponsor
+    alt_labels: [Originating Sponsor, Prime]
+    definition: >-
+      The originating source of funds when UNMC receives an award through an intermediary
+      (pass-through) entity rather than directly from that source. The prime sponsor's terms
+      flow down through the pass-through entity to UNMC.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Master.SOF_Sponsor_Code (resolved against dbo.GA_Sponsor_Codes)
+      format: Sponsor code identifying the originating funder.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

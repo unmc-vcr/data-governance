@@ -1,0 +1,19 @@
+terms:
+  - id: unmc:MaterialTransferAgreement
+    code: SP.AGR.002
+    pref_label: Material Transfer Agreement (MTA)
+    alt_labels: [MTA]
+    definition: >-
+      An agreement governing the transfer of tangible research materials between UNMC and
+      another organization, setting out permitted use, ownership, and publication terms.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Master.MTA
+      format: Indicator that an MTA applies to the project.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

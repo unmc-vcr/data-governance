@@ -1,0 +1,20 @@
+terms:
+  - id: unmc:GrantID
+    code: SP.PROJ.002
+    pref_label: Grant ID (GID)
+    alt_labels: [GID, Grant Number]
+    definition: >-
+      The institution-wide identifier assigned to a sponsored project, tying its proposals,
+      awards, personnel, and financial accounts together across the whole project
+      lifecycle.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Master.GID
+      format: Institution-assigned identifier, one per sponsored project.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

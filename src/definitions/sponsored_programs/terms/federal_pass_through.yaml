@@ -1,0 +1,22 @@
+terms:
+  - id: unmc:FederalPassThrough
+    code: SP.COST.005
+    pref_label: Federal Pass-Through Funding
+    alt_labels: [Pass-Through Funding, Federal Flow-Through, Subaward In]
+    definition: >-
+      Federal funds received by UNMC through a non-federal pass-through entity (the prime
+      recipient) rather than directly from the federal agency. Pass-through funds carry the
+      federal terms and conditions that flow down from the prime award.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: >-
+        dbo.GA_Awards.Federal_Pass_Thru; originating funder in
+        dbo.GA_Master.Prime_Sponsor_Code
+      format: Indicator, with the prime sponsor identified separately.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft

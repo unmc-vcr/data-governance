@@ -1,0 +1,22 @@
+terms:
+  - id: unmc:SponsoredProject
+    code: SP.PROJ.001
+    pref_label: Sponsored Project
+    alt_labels: [Sponsored Program, Grant]
+    definition: >-
+      An externally funded project or activity, of any category, established through a
+      request to and an award from a sponsor and administered by UNMC under the terms of
+      that funding. The category of activity -- research, instruction, public service, and
+      so on -- is what distinguishes one sponsored project from another; it is not limited
+      to research.
+    in_subject_area: unmc:SponsoredPrograms
+    source_of_record:
+      system: SPAdmin reporting database (spareportdb)
+      field: dbo.GA_Master, categorized by dbo.GA_Master.Proposal_Category
+      format: One master record per sponsored project, keyed by GID.
+    responsibilities:
+      - agent: unmc:role/SponsoredProgramsOffice
+        governance_role: definition_owner
+      - agent: unmc:role/ResearchAnalytics
+        governance_role: data_steward
+    status: draft
