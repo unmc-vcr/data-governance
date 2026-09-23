@@ -68,6 +68,28 @@
             "title": "DataClassification",
             "type": "string"
         },
+        "DefinitionSource": {
+            "additionalProperties": false,
+            "description": "words",
+            "properties": {
+                "source_label": {
+                    "description": "The human-readable description of the source.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_uri": {
+                    "description": "The record or persistent identifier of the source.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "source_uri"
+            ],
+            "title": "DefinitionSource",
+            "type": "object"
+        },
         "GovernanceRole": {
             "description": "What an office is on the hook for.",
             "enum": [
@@ -348,12 +370,15 @@
                     "type": "string"
                 },
                 "definition_source": {
-                    "description": "Where the wording came from, if it was adopted rather than written here.",
-                    "format": "uri",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DefinitionSource"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Where the wording came from, if it was adopted rather than written here."
                 },
                 "exact_match": {
                     "description": "An external concept that means the same thing.",

@@ -15,6 +15,7 @@ prefixes:
   org: http://www.w3.org/ns/org#
   prov: http://www.w3.org/ns/prov#
   foaf: http://xmlns.com/foaf/0.1/
+  isbn: https://openlibrary.org/isbn/
   unmc:   https://w3id.org/unmc/model/
   term:   https://w3id.org/unmc/terms/
   area:   https://w3id.org/unmc/areas/
@@ -127,6 +128,11 @@ classes:
       resolves to whoever currently staffs it.
     slots: [id, name, email, title]
 
+  DefinitionSource:
+    description: >-
+      words
+    slots: [source_uri, source_label]
+
   StewardshipCouncil:
     is_a: Agent
     exact_mappings:
@@ -172,8 +178,17 @@ slots:
 
   definition_source:
     description: Where the wording came from, if it was adopted rather than written here.
+    range: DefinitionSource
+
+  source_uri:
+    description: >-
+      The record or persistent identifier of the source.
     slot_uri: dcterms:source
-    range: uri
+    range: uriorcurie
+    required: true
+
+  source_label:
+    description: The human-readable description of the source.
 
   in_subject_area:
     slot_uri: skos:inScheme
