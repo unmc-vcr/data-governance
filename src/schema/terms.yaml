@@ -55,6 +55,7 @@ classes:
       - definition_source
       - in_subject_area
       - broader
+      - related
       - classification
       - source_of_record
       - rules
@@ -167,11 +168,17 @@ slots:
     range: Term
     multivalued: true
 
+  related:
+    description: >-
+      Another governed term that is conceptually associated with this one,
+      where neither is broader nor narrower than the other.
+    slot_uri: skos:related
+    range: Term
+    multivalued: true
+
   classification:
     description: >-
-      Handling tier for data implementing this term. PROVISIONAL - the four
-      tiers below are carried over from the site design and have not been
-      confirmed by Compliance and Privacy. Do not cite them as policy.
+      Handling tier for data implementing this term.
     range: DataClassification
 
   source_of_record:
@@ -227,8 +234,7 @@ slots:
   responsibilities:
     description: >-
       Who is accountable for this term. Exactly one definition_owner is
-      required; the check in tools/terms_site/checks.py enforces that,
-      because LinkML cannot express it.
+      required.
     slot_uri: prov:qualifiedAttribution
     range: Responsibility
     multivalued: true

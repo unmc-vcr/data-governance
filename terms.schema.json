@@ -188,7 +188,7 @@
                     "type": "string"
                 },
                 "responsibilities": {
-                    "description": "Who is accountable for this term. Exactly one definition_owner is required; the check in tools/terms_site/checks.py enforces that, because LinkML cannot express it.",
+                    "description": "Who is accountable for this term. Exactly one definition_owner is required.",
                     "items": {
                         "$ref": "#/$defs/Responsibility"
                     },
@@ -229,7 +229,7 @@
                 },
                 "classification": {
                     "$ref": "#/$defs/DataClassification",
-                    "description": "Handling tier for data implementing this term. PROVISIONAL - the four tiers below are carried over from the site design and have not been confirmed by Compliance and Privacy. Do not cite them as policy."
+                    "description": "Handling tier for data implementing this term."
                 },
                 "close_match": {
                     "description": "An external concept that is similar but not interchangeable.",
@@ -299,6 +299,16 @@
                         "null"
                     ]
                 },
+                "related": {
+                    "description": "Another governed term that is conceptually associated with this one, where neither is broader nor narrower than the other.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "replaced_by": {
                     "description": "For deprecated terms, the term that supersedes this one.",
                     "type": [
@@ -307,7 +317,7 @@
                     ]
                 },
                 "responsibilities": {
-                    "description": "Who is accountable for this term. Exactly one definition_owner is required; the check in tools/terms_site/checks.py enforces that, because LinkML cannot express it.",
+                    "description": "Who is accountable for this term. Exactly one definition_owner is required.",
                     "items": {
                         "$ref": "#/$defs/Responsibility"
                     },
