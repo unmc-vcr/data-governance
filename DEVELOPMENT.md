@@ -20,6 +20,13 @@ model.
 uv sync --group dev
 ```
 
+Enable the git hooks (once per clone) so `terms.schema.json` stays in step
+with the schema — see [Editor validation](#editor-validation):
+
+```bash
+git config core.hooksPath .githooks
+```
+
 ```bash
 uv run python -m terms_site.build
 ```
@@ -38,6 +45,8 @@ python3 -m http.server 8765 --directory site
 | Path | What it is |
 | --- | --- |
 | `src/schema/terms.yaml` | The LinkML schema. Defines `Term`, `SubjectArea`, and the enums. |
+| `terms.schema.json` | JSON Schema derived from `terms.yaml`, for editor validation. Generated artifact — see [Editor validation](#editor-validation). |
+| `.githooks/` | Git hooks. `pre-commit` regenerates `terms.schema.json` when `terms.yaml` changes. |
 | `src/definitions/<area>/<area>.yaml` | A subject area declaration. |
 | `src/definitions/<area>/terms/*.yaml` | The governed terms, **one file per term**. |
 | `src/agents.yaml` | Registry of offices that can hold a governance role. |
@@ -94,6 +103,51 @@ several terms shared a file, editing one would appear in every other term's
 timeline, and `git log` could not tell them apart. One file per term keeps the
 history — and the *View source on GitHub* link — precise. Definition files are
 discovered recursively, so adding a subject area is just adding a directory.
+
+## Editor validation
+
+The build's stage 1 validates definition files with `linkml-validate`, but
+that only runs when you run the build. To catch a malformed term *as you
+type*, the repository ships a JSON Schema derived from `terms.yaml`, and
+`.vscode/` points the YAML language server at it.
+
+Install the [Red Hat YAML extension](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+(`redhat.vscode-yaml`) — VS Code offers it automatically from
+`.vscode/extensions.json`. With it installed, `.vscode/settings.json` maps
+`src/definitions/**/*.yaml` and `src/agents.yaml` to `terms.schema.json`, so
+a wrong status value, a missing required slot, or an unknown key is
+underlined in the editor, with hover docs pulled from the schema
+descriptions.
+
+`terms.schema.json` at the repository root is a generated artifact, derived
+from `terms.yaml` — do not edit it by hand. It is committed (unlike the
+`site/` build output) because the editor and a fresh clone both need it
+present.
+
+A pre-commit hook keeps it from drifting: when a commit touches `terms.yaml`,
+the hook regenerates `terms.schema.json` and stages it into the same commit.
+Enable the hook once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+To regenerate by hand — for instance after editing `terms.yaml` without
+committing yet:
+
+```bash
+uv run python -m terms_site.json_schema
+```
+
+`tests/test_json_schema.py` is the backstop: it fails if the committed copy
+has drifted, so CI catches a stale schema even when the hook is bypassed
+(`git commit --no-verify`, or a clone that never set `core.hooksPath`).
+
+Two schemas, one source of truth: the editor validates against the JSON
+Schema, the build validates against `terms.yaml` itself, and the drift test
+keeps them from disagreeing. The JSON Schema checks *shape* only — the same
+things `linkml-validate` checks. Cross-references and the governance rules
+(stages 2–3) are still only enforced by the build.
 
 ## Adding or changing a term
 

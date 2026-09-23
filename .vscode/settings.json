@@ -5,5 +5,11 @@
         "markdown": false,
         "scminput": false,
         "asm": false
+    },
+    "yaml.schemas": {
+        "./terms.schema.json": [
+            "src/definitions/**/*.yaml",
+            "src/agents.yaml"
+        ]
     }
 }

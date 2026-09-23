@@ -1,0 +1,19 @@
+#!/bin/sh
+# Keep the generated JSON Schema in step with the LinkML schema.
+#
+# terms.schema.json is derived from src/schema/terms.yaml and drives editor
+# validation of definition files. When a commit touches terms.yaml, regenerate
+# the JSON Schema and stage it into the same commit, so the committed copy
+# never drifts. tests/test_json_schema.py is the CI backstop if this is skipped.
+#
+# Enable once per clone:
+#     git config core.hooksPath .githooks
+set -e
+
+# Only the schema source affects the JSON Schema, so only regenerate when it is
+# part of this commit -- keeps every other commit fast.
+if git diff --cached --name-only | grep -qx 'src/schema/terms.yaml'; then
+    echo "pre-commit: terms.yaml changed -- regenerating terms.schema.json"
+    uv run python -m terms_site.json_schema
+    git add terms.schema.json
+fi

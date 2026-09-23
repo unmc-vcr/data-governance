@@ -1,0 +1,487 @@
+{
+    "$defs": {
+        "Agent": {
+            "additionalProperties": false,
+            "description": "An office, role, or committee that can hold a governance role. Agents are offices, not individuals, so that ownership survives staff turnover. An office may list the people who currently staff it in `contacts`; those are a directory, and accountability stays with the office.",
+            "properties": {
+                "contacts": {
+                    "description": "People who currently staff this office. A directory for readers -- who to ask for -- not a transfer of accountability, which stays with the office. The same person may staff more than one office.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "email": {
+                    "description": "Email address. On an office this is a shared mailbox; on a person it is their own address.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "pref_label": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "pref_label"
+            ],
+            "title": "Agent",
+            "type": "object"
+        },
+        "DataClassification": {
+            "description": "PROVISIONAL handling tier. Carried over from the site design pending confirmation by Compliance and Privacy. Not policy yet.",
+            "enum": [
+                "public",
+                "internal",
+                "sensitive",
+                "restricted"
+            ],
+            "title": "DataClassification",
+            "type": "string"
+        },
+        "GovernanceRole": {
+            "description": "What an office is on the hook for.",
+            "enum": [
+                "definition_owner",
+                "data_steward",
+                "business_sme"
+            ],
+            "title": "GovernanceRole",
+            "type": "string"
+        },
+        "Guidance": {
+            "additionalProperties": false,
+            "description": "A single callout shown with the term. Used for a handling rule, a caveat, or a warning that the definition is still moving.",
+            "properties": {
+                "guidance_kind": {
+                    "$ref": "#/$defs/GuidanceKind"
+                },
+                "guidance_text": {
+                    "description": "The callout body. One short paragraph.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "guidance_kind",
+                "guidance_text"
+            ],
+            "title": "Guidance",
+            "type": "object"
+        },
+        "GuidanceKind": {
+            "description": "Tone of a callout, which decides how it is styled.",
+            "enum": [
+                "required",
+                "good_to_know",
+                "in_review",
+                "draft"
+            ],
+            "title": "GuidanceKind",
+            "type": "string"
+        },
+        "Person": {
+            "additionalProperties": false,
+            "description": "A named individual who staffs one or more offices. People are a directory so a reader knows who to ask for. A Person is never the target of a Responsibility -- accountability rests with an office (Agent), which resolves to whoever currently staffs it.",
+            "properties": {
+                "email": {
+                    "description": "Email address. On an office this is a shared mailbox; on a person it is their own address.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "A person's full name.",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "A person's job title, e.g. \"Research Data Manager\". Presentation only.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ],
+            "title": "Person",
+            "type": "object"
+        },
+        "Responsibility": {
+            "additionalProperties": false,
+            "description": "One office or role holding one governance role for a term or subject area. A value object, not an identified thing.",
+            "properties": {
+                "agent": {
+                    "description": "Office, group, or role IRI. Not an individual.",
+                    "type": "string"
+                },
+                "governance_role": {
+                    "$ref": "#/$defs/GovernanceRole"
+                }
+            },
+            "required": [
+                "agent",
+                "governance_role"
+            ],
+            "title": "Responsibility",
+            "type": "object"
+        },
+        "SourceOfRecord": {
+            "additionalProperties": false,
+            "description": "The system that is authoritative for the values behind this term, and where in that system the values live.",
+            "properties": {
+                "field": {
+                    "description": "Column or field name within the source system.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "format": {
+                    "description": "Shape of the stored value, in plain language.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "refresh": {
+                    "description": "How often the warehouse copy is refreshed.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "system": {
+                    "description": "Name of the authoritative system, e.g. \"OnCore - adverse event module\".",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "system"
+            ],
+            "title": "SourceOfRecord",
+            "type": "object"
+        },
+        "SubjectArea": {
+            "additionalProperties": false,
+            "description": "A governed grouping of terms, owned end to end by one office.",
+            "properties": {
+                "definition": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "pref_label": {
+                    "type": "string"
+                },
+                "responsibilities": {
+                    "description": "Who is accountable for this term. Exactly one definition_owner is required; the check in tools/terms_site/checks.py enforces that, because LinkML cannot express it.",
+                    "items": {
+                        "$ref": "#/$defs/Responsibility"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "id",
+                "pref_label",
+                "definition",
+                "responsibilities"
+            ],
+            "title": "SubjectArea",
+            "type": "object"
+        },
+        "Term": {
+            "additionalProperties": false,
+            "description": "One governed business term. Exactly one definition, one accountable definition owner, and a status that says how far it has moved through review.",
+            "properties": {
+                "alt_labels": {
+                    "description": "Other names people actually use for this term. Indexed by site search, so add the wrong-but-common names too.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "broader": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "classification": {
+                    "$ref": "#/$defs/DataClassification",
+                    "description": "Handling tier for data implementing this term. PROVISIONAL - the four tiers below are carried over from the site design and have not been confirmed by Compliance and Privacy. Do not cite them as policy."
+                },
+                "close_match": {
+                    "description": "An external concept that is similar but not interchangeable.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "code": {
+                    "description": "Short human-quotable identifier, e.g. CR.AE.001. Subject-area prefix, concept abbreviation, sequence. Stable for the life of the term.",
+                    "pattern": "^[A-Z]{2}\\.[A-Z]{2,4}\\.[0-9]{3}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "definition": {
+                    "type": "string"
+                },
+                "definition_source": {
+                    "description": "Where the wording came from, if it was adopted rather than written here.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "exact_match": {
+                    "description": "An external concept that means the same thing.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "guidance": {
+                    "description": "Callouts shown alongside the definition.",
+                    "items": {
+                        "$ref": "#/$defs/Guidance"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "in_subject_area": {
+                    "type": "string"
+                },
+                "pref_label": {
+                    "type": "string"
+                },
+                "realized_by": {
+                    "description": "Schema class, slot, or warehouse column that implements this term.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "replaced_by": {
+                    "description": "For deprecated terms, the term that supersedes this one.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "responsibilities": {
+                    "description": "Who is accountable for this term. Exactly one definition_owner is required; the check in tools/terms_site/checks.py enforces that, because LinkML cannot express it.",
+                    "items": {
+                        "$ref": "#/$defs/Responsibility"
+                    },
+                    "type": "array"
+                },
+                "rules": {
+                    "description": "Qualifiers that change how the term is counted or applied. One rule per entry, written as an instruction rather than a description.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "source_of_record": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceOfRecord"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The authoritative system for this term's values."
+                },
+                "status": {
+                    "$ref": "#/$defs/TermStatus"
+                },
+                "used_in": {
+                    "description": "Reports and extracts known to depend on this term.",
+                    "items": {
+                        "$ref": "#/$defs/Usage"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "pref_label",
+                "definition",
+                "in_subject_area",
+                "responsibilities",
+                "status"
+            ],
+            "title": "Term",
+            "type": "object"
+        },
+        "TermStatus": {
+            "description": "How far a term has moved through review.",
+            "enum": [
+                "draft",
+                "in_review",
+                "approved",
+                "deprecated"
+            ],
+            "title": "TermStatus",
+            "type": "string"
+        },
+        "Terms": {
+            "additionalProperties": false,
+            "description": "Per-file container for validation only; not part of the published vocabulary. Its blank node is stripped before the vocabulary is published as RDF.",
+            "properties": {
+                "agents": {
+                    "items": {
+                        "$ref": "#/$defs/Agent"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "people": {
+                    "items": {
+                        "$ref": "#/$defs/Person"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "subject_areas": {
+                    "items": {
+                        "$ref": "#/$defs/SubjectArea"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "terms": {
+                    "items": {
+                        "$ref": "#/$defs/Term"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Terms",
+            "type": "object"
+        },
+        "Usage": {
+            "additionalProperties": false,
+            "description": "A report, dashboard, or extract that depends on this term.",
+            "properties": {
+                "usage_name": {
+                    "description": "Name of the report, dashboard, or extract.",
+                    "type": "string"
+                },
+                "usage_owner": {
+                    "description": "Office that owns that report.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "usage_name"
+            ],
+            "title": "Usage",
+            "type": "object"
+        }
+    },
+    "$id": "https://w3id.org/unmc/model/",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "Per-file container for validation only; not part of the published vocabulary. Its blank node is stripped before the vocabulary is published as RDF.",
+    "metamodel_version": "1.11.0",
+    "properties": {
+        "agents": {
+            "items": {
+                "$ref": "#/$defs/Agent"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "people": {
+            "items": {
+                "$ref": "#/$defs/Person"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "subject_areas": {
+            "items": {
+                "$ref": "#/$defs/SubjectArea"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "terms": {
+            "items": {
+                "$ref": "#/$defs/Term"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        }
+    },
+    "title": "unmc_terms",
+    "type": "object",
+    "version": "0.2.0"
+}
+
