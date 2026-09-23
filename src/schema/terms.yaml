@@ -12,6 +12,7 @@ prefixes:
   linkml: https://w3id.org/linkml/
   skos: http://www.w3.org/2004/02/skos/core#
   dcterms: http://purl.org/dc/terms/
+  org: http://www.w3.org/ns/org#
   prov: http://www.w3.org/ns/prov#
   foaf: http://xmlns.com/foaf/0.1/
   unmc:   https://w3id.org/unmc/model/
@@ -108,13 +109,14 @@ classes:
         required: true
 
   Agent:
-    class_uri: prov:Agent
+    exact_mappings:
+      - prov:Agent
     description: >-
       An office, role, or committee that can hold a governance role. Agents
       are offices, not individuals, so that ownership survives staff turnover.
       An office may list the people who currently staff it in `contacts`;
       those are a directory, and accountability stays with the office.
-    slots: [id, pref_label, email, contacts]
+    slots: [id, category, pref_label, email, contacts]
 
   Person:
     class_uri: foaf:Person
@@ -124,6 +126,21 @@ classes:
       of a Responsibility -- accountability rests with an office (Agent), which
       resolves to whoever currently staffs it.
     slots: [id, name, email, title]
+
+  StewardshipCouncil:
+    is_a: Agent
+    exact_mappings:
+      - org:Organization
+    description: A committee-Agent whose seats are held by named people.
+    slots: [memberships]
+
+  Membership:
+    class_uri: org:Membership
+    description: One person holding one seat on a council. A value object.
+    slots: [member, council_role]
+    slot_usage:
+      member: { required: true }
+      council_role: { required: true }
 
 slots:
 
@@ -298,6 +315,13 @@ slots:
     multivalued: true
     inlined: false
 
+  category:
+    description: >-
+      Discriminates agent subtypes within the shared agents registry.
+      Value is the subtype's class IRI, e.g. org:Organization for a council.
+    designates_type: true
+    range: uriorcurie
+
   subject_areas:
     range: SubjectArea
     multivalued: true
@@ -318,6 +342,19 @@ slots:
     multivalued: true
     inlined_as_list: true
 
+  memberships:
+    range: Membership
+    multivalued: true
+    inlined_as_list: true
+
+  member:
+    slot_uri: org:member
+    range: Person
+
+  council_role:
+    slot_uri: org:role
+    range: CouncilRole
+
 enums:
 
   GovernanceRole:
@@ -332,6 +369,28 @@ enums:
       business_sme:
         meaning: unmc:roles/business-sme
         description: Consulted on meaning and use in practice.
+      data_custodian:
+        meaning: unmc:roles/data-custodian
+        description:
+
+  CouncilRole:
+    description: What facet of stewardship the role holder is responsible.
+    permissible_values:
+      chair:
+        meaning: unmc:roles/council#chair
+        description: Convenes the council and owns final sign-off on decisions.
+      security:
+        meaning: unmc:roles/council#security
+        description: Advises on access controls and safeguarding of the data.
+      ethics:
+        meaning: unmc:roles/council#ethics
+        description: Advises on ethical use and transparency across the organization.
+      documentation:
+        meaning: unmc:roles/council#documentation
+        description: Keeps definitions, lineage, and decisions documented.
+      compliance:
+        meaning: unmc:roles/council#compliance
+        description: Advises on regulatory and policy conformance.
 
   TermStatus:
     description: How far a term has moved through review.

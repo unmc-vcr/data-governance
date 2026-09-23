@@ -4,6 +4,16 @@
             "additionalProperties": false,
             "description": "An office, role, or committee that can hold a governance role. Agents are offices, not individuals, so that ownership survives staff turnover. An office may list the people who currently staff it in `contacts`; those are a directory, and accountability stays with the office.",
             "properties": {
+                "category": {
+                    "description": "Discriminates agent subtypes within the shared agents registry. Value is the subtype's class IRI, e.g. org:Organization for a council.",
+                    "enum": [
+                        "unmc:Agent"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "contacts": {
                     "description": "People who currently staff this office. A directory for readers -- who to ask for -- not a transfer of accountability, which stays with the office. The same person may staff more than one office.",
                     "items": {
@@ -35,6 +45,18 @@
             "title": "Agent",
             "type": "object"
         },
+        "CouncilRole": {
+            "description": "What facet of stewardship the role holder is responsible.",
+            "enum": [
+                "chair",
+                "security",
+                "ethics",
+                "documentation",
+                "compliance"
+            ],
+            "title": "CouncilRole",
+            "type": "string"
+        },
         "DataClassification": {
             "description": "PROVISIONAL handling tier. Carried over from the site design pending confirmation by Compliance and Privacy. Not policy yet.",
             "enum": [
@@ -51,7 +73,8 @@
             "enum": [
                 "definition_owner",
                 "data_steward",
-                "business_sme"
+                "business_sme",
+                "data_custodian"
             ],
             "title": "GovernanceRole",
             "type": "string"
@@ -85,6 +108,24 @@
             ],
             "title": "GuidanceKind",
             "type": "string"
+        },
+        "Membership": {
+            "additionalProperties": false,
+            "description": "One person holding one seat on a council. A value object.",
+            "properties": {
+                "council_role": {
+                    "$ref": "#/$defs/CouncilRole"
+                },
+                "member": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "member",
+                "council_role"
+            ],
+            "title": "Membership",
+            "type": "object"
         },
         "Person": {
             "additionalProperties": false,
@@ -172,6 +213,60 @@
                 "system"
             ],
             "title": "SourceOfRecord",
+            "type": "object"
+        },
+        "StewardshipCouncil": {
+            "additionalProperties": false,
+            "description": "A committee-Agent whose seats are held by named people.",
+            "properties": {
+                "category": {
+                    "description": "Discriminates agent subtypes within the shared agents registry. Value is the subtype's class IRI, e.g. org:Organization for a council.",
+                    "enum": [
+                        "unmc:StewardshipCouncil"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "description": "People who currently staff this office. A directory for readers -- who to ask for -- not a transfer of accountability, which stays with the office. The same person may staff more than one office.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "email": {
+                    "description": "Email address. On an office this is a shared mailbox; on a person it is their own address.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "memberships": {
+                    "items": {
+                        "$ref": "#/$defs/Membership"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "pref_label": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "pref_label"
+            ],
+            "title": "StewardshipCouncil",
             "type": "object"
         },
         "SubjectArea": {
@@ -386,7 +481,14 @@
             "properties": {
                 "agents": {
                     "items": {
-                        "$ref": "#/$defs/Agent"
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Agent"
+                            },
+                            {
+                                "$ref": "#/$defs/StewardshipCouncil"
+                            }
+                        ]
                     },
                     "type": [
                         "array",
@@ -455,7 +557,14 @@
     "properties": {
         "agents": {
             "items": {
-                "$ref": "#/$defs/Agent"
+                "anyOf": [
+                    {
+                        "$ref": "#/$defs/Agent"
+                    },
+                    {
+                        "$ref": "#/$defs/StewardshipCouncil"
+                    }
+                ]
             },
             "type": [
                 "array",
