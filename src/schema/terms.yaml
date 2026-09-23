@@ -371,7 +371,7 @@ enums:
         description: Consulted on meaning and use in practice.
       data_custodian:
         meaning: unmc:roles/data-custodian
-        description:
+        description: Consulted on the collection, storage, and management of data through IT lens.
 
   CouncilRole:
     description: What facet of stewardship the role holder is responsible.
