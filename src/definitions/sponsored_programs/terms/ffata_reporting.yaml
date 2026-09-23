@@ -1,19 +1,19 @@
 terms:
-  - id: unmc:ffata-reporting
+  - id: term:ffata-reporting
     code: SP.COMP.001
     pref_label: FFATA Reporting
     alt_labels: [FFATA, Transparency Act Reporting, FSRS Reporting]
     definition: >-
       The Federal Funding Accountability and Transparency Act obligation to publicly report
       certain federal awards and their first-tier subawards.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.FFATA (subaward reporting flagged in dbo.GA_Subout.FFATA)
       format: Indicator of whether the award or subaward is subject to FFATA reporting.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

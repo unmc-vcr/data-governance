@@ -1,19 +1,19 @@
 terms:
-  - id: unmc:unique-entity-identifier
+  - id: term:unique-entity-identifier
     code: SP.SPON.003
     pref_label: Unique Entity Identifier (UEI)
     alt_labels: [UEI, Entity ID]
     definition: >-
       The government-assigned identifier for an organization registered in SAM.gov, used to
       identify a sponsor or recipient. It replaced the DUNS Number.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Sponsor_Codes.Unique_Entity_Identifier
       format: SAM.gov twelve-character alphanumeric identifier.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

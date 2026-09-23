@@ -6,11 +6,11 @@
 # record.
 
 subject_areas:
-  - id: unmc:sponsored-programs
+  - id: area:sponsored-programs
     pref_label: Sponsored Programs
     definition: Management of funding requests and awards from external entities.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward

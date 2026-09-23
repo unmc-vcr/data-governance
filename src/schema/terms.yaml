@@ -1,4 +1,4 @@
-id: https://w3id.org/unmc/terms/
+id: https://w3id.org/unmc/model/
 name: unmc_terms
 title: UNMC Research Administration Data Governance
 description: >-
@@ -14,7 +14,11 @@ prefixes:
   dcterms: http://purl.org/dc/terms/
   prov: http://www.w3.org/ns/prov#
   foaf: http://xmlns.com/foaf/0.1/
-  unmc: https://w3id.org/unmc/terms/
+  unmc:   https://w3id.org/unmc/model/
+  term:   https://w3id.org/unmc/terms/
+  area:   https://w3id.org/unmc/areas/
+  office: https://w3id.org/unmc/offices/
+  person: https://w3id.org/unmc/people/
 default_prefix: unmc
 default_range: string
 
@@ -314,13 +318,13 @@ enums:
     description: What an office is on the hook for.
     permissible_values:
       definition_owner:
-        meaning: unmc:definition-owner
+        meaning: unmc:roles/definition-owner
         description: Accountable for approving the definition.
       data_steward:
-        meaning: unmc:data-steward
+        meaning: unmc:roles/data-steward
         description: Responsible for quality of implementing data.
       business_sme:
-        meaning: unmc:business-sme
+        meaning: unmc:roles/business-sme
         description: Consulted on meaning and use in practice.
 
   TermStatus:

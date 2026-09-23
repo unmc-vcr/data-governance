@@ -1,19 +1,19 @@
 terms:
-  - id: unmc:administering-department
+  - id: term:administering-department
     code: SP.ORG.001
     pref_label: Administering Department
     alt_labels: [Department, Home Department]
     definition: >-
       The UNMC organizational unit accountable for administering a sponsored project, or the
       unit against which a person's project effort is charged.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Departments (keyed by DID); referenced from dbo.GA_Master and dbo.GA_Staff.DID
       format: Hierarchical unit / department / section, with SAP department code.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

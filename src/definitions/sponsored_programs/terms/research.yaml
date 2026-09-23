@@ -1,15 +1,15 @@
 terms:
-  - id: unmc:research-project
+  - id: term:research-project
     code: SP.RS.001
     pref_label: Research Project
     definition: An activity specifically organized and separately budgeted to produce research outcomes, whether
       commissioned by an agency external to the institution or separately by an organizational unit within the institution.
     #definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
-    broader: [unmc:sponsored-project]
-    in_subject_area: unmc:sponsored-programs
+    broader: [term:sponsored-project]
+    in_subject_area: area:sponsored-programs
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: approved

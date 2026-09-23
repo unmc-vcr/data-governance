@@ -1,5 +1,5 @@
 terms:
-  - id: unmc:subaward
+  - id: term:subaward
     code: SP.AGR.001
     pref_label: Subaward
     alt_labels: [Subcontract Out, Subaward Out, Subout]
@@ -7,14 +7,14 @@ terms:
       A portion of a UNMC award passed through to another institution to perform a defined
       part of the project's scope of work, under a subaward agreement. UNMC is the
       pass-through entity and the receiving institution is the subrecipient.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Subout (subrecipient in dbo.GA_Subout.Recipient_Code, subrecipient PI in dbo.GA_Subout.Subout_PI)
       format: One record per subaward issued against a sponsored project's GID.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

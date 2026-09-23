@@ -1,5 +1,5 @@
 terms:
-  - id: unmc:assistance-listing-number
+  - id: term:assistance-listing-number
     code: SP.SPON.004
     pref_label: Assistance Listing Number
     alt_labels: [CFDA Number, CFDA, Assistance Listing]
@@ -7,14 +7,14 @@ terms:
       The number identifying a federal assistance program, formerly the Catalog of Federal
       Domestic Assistance (CFDA) number. It ties an award to the specific federal program
       that funds it.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.CFDA
       format: Federal program number, e.g. 93.847.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

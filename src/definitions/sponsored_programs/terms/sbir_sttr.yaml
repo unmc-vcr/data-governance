@@ -1,5 +1,5 @@
 terms:
-  - id: unmc:sbir-sttr
+  - id: term:sbir-sttr
     code: SP.COMP.002
     pref_label: SBIR/STTR
     alt_labels: [SBIR, STTR, Small Business Innovation Research, Small Business Technology Transfer]
@@ -7,14 +7,14 @@ terms:
       Federal programs -- Small Business Innovation Research (SBIR) and Small Business
       Technology Transfer (STTR) -- that fund research and development at small businesses,
       STTR requiring formal partnership with a research institution.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.SBIR_STTR
       format: Indicator or code distinguishing SBIR from STTR.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

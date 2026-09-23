@@ -1,12 +1,12 @@
 terms:
-  - id: unmc:principal-investigator
+  - id: term:principal-investigator
     code: SP.PERS.001
     pref_label: Principal Investigator (PI)
     alt_labels: [PI, Project Director]
     definition: >-
       The individual with primary responsibility for the scientific, technical, and
       administrative conduct of a sponsored project.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.Current_PI_SID (original assignment in dbo.GA_Master.Initial_PI_SID)
@@ -14,8 +14,8 @@ terms:
     rules:
       - The current PI may differ from the initial PI when leadership transfers; use Current_PI_SID for present accountability.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

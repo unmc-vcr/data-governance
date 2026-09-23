@@ -10,11 +10,11 @@
 # record.
 
 subject_areas:
-  - id: unmc:clinical-research
+  - id: area:clinical-research
     pref_label: Clinical Research
     definition: Research involving human participants, their data, or their specimens.
     responsibilities:
-      - agent: unmc:role/clinical-research-office
+      - agent: office:clinical-research-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward

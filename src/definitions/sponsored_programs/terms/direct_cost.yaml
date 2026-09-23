@@ -1,5 +1,5 @@
 terms:
-  - id: unmc:direct-cost
+  - id: term:direct-cost
     code: SP.COST.001
     pref_label: Direct Cost
     definition: >-
@@ -7,10 +7,10 @@ terms:
       instructional activity, or any other institutional activity, or that can be directly
       assigned to such activities relatively easily with a high degree of accuracy.
     definition_source: https://grants.nih.gov/grants/policy/nihgps/HTML5/section_7/7.3_direct_costs_and_indirect_costs.htm
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: approved

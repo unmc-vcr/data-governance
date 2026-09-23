@@ -1,5 +1,5 @@
 terms:
-  - id: unmc:sponsor
+  - id: term:sponsor
     code: SP.SPON.001
     pref_label: Sponsor
     alt_labels: [Funding Agency, Sponsoring Agency]
@@ -7,14 +7,14 @@ terms:
       The external entity that provides, or is asked to provide, funding for a sponsored
       project. Sponsors are classified by type -- federal, state, foundation, industry, and
       so on.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Sponsor_Codes, typed by dbo.GA_Sponsor_Codes.Sponsor_Type_Code (dbo.GA_Sponsor_Type)
       format: One record per sponsor, referenced from awards and proposals by sponsor code.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

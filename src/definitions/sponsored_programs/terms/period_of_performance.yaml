@@ -1,19 +1,19 @@
 terms:
-  - id: unmc:period-of-performance
+  - id: term:period-of-performance
     code: SP.AWD.002
     pref_label: Period of Performance
     alt_labels: [Project Period, Performance Period]
     definition: >-
       The authorized start-through-end date range during which a sponsored project may incur
       allowable costs against an award.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Awards.Begin_Date and dbo.GA_Awards.End_Date
       format: A start date and an end date bounding the award.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

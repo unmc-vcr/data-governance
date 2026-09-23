@@ -1,19 +1,19 @@
 terms:
-  - id: unmc:budget-period
+  - id: term:budget-period
     code: SP.AWD.004
     pref_label: Budget Period
     alt_labels: [Project Year, Cycle]
     definition: >-
       A discrete, separately budgeted interval within a multi-year award -- typically one
       project year -- against which spending and reporting are tracked.
-    in_subject_area: unmc:sponsored-programs
+    in_subject_area: area:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Awards.Project_Year and dbo.GA_Awards.Cycle
       format: Sequence identifying the year within the award.
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft

@@ -1,13 +1,13 @@
 terms:
-  - id: unmc:clinical-study
+  - id: term:clinical-study
     code: CR.STU.001
     pref_label: Clinical Study
     definition: TODO - local operational definition (e.g. what counts as a study in the CTMS).
-    in_subject_area: unmc:clinical-research
+    in_subject_area: area:clinical-research
     responsibilities:
-      - agent: unmc:role/clinical-research-office
+      - agent: office:clinical-research-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     guidance:
       - guidance_kind: draft

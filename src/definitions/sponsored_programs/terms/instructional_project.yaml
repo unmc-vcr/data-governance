@@ -1,16 +1,16 @@
 terms:
-  - id: unmc:instructional-project
+  - id: term:instructional-project
     code: SP.IN.001
     pref_label: Instructional Project
     alt_labels: [Instruction, Training Project]
     definition: An activity specifically organized and separately budgeted to produce teaching, training,
       or other instructional outcomes, whether commissioned by an agency external to the institution or
       separately by an organizational unit within the institution.
-    broader: [unmc:sponsored-project]
-    in_subject_area: unmc:sponsored-programs
+    broader: [term:sponsored-project]
+    in_subject_area: area:sponsored-programs
     responsibilities:
-      - agent: unmc:role/sponsored-programs-office
+      - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/research-analytics
+      - agent: office:research-analytics
         governance_role: data_steward
     status: draft
