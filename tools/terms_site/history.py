@@ -75,7 +75,7 @@ def _describe(before: dict | None, after: dict | None) -> str | None:
     if before is None:
         return "Term created."
     if after is None:
-        return "Term removed from the glossary."
+        return "Term removed from the term set."
     if before == after:
         return None
 
@@ -261,8 +261,8 @@ def _file_commits(repo_root: Path, rel_path: str) -> list[dict]:
     return commits
 
 
-def attach(repo_root: Path, definition_paths: list[Path], glossary) -> None:
+def attach(repo_root: Path, definition_paths: list[Path], termset) -> None:
     """Attach collected history onto each term in place."""
     collected = collect(repo_root, definition_paths)
-    for term in glossary.terms:
+    for term in termset.terms:
         term.history = collected.get(term.id, [])

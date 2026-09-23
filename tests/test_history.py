@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from glossary_site import history
+from terms_site import history
 
 TERM_A = """
 subject_areas:
@@ -228,12 +228,12 @@ def test_missing_git_degrades_to_empty(tmp_path):
 
 
 def test_attach_sets_history_on_terms(repo, fixture_agents):
-    from glossary_site.model import load
+    from terms_site.model import load
 
     paths = [repo / "src" / "definitions" / "alpha.yaml"]
-    glossary = load(paths, fixture_agents, repo)
-    history.attach(repo, paths, glossary)
+    termset = load(paths, fixture_agents, repo)
+    history.attach(repo, paths, termset)
 
-    one = glossary.term_by_id("unmc:One")
+    one = termset.term_by_id("unmc:One")
     assert one.history
     assert one.last_changed == one.history[0].date

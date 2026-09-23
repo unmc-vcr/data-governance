@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from glossary_site.model import GlossaryError, expand_curie, load, slugify
+from terms_site.model import TermsError, expand_curie, load, slugify
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -16,16 +16,16 @@ def test_slugify_splits_camel_case():
 
 
 def test_expand_curie():
-    prefixes = {"unmc": "https://w3id.org/unmc/glossary/"}
-    assert expand_curie("unmc:Foo", prefixes) == "https://w3id.org/unmc/glossary/Foo"
+    prefixes = {"unmc": "https://example.edu/vocab/"}
+    assert expand_curie("unmc:Foo", prefixes) == "https://example.edu/vocab/Foo"
     # Unknown prefix stays visible rather than becoming a wrong IRI.
     assert expand_curie("other:Foo", prefixes) == "other:Foo"
     assert expand_curie("https://example.org/x", prefixes) == "https://example.org/x"
 
 
-def test_loads_all_terms_and_areas(glossary):
-    assert [a.pref_label for a in glossary.areas] == ["Alpha Area", "Beta Area"]
-    assert [t.pref_label for t in glossary.terms] == [
+def test_loads_all_terms_and_areas(termset):
+    assert [a.pref_label for a in termset.areas] == ["Alpha Area", "Beta Area"]
+    assert [t.pref_label for t in termset.terms] == [
         "Beta Term",
         "Fully Loaded",
         "Narrower Thing",
@@ -33,49 +33,49 @@ def test_loads_all_terms_and_areas(glossary):
     ]
 
 
-def test_each_term_is_attributed_to_its_own_file(glossary):
+def test_each_term_is_attributed_to_its_own_file(termset):
     """The point of the per-term layout: a term's source_file drives both its
     GitHub source link and which commits count as its history. If two terms
     shared a file, editing one would show up in the other's timeline."""
-    sources = {t.id: t.source_file for t in glossary.terms}
+    sources = {t.id: t.source_file for t in termset.terms}
     assert sources["unmc:FullyLoaded"].endswith("alpha/terms/fully_loaded.yaml")
     assert sources["unmc:BetaTerm"].endswith("beta/terms/beta_term.yaml")
     assert len(set(sources.values())) == len(sources), "terms share a file"
 
     # Subject areas are declared separately from their terms.
-    areas = {a.id: a.source_file for a in glossary.areas}
+    areas = {a.id: a.source_file for a in termset.areas}
     assert areas["unmc:Alpha"].endswith("alpha/alpha.yaml")
     assert not set(areas.values()) & set(sources.values())
 
 
-def test_broader_is_inverted_into_narrower(glossary):
-    full = glossary.term_by_id("unmc:FullyLoaded")
-    narrower = glossary.term_by_id("unmc:NarrowerThing")
+def test_broader_is_inverted_into_narrower(termset):
+    full = termset.term_by_id("unmc:FullyLoaded")
+    narrower = termset.term_by_id("unmc:NarrowerThing")
     assert narrower.broader == [full]
     assert full.narrower == [narrower]
 
 
-def test_replaced_by_is_inverted_into_replaces(glossary):
-    full = glossary.term_by_id("unmc:FullyLoaded")
-    old = glossary.term_by_id("unmc:OldThing")
+def test_replaced_by_is_inverted_into_replaces(termset):
+    full = termset.term_by_id("unmc:FullyLoaded")
+    old = termset.term_by_id("unmc:OldThing")
     assert old.replaced_by is full
     assert full.replaces == [old]
 
 
-def test_responsibilities_resolve_to_agents_and_sort_by_role(glossary):
-    full = glossary.term_by_id("unmc:FullyLoaded")
+def test_responsibilities_resolve_to_agents_and_sort_by_role(termset):
+    full = termset.term_by_id("unmc:FullyLoaded")
     assert [r.role for r in full.responsibilities] == ["definition_owner", "data_steward"]
     assert full.owner.pref_label == "Office A"
     assert full.steward.pref_label == "Office B"
     assert full.steward.email == "office-b@example.edu"
 
 
-def test_agent_initials(glossary):
-    assert glossary.agents["unmc:role/OfficeA"].initials == "OA"
+def test_agent_initials(termset):
+    assert termset.agents["unmc:role/OfficeA"].initials == "OA"
 
 
-def test_related_terms_are_labelled(glossary):
-    full = glossary.term_by_id("unmc:FullyLoaded")
+def test_related_terms_are_labelled(termset):
+    full = termset.term_by_id("unmc:FullyLoaded")
     related = {t.pref_label: rel for t, rel in full.related}
     assert related == {
         "Narrower Thing": "Narrower term",
@@ -83,28 +83,28 @@ def test_related_terms_are_labelled(glossary):
     }
 
 
-def test_handling_matrix_follows_classification(glossary):
-    full = glossary.term_by_id("unmc:FullyLoaded")
+def test_handling_matrix_follows_classification(termset):
+    full = termset.term_by_id("unmc:FullyLoaded")
     assert dict(full.handling)["Email"] == "Encrypted only"
-    narrower = glossary.term_by_id("unmc:NarrowerThing")
+    narrower = termset.term_by_id("unmc:NarrowerThing")
     assert narrower.handling == []
 
 
-def test_iri_expands(glossary):
+def test_iri_expands(termset):
     assert (
-        glossary.term_by_id("unmc:FullyLoaded").iri
-        == "https://w3id.org/unmc/glossary/FullyLoaded"
+        termset.term_by_id("unmc:FullyLoaded").iri
+        == "https://example.edu/vocab/FullyLoaded"
     )
 
 
-def test_search_text_includes_alt_labels(glossary):
-    text = glossary.term_by_id("unmc:FullyLoaded").search_text()
+def test_search_text_includes_alt_labels(termset):
+    text = termset.term_by_id("unmc:FullyLoaded").search_text()
     assert "Kitchen Sink" in text
     assert "AL.FUL.001" in text
 
 
-def test_counts(glossary):
-    assert glossary.counts == {
+def test_counts(termset):
+    assert termset.counts == {
         "approved": 1,
         "in_review": 1,
         "draft": 1,
@@ -140,7 +140,7 @@ terms:
     status: draft
 """,
     )
-    with pytest.raises(GlossaryError, match="broader term 'unmc:DoesNotExist'"):
+    with pytest.raises(TermsError, match="broader term 'unmc:DoesNotExist'"):
         load([bad], fixture_agents, tmp_path)
 
 
@@ -158,7 +158,7 @@ subject_areas:
 terms: []
 """,
     )
-    with pytest.raises(GlossaryError, match="unmc:role/Nobody"):
+    with pytest.raises(TermsError, match="unmc:role/Nobody"):
         load([bad], fixture_agents, tmp_path)
 
 
@@ -178,11 +178,11 @@ terms:
     status: draft
 """,
     )
-    with pytest.raises(GlossaryError, match="in_subject_area 'unmc:Missing'"):
+    with pytest.raises(TermsError, match="in_subject_area 'unmc:Missing'"):
         load([bad], fixture_agents, tmp_path)
 
 
-def test_slug_collision_is_an_error(tmp_path, fixture_agents):
+def test_page_url_collision_is_an_error(tmp_path, fixture_agents):
     bad = _write(
         tmp_path,
         "bad.yaml",
@@ -210,5 +210,5 @@ terms:
     status: draft
 """,
     )
-    with pytest.raises(GlossaryError, match="slugify"):
+    with pytest.raises(TermsError, match="both resolve to the page"):
         load([bad], fixture_agents, tmp_path)

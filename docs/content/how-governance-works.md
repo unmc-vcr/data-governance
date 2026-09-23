@@ -1,14 +1,14 @@
 ---
-title: How data governance works here
+title: How research administration data governance works
 eyebrow: Start here
 lede: >-
   A term becomes official when a definition owner writes it, a steward validates
   it against real data, and the change is merged.
 nav_group: Start here
-nav_label: How data governance works
+nav_label: How governance works
 order: 10
 meta:
-  - "Maintained by: Data Governance Program"
+  - "Maintained by: Research Administration Data Governance Program"
 toc: true
 ---
 

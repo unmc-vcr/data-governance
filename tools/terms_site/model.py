@@ -1,4 +1,4 @@
-"""Load glossary YAML into the shape the templates want.
+"""Load term YAML into the shape the templates want.
 
 The YAML is validated separately by `linkml-validate` (see checks.validate),
 so this module assumes well-formed input and concerns itself with the things
@@ -78,12 +78,12 @@ HANDLING = {
 }
 
 
-class GlossaryError(Exception):
-    """Raised when the glossary data cannot be assembled into a site."""
+class TermsError(Exception):
+    """Raised when the term data cannot be assembled into a site."""
 
 
 def expand_curie(value: str, prefixes: dict[str, str]) -> str:
-    """`unmc:ClinicalTrial` -> `https://w3id.org/unmc/glossary/ClinicalTrial`."""
+    """`unmc:ClinicalTrial` -> `https://w3id.org/unmc/terms/ClinicalTrial`."""
     if value.startswith(("http://", "https://")):
         return value
     prefix, _, local = value.partition(":")
@@ -107,7 +107,7 @@ def slugify(value: str) -> str:
     spaced = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", "-", spaced)
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", spaced).strip("-").lower()
     if not slug:
-        raise GlossaryError(f"cannot build a slug from {value!r}")
+        raise TermsError(f"cannot build a slug from {value!r}")
     return slug
 
 
@@ -243,8 +243,20 @@ class Term:
         return expand_curie(self.id, self.prefixes)
 
     @property
+    def local_id(self) -> str:
+        """The identifier's local part, e.g. `unmc:Award` -> `Award`.
+
+        This, not the kebab slug, is what the page URL uses, so that the page
+        path matches the term's IRI exactly: `unmc:Award` expands to
+        `https://w3id.org/unmc/terms/Award` and is served at `/terms/Award`.
+        A w3id redirect from the namespace to this site is then the only thing
+        needed to make every term IRI dereference.
+        """
+        return self.id.split(":")[-1].split("/")[-1]
+
+    @property
     def url(self) -> str:
-        return f"terms/{self.slug}.html"
+        return f"terms/{self.local_id}.html"
 
     @property
     def status_label(self) -> str:
@@ -309,7 +321,7 @@ class Term:
 
 
 @dataclass
-class Glossary:
+class TermSet:
     areas: list[SubjectArea]
     terms: list[Term]
     agents: dict[str, Agent]
@@ -331,7 +343,7 @@ def _read(path: Path) -> dict:
     with path.open(encoding="utf-8") as fh:
         data = yaml.safe_load(fh) or {}
     if not isinstance(data, dict):
-        raise GlossaryError(f"{path}: expected a mapping at the top level")
+        raise TermsError(f"{path}: expected a mapping at the top level")
     return data
 
 
@@ -340,10 +352,10 @@ def load(
     agents_path: Path,
     repo_root: Path,
     prefixes: dict[str, str] | None = None,
-) -> Glossary:
-    """Assemble a Glossary from the definition files and the agent registry.
+) -> TermSet:
+    """Assemble a TermSet from the definition files and the agent registry.
 
-    Raises GlossaryError on any dangling reference. `linkml-validate` does not
+    Raises TermsError on any dangling reference. `linkml-validate` does not
     catch these -- it validates shapes, not the graph -- so they are caught
     here and fail the build.
     """
@@ -359,7 +371,7 @@ def load(
             title=raw.get("title"),
         )
         if person.id in people:
-            raise GlossaryError(f"{agents_path}: duplicate person {person.id}")
+            raise TermsError(f"{agents_path}: duplicate person {person.id}")
         people[person.id] = person
 
     agents: dict[str, Agent] = {}
@@ -368,7 +380,7 @@ def load(
         for person_id in raw.get("contacts") or []:
             person = people.get(person_id)
             if person is None:
-                raise GlossaryError(
+                raise TermsError(
                     f"{agents_path}: agent {raw['id']} lists contact {person_id!r}, "
                     "which is not in the people registry. Add the person there, "
                     "or fix the IRI."
@@ -381,7 +393,7 @@ def load(
             contacts=contacts,
         )
         if agent.id in agents:
-            raise GlossaryError(f"{agents_path}: duplicate agent {agent.id}")
+            raise TermsError(f"{agents_path}: duplicate agent {agent.id}")
         agents[agent.id] = agent
 
     def resolve_responsibilities(raw_list, where: str) -> list[Responsibility]:
@@ -390,7 +402,7 @@ def load(
             agent_id = entry["agent"]
             agent = agents.get(agent_id)
             if agent is None:
-                raise GlossaryError(
+                raise TermsError(
                     f"{where}: agent {agent_id!r} is not in {agents_path.name}. "
                     "Add the office there, or fix the IRI."
                 )
@@ -406,7 +418,7 @@ def load(
         doc = _read(path)
         for raw in doc.get("subject_areas") or []:
             if raw["id"] in areas:
-                raise GlossaryError(f"{rel}: subject area {raw['id']} already defined")
+                raise TermsError(f"{rel}: subject area {raw['id']} already defined")
             areas[raw["id"]] = SubjectArea(
                 id=raw["id"],
                 pref_label=raw["pref_label"],
@@ -428,12 +440,12 @@ def load(
         area_id = raw["in_subject_area"]
         area = areas.get(area_id)
         if area is None:
-            raise GlossaryError(
+            raise TermsError(
                 f"{rel} / {raw['id']}: in_subject_area {area_id!r} is not defined "
                 "in any definition file."
             )
         if raw["id"] in terms:
-            raise GlossaryError(f"{rel}: term {raw['id']} already defined")
+            raise TermsError(f"{rel}: term {raw['id']} already defined")
         terms[raw["id"]] = Term(
             id=raw["id"],
             pref_label=raw["pref_label"],
@@ -473,7 +485,7 @@ def load(
         for broader_id in term._raw_broader:  # type: ignore[attr-defined]
             target = terms.get(broader_id)
             if target is None:
-                raise GlossaryError(
+                raise TermsError(
                     f"{term.source_file} / {term.id}: broader term {broader_id!r} "
                     "does not exist."
                 )
@@ -483,7 +495,7 @@ def load(
         if replaced_by_id:
             target = terms.get(replaced_by_id)
             if target is None:
-                raise GlossaryError(
+                raise TermsError(
                     f"{term.source_file} / {term.id}: replaced_by {replaced_by_id!r} "
                     "does not exist."
                 )
@@ -499,18 +511,22 @@ def load(
         term.narrower.sort(key=lambda t: t.pref_label.lower())
         term.area.terms.append(term)
 
-    # Slugs become URLs, so a collision would silently overwrite a page.
+    # A page URL collision silently overwrites one of the two pages. Compared
+    # case-insensitively because macOS and Windows filesystems are: `Award`
+    # and `award` are distinct IRIs but the same file, and the loser would
+    # vanish without any error at build time.
     for kind, items in (("term", ordered_terms), ("subject area", list(areas.values()))):
         seen: dict[str, str] = {}
         for item in items:
-            if item.slug in seen:
-                raise GlossaryError(
-                    f"{kind} {item.id} and {seen[item.slug]} both slugify to "
-                    f"{item.slug!r}; one would overwrite the other's page."
+            key = item.url.lower()
+            if key in seen:
+                raise TermsError(
+                    f"{kind} {item.id} and {seen[key]} both resolve to the page "
+                    f"{item.url!r}; one would overwrite the other."
                 )
-            seen[item.slug] = item.id
+            seen[key] = item.id
 
-    return Glossary(
+    return TermSet(
         areas=sorted(areas.values(), key=lambda a: a.pref_label.lower()),
         terms=ordered_terms,
         agents=agents,

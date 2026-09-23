@@ -1,4 +1,4 @@
-/* UNMC Data Governance site.
+/* UNMC Research Administration Data Governance site.
  *
  * Tokens and component styles are lifted from the design prototype
  * ("Data Governance Site.dc.html"). Hex values and PMS equivalents come from
@@ -635,7 +635,7 @@ h2.subhead--term { font-size: 20px; letter-spacing: .03em; }
 .contact__name { font-size: 14.5px; font-weight: 500; }
 .contact__role { font-size: 12.5px; color: var(--ink-3); margin-bottom: 6px; }
 
-/* ---------- Glossary index ---------- */
+/* ---------- Term index ---------- */
 
 .filter-bar {
   display: flex;

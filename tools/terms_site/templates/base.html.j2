@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% block title %}{{ page_title }}{% endblock %} · UNMC Data Governance</title>
+<title>{% block title %}{{ page_title }}{% endblock %} · UNMC Research Administration Data Governance</title>
 {%- if page_description %}
 <meta name="description" content="{{ page_description }}">
 {%- endif %}
@@ -32,7 +32,7 @@ try {
   <a class="brand" href="{{ rel }}index.html">
     <span class="brand__mark" aria-hidden="true">N</span>
     <span class="brand__text">
-      <span class="brand__name">Data Governance</span>
+      <span class="brand__name">Research Administration<br>Data Governance</span>
       <span class="brand__org">University of Nebraska Medical Center</span>
     </span>
   </a>
@@ -45,7 +45,7 @@ try {
       id="site-search"
       autocomplete="off"
       placeholder="Search terms, stewards, standards"
-      aria-label="Search the glossary"
+      aria-label="Search terms and standards"
       aria-expanded="false"
       aria-controls="search-results">
     <span class="search__key" aria-hidden="true">/</span>
@@ -80,7 +80,7 @@ try {
   <main class="main" id="main">
     {%- if breadcrumb %}
     <div class="breadcrumb">
-      <a href="{{ rel }}index.html">Data Governance</a>
+      <a href="{{ rel }}index.html">Research Administration Data Governance</a>
       {%- for crumb in breadcrumb %}
       <span aria-hidden="true">/</span>
       {%- if crumb.url %}
@@ -98,7 +98,7 @@ try {
 
 <footer class="footer">
   <div class="footer__inner">
-    <span>University of Nebraska Medical Center &middot; Data Governance Program</span>
+    <span>University of Nebraska Medical Center &middot; Research Administration Data Governance Program</span>
     <div class="footer__spacer"></div>
     <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
     <span>Generated from <code>{{ schema_name }}</code> v{{ schema_version }}</span>

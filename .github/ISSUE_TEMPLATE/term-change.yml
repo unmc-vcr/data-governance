@@ -1,7 +1,7 @@
 name: Suggest a change to a term
 description: Report a definition that is wrong, unclear, or missing.
 title: "Change request: "
-labels: [glossary]
+labels: [terms]
 body:
   - type: markdown
     attributes:

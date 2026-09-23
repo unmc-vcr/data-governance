@@ -17,7 +17,7 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoes
 from .content import ContentPage
 from .model import (
     CLASSIFICATION_LABELS,
-    Glossary,
+    TermSet,
     ROLE_LABELS,
     STATUS_LABELS,
 )
@@ -177,10 +177,10 @@ def build_nav(pages: list[ContentPage], has_reference: bool) -> list[NavGroup]:
         )
 
     # Subject areas are deliberately not listed here: they are reachable from
-    # the glossary, and duplicating them in the sidebar makes the nav grow
+    # the term index, and duplicating them in the sidebar makes the nav grow
     # without bound as subject areas are added.
     reference_items = [
-        NavItem("Glossary & dictionary", "glossary.html"),
+        NavItem("All terms", "terms/index.html"),
         NavItem("How to read a term", "how-to-read-a-term.html"),
         NavItem("Search", "search.html"),
     ]
@@ -198,7 +198,7 @@ class Renderer:
     def __init__(
         self,
         out_dir: Path,
-        glossary: Glossary,
+        termset: TermSet,
         nav: list[NavGroup],
         schema: dict,
         *,
@@ -208,7 +208,7 @@ class Renderer:
     ) -> None:
         self.out = out_dir
         self.env = make_env()
-        self.glossary = glossary
+        self.termset = termset
         self.nav = nav
         self.schema = schema
         self.contact_email = contact_email
@@ -228,7 +228,7 @@ class Renderer:
             "breadcrumb": breadcrumb or [],
             "built_on": self.built_on,
             "contact_email": self.contact_email,
-            "schema_name": self.schema.get("name", "unmc_glossary"),
+            "schema_name": self.schema.get("name", "unmc_terms"),
             "schema_version": self.schema.get("version", "0"),
             "suggest_change_url": self.suggest_change_url,
             "repo_blob_url": self.repo_blob_url,
@@ -244,11 +244,11 @@ class Renderer:
     # ---------- pages ----------
 
     def hub(self, page: ContentPage, recent_changes, contacts) -> None:
-        counts = self.glossary.counts
+        counts = self.termset.counts
         stats = [
             {"n": counts.get("approved", 0), "label": "Approved terms in the dictionary"},
-            {"n": len(self.glossary.areas), "label": "Subject areas under governance"},
-            {"n": len(self.glossary.agents), "label": "Offices holding a governance role"},
+            {"n": len(self.termset.areas), "label": "Subject areas under governance"},
+            {"n": len(self.termset.agents), "label": "Offices holding a governance role"},
             {
                 "n": counts.get("draft", 0) + counts.get("in_review", 0),
                 "label": "Terms under review",
@@ -259,22 +259,22 @@ class Renderer:
             "hub.html.j2",
             page=page,
             stats=stats,
-            areas=self.glossary.areas,
+            areas=self.termset.areas,
             recent_changes=recent_changes,
             contacts=contacts,
             **self._base_context("index.html", page.title, description=page.lede),
         )
 
-    def glossary_index(self) -> None:
+    def terms_index(self) -> None:
         self.write(
-            "glossary.html",
-            "glossary.html.j2",
-            terms=self.glossary.terms,
-            areas=self.glossary.areas,
+            "terms/index.html",
+            "terms_index.html.j2",
+            terms=self.termset.terms,
+            areas=self.termset.areas,
             **self._base_context(
-                "glossary.html",
-                "Glossary & data dictionary",
-                breadcrumb=[{"label": "Glossary & data dictionary", "url": None}],
+                "terms/index.html",
+                "Terms & data dictionary",
+                breadcrumb=[{"label": "Terms & data dictionary", "url": None}],
                 description="Every governed business term at UNMC, with its definition, status, and accountable office.",
             ),
         )
@@ -288,7 +288,7 @@ class Renderer:
                 term.url,
                 term.pref_label,
                 breadcrumb=[
-                    {"label": "Glossary", "url": "glossary.html"},
+                    {"label": "Terms", "url": "terms/index.html"},
                     {"label": term.area.pref_label, "url": term.area.url},
                     {"label": term.pref_label, "url": None},
                 ],
@@ -314,7 +314,7 @@ class Renderer:
                 area.url,
                 area.pref_label,
                 breadcrumb=[
-                    {"label": "Glossary", "url": "glossary.html"},
+                    {"label": "Terms", "url": "terms/index.html"},
                     {"label": area.pref_label, "url": None},
                 ],
                 description=area.definition[:180],
@@ -327,14 +327,14 @@ class Renderer:
         # at the subject-area level: listing every term makes the sidebar grow
         # without bound, and a term's office is reachable from the term itself.
         roles: set[str] = set()
-        for items in (self.glossary.areas, self.glossary.terms):
+        for items in (self.termset.areas, self.termset.terms):
             for item in items:
                 for r in item.responsibilities:
                     if r.agent.id == office.id:
                         roles.add(r.role)
 
         accountable_for: list[dict] = []
-        for area in self.glossary.areas:
+        for area in self.termset.areas:
             for r in area.responsibilities:
                 if r.agent.id != office.id:
                     continue
@@ -361,7 +361,7 @@ class Renderer:
                 office.url,
                 office.pref_label,
                 breadcrumb=[
-                    {"label": "Glossary", "url": "glossary.html"},
+                    {"label": "Terms", "url": "terms/index.html"},
                     {"label": office.pref_label, "url": None},
                 ],
                 description=f"Who to contact at {office.pref_label} and the terms it is accountable for.",
@@ -480,7 +480,7 @@ class Renderer:
     def write_search_index(self, pages: list[ContentPage]) -> None:
         entries = []
 
-        for term in self.glossary.terms:
+        for term in self.termset.terms:
             entries.append(
                 {
                     "kind": "term",
@@ -488,7 +488,7 @@ class Renderer:
                     "title": term.pref_label,
                     "alt": term.alt_labels,
                     "url": term.url,
-                    "path": f"Glossary / {term.area.pref_label}",
+                    "path": f"Terms / {term.area.pref_label}",
                     "meta": f"{term.status_label}"
                     + (f" · Steward: {term.steward.pref_label}" if term.steward else ""),
                     "snippet": term.definition,
@@ -496,7 +496,7 @@ class Renderer:
                 }
             )
 
-        for area in self.glossary.areas:
+        for area in self.termset.areas:
             entries.append(
                 {
                     "kind": "area",
@@ -504,7 +504,7 @@ class Renderer:
                     "title": area.pref_label,
                     "alt": [],
                     "url": area.url,
-                    "path": "Glossary",
+                    "path": "Terms",
                     "meta": f"{len(area.terms)} term{'' if len(area.terms) == 1 else 's'}"
                     + (f" · {area.owner.pref_label}" if area.owner else ""),
                     "snippet": area.definition,
@@ -512,7 +512,7 @@ class Renderer:
                 }
             )
 
-        for office in self.glossary.agents.values():
+        for office in self.termset.agents.values():
             names = [c.name for c in office.contacts]
             entries.append(
                 {
@@ -521,7 +521,7 @@ class Renderer:
                     "title": office.pref_label,
                     "alt": names,
                     "url": office.url,
-                    "path": "Glossary",
+                    "path": "Terms",
                     "meta": office.email or "",
                     "snippet": "Who to contact and the terms this office is accountable for."
                     + (f" Contacts: {', '.join(names)}." if names else ""),
@@ -537,7 +537,7 @@ class Renderer:
                     "title": page.title,
                     "alt": [],
                     "url": page.url,
-                    "path": page.nav_group or "Data Governance",
+                    "path": page.nav_group or "Research Administration Data Governance",
                     "meta": " · ".join(page.meta) if page.meta else "",
                     "snippet": page.lede or page.summary,
                     "text": f"{page.title} {page.lede or ''} {page.summary}",

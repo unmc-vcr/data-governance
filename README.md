@@ -1,10 +1,10 @@
-# UNMC Research Data Governance
+# UNMC Research Administration Data Governance
 
 Governed business terms for research data at UNMC, and the static site that
 publishes them.
 
 The core idea: **terms are data, not schema.** A small LinkML schema
-(`src/schema/glossary.yaml`) describes the *shape* of a term; the terms
+(`src/schema/terms.yaml`) describes the *shape* of a term; the terms
 themselves are YAML data files in `src/definitions/`, validated against it.
 Rewording a definition is a data change, not a schema release, and local
 UNMC concepts never leak into the community LinkML Research Administration
@@ -17,7 +17,7 @@ uv sync --group dev
 ```
 
 ```bash
-uv run python -m glossary_site.build
+uv run python -m terms_site.build
 ```
 
 The site lands in `site/`. Open `site/index.html` directly — it uses relative
@@ -33,17 +33,17 @@ python3 -m http.server 8765 --directory site
 
 | Path | What it is |
 | --- | --- |
-| `src/schema/glossary.yaml` | The LinkML schema. Defines `Term`, `SubjectArea`, and the enums. |
+| `src/schema/terms.yaml` | The LinkML schema. Defines `Term`, `SubjectArea`, and the enums. |
 | `src/definitions/<area>/<area>.yaml` | A subject area declaration. |
 | `src/definitions/<area>/terms/*.yaml` | The governed terms, **one file per term**. |
 | `src/agents.yaml` | Registry of offices that can hold a governance role. |
 | `docs/content/**.md` | Authored narrative: the hub, the governance guide, standards. |
-| `tools/glossary_site/` | The site generator. |
-| `tests/` | Test suite, with its own fixture glossary. |
+| `tools/terms_site/` | The site generator. |
+| `tests/` | Test suite, with its own fixture term set. |
 
 ## How the build works
 
-`python -m glossary_site.build` runs five stages and stops at the first
+`python -m terms_site.build` runs five stages and stops at the first
 failure:
 
 1. **Validate** every definition file against the schema with
@@ -56,13 +56,13 @@ failure:
    deprecated terms point at a replacement, no cycles in `broader`.
 4. **Read change history** from `git log` over the definition files, diffing
    each commit against its parent to attribute changes to individual terms.
-5. **Render** the glossary, the authored Markdown, and the `gen-doc` schema
+5. **Render** the terms, the authored Markdown, and the `gen-doc` schema
    reference into one static site.
 
 Useful flags:
 
 ```bash
-uv run python -m glossary_site.build --skip-reference
+uv run python -m terms_site.build --skip-reference
 ```
 
 That skips the `gen-doc` pass, which is most of the build time, for faster
@@ -70,12 +70,12 @@ local iteration on templates.
 
 ### Why not `gen-doc` alone?
 
-`gen-doc` documents the **schema**, not the terms. Run it on `glossary.yaml`
+`gen-doc` documents the **schema**, not the terms. Run it on `terms.yaml`
 and you get pages for `Term`, `SubjectArea`, every slot, and every enum —
 and the words "Clinical Trial" appear nowhere in the output. Stakeholders
 care about the terms. So the site has two halves:
 
-- **Glossary pages**, rendered from `src/definitions/` — the primary audience.
+- **Term pages**, rendered from `src/definitions/` — the primary audience.
 - **Schema reference**, from `gen-doc`, wrapped in the same page shell so it
   does not look like a different website — the technical audience.
 
@@ -136,7 +136,7 @@ requires GitHub Team or Enterprise Cloud.
 - **Every pull request** — run tests, validate, build, check internal links,
   then deploy to a per-PR staging site. The preview URL is posted as a comment
   on the PR and updated in place on each push. Closing the PR tears the staging
-  site down. The build is also uploaded as the `glossary-site` artifact, so a
+  site down. The build is also uploaded as the `terms-site` artifact, so a
   reviewer can open `index.html` from the zip without signing in.
 - **Push to `main`** — the same, then deploy to the production site.
 
@@ -161,7 +161,7 @@ renders empty.
 
 `staticwebapp.config.json` is deliberately **closed by default**: every route
 requires an authenticated user, and a 401 redirects to `/.auth/login/aad`. This
-repository is private and the glossary carries internal operational
+repository is private and the term set carries internal operational
 definitions, so publishing it anonymously should be a deliberate act, not a
 default.
 
@@ -178,9 +178,9 @@ gitignored.
 
 These are real and deliberate, not oversights:
 
-- **The namespace is a placeholder.** `https://w3id.org/unmc/glossary/` is not
+- **The namespace is not registered yet.** `https://w3id.org/unmc/terms/` is not
   registered. Term IRIs do not resolve. Register a real w3id namespace and
-  replace the `unmc:` prefix in `src/schema/glossary.yaml`.
+  replace the `unmc:` prefix in `src/schema/terms.yaml`.
 - **Data classification is provisional.** The four tiers (Public / Internal /
   Sensitive / Restricted) and the handling matrix were carried over from the
   site design and have **not** been approved by Compliance & Privacy. The
@@ -193,10 +193,10 @@ These are real and deliberate, not oversights:
 - **The Azure Static Web App has to exist before the first deploy.** Until
   `AZURE_STATIC_WEB_APPS_API_TOKEN` is set, the deploy step fails while every
   step before it — tests, validation, build, link check — still runs, and the
-  `glossary-site` artifact is still produced.
+  `terms-site` artifact is still produced.
 - **Anyone in the Azure AD tenant can read the site** once authenticated. The
   config requires sign-in, not membership of a particular group. Narrow it with
-  a custom role if the glossary should be restricted further.
+  a custom role if the term set should be restricted further.
 - **Fonts load from Google Fonts.** On a network that blocks them the site
   falls back to system fonts and still reads fine, but the typography is not
   the designed one. Self-host the three families if that matters.
@@ -207,7 +207,7 @@ These are real and deliberate, not oversights:
 
 Verified against linkml 1.11.1:
 
-- `linkml-validate -s <schema> -C Glossary <files>` works and exits non-zero on
+- `linkml-validate -s <schema> -C Terms <files>` works and exits non-zero on
   failure.
 - **Do not use `linkml-validate --config`.** It reported "No issues found" on a
   file with a known-invalid status value, and it does not expand globs.
@@ -220,5 +220,5 @@ Verified against linkml 1.11.1:
 uv run pytest
 ```
 
-The suite runs against its own fixture glossary in `tests/fixtures/`, not
+The suite runs against its own fixture term set in `tests/fixtures/`, not
 against the real definitions, so adding a term never breaks a test.

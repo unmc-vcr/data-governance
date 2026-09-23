@@ -19,7 +19,7 @@ toc: true
 > design and have not been reviewed or approved by Compliance & Privacy. Do not
 > cite this page as policy, and do not use it to justify a handling decision.
 > Confirm the real scheme with Compliance & Privacy, then replace this page and
-> the `DataClassification` enum in `src/schema/glossary.yaml` together.
+> the `DataClassification` enum in `src/schema/terms.yaml` together.
 
 ## The four tiers
 

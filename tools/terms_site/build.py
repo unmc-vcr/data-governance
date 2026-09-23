@@ -1,6 +1,6 @@
 """Build the site.
 
-    python -m glossary_site.build [--out site] [--skip-reference] [--strict]
+    python -m terms_site.build [--out site] [--skip-reference] [--strict]
 
 The pipeline, in order, with the build stopping at the first failure:
 
@@ -11,7 +11,7 @@ The pipeline, in order, with the build stopping at the first failure:
    owner per term, approved terms cite a source, deprecated terms point to a
    replacement).
 4. Read each term's change history out of git.
-5. Render the glossary, the authored content, and the gen-doc schema
+5. Render the termset, the authored content, and the gen-doc schema
    reference into one static site.
 """
 
@@ -23,11 +23,11 @@ import sys
 from pathlib import Path
 
 from . import checks, content, history, reference, render
-from .model import GlossaryError, ROLE_LABELS, load
+from .model import TermsError, ROLE_LABELS, load
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
-DEFAULT_SCHEMA = REPO_ROOT / "src" / "schema" / "glossary.yaml"
+DEFAULT_SCHEMA = REPO_ROOT / "src" / "schema" / "terms.yaml"
 DEFAULT_DEFINITIONS = REPO_ROOT / "src" / "definitions"
 DEFAULT_AGENTS = REPO_ROOT / "src" / "agents.yaml"
 DEFAULT_CONTENT = REPO_ROOT / "docs" / "content"
@@ -38,7 +38,7 @@ REPO_URL = "https://github.com/unmc-vcr/data-governance"
 CONTACT_EMAIL = "datagovernance@unmc.edu"
 SUGGEST_CHANGE_URL = (
     f"{REPO_URL}/issues/new"
-    "?template=term-change.yml&labels=glossary&title=Change+request%3A+&term="
+    "?template=term-change.yml&labels=terms&title=Change+request%3A+&term="
 )
 # Source links point at the default branch rather than a commit, so they keep
 # working as the file changes. A reader following one wants the current file.
@@ -87,27 +87,27 @@ def build(
     schema_doc = render.load_schema(schema)
 
     try:
-        glossary = load(
+        termset = load(
             definition_files, agents, repo_root, prefixes=schema_doc.get("prefixes") or {}
         )
-    except GlossaryError as exc:
+    except TermsError as exc:
         return _fail("Reference check failed:", [exc])
     print(
-        f"  loaded {len(glossary.terms)} term(s) across "
-        f"{len(glossary.areas)} subject area(s)"
+        f"  loaded {len(termset.terms)} term(s) across "
+        f"{len(termset.areas)} subject area(s)"
     )
 
-    problems = checks.check_governance(glossary)
+    problems = checks.check_governance(termset)
     if problems:
         return _fail("Governance checks failed:", problems)
     print("  governance checks passed")
 
-    for note in checks.warnings(glossary):
+    for note in checks.warnings(termset):
         print(f"  warning: {note}")
 
-    history.attach(repo_root, definition_files, glossary)
-    with_history = sum(1 for t in glossary.terms if t.history)
-    print(f"  change history found for {with_history}/{len(glossary.terms)} term(s)")
+    history.attach(repo_root, definition_files, termset)
+    with_history = sum(1 for t in termset.terms if t.history)
+    print(f"  change history found for {with_history}/{len(termset.terms)} term(s)")
 
     try:
         pages = content.load(content_dir)
@@ -131,7 +131,7 @@ def build(
 
     renderer = render.Renderer(
         out,
-        glossary,
+        termset,
         nav=[],
         schema=schema_doc,
         contact_email=CONTACT_EMAIL,
@@ -153,19 +153,19 @@ def build(
 
     renderer.hub(
         hub_page,
-        recent_changes=_recent_changes(glossary),
-        contacts=_contacts(glossary),
+        recent_changes=_recent_changes(termset),
+        contacts=_contacts(termset),
     )
-    renderer.glossary_index()
+    renderer.terms_index()
     renderer.search_page()
     renderer.not_found_page()
     renderer.how_to_read(reference_url)
 
-    for area in glossary.areas:
+    for area in termset.areas:
         renderer.area_page(area)
-    for term in glossary.terms:
+    for term in termset.terms:
         renderer.term_page(term)
-    for office in glossary.agents.values():
+    for office in termset.agents.values():
         renderer.office_page(office)
     for page in pages:
         if not page.is_hub:
@@ -178,18 +178,18 @@ def build(
     return 0
 
 
-def _recent_changes(glossary):
+def _recent_changes(termset):
     """Newest changes across all terms, for the hub timeline."""
     entries = [
         {"term": term, "change": change}
-        for term in glossary.terms
+        for term in termset.terms
         for change in term.history
     ]
     entries.sort(key=lambda e: e["change"].iso, reverse=True)
     return entries[:RECENT_CHANGE_LIMIT]
 
 
-def _contacts(glossary):
+def _contacts(termset):
     """Every office holding a role, with the roles it holds."""
     colours = {
         "definition_owner": "var(--navy)",
@@ -197,7 +197,7 @@ def _contacts(glossary):
         "business_sme": "var(--ink-3)",
     }
     by_agent: dict[str, dict] = {}
-    for item in [*glossary.areas, *glossary.terms]:
+    for item in [*termset.areas, *termset.terms]:
         for responsibility in item.responsibilities:
             entry = by_agent.setdefault(
                 responsibility.agent.id,
@@ -224,8 +224,8 @@ def _contacts(glossary):
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="build-glossary-site",
-        description="Build the UNMC data governance static site.",
+        prog="build-terms-site",
+        description="Build the UNMC Research Administration Data Governance site.",
     )
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT, help="output directory")
     parser.add_argument("--schema", type=Path, default=DEFAULT_SCHEMA)

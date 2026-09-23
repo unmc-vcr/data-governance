@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from glossary_site import build as build_module
-from glossary_site import content
+from terms_site import build as build_module
+from terms_site import content
 
 FIXTURES = Path(__file__).parent / "fixtures"
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -16,7 +16,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 def built(tmp_path_factory):
     out = tmp_path_factory.mktemp("site")
     code = build_module.build(
-        schema=REPO_ROOT / "src" / "schema" / "glossary.yaml",
+        schema=REPO_ROOT / "src" / "schema" / "terms.yaml",
         definitions_dir=FIXTURES / "definitions",
         agents=FIXTURES / "agents.yaml",
         content_dir=FIXTURES / "content",
@@ -31,15 +31,15 @@ def built(tmp_path_factory):
 def test_expected_pages_exist(built):
     for path in [
         "index.html",
-        "glossary.html",
+        "terms/index.html",
         "search.html",
         "how-to-read-a-term.html",
         "guide.html",
         "areas/alpha.html",
         "areas/beta.html",
-        "terms/fully-loaded.html",
-        "terms/beta-term.html",
-        "terms/old-thing.html",
+        "terms/FullyLoaded.html",
+        "terms/BetaTerm.html",
+        "terms/OldThing.html",
         "assets/site.css",
         "assets/site.js",
         "assets/search-index.json",
@@ -48,7 +48,7 @@ def test_expected_pages_exist(built):
 
 
 def test_term_page_renders_every_section(built):
-    html = (built / "terms" / "fully-loaded.html").read_text(encoding="utf-8")
+    html = (built / "terms" / "FullyLoaded.html").read_text(encoding="utf-8")
     assert "Fully Loaded" in html
     assert "AL.FUL.001" in html
     assert "Rules &amp; qualifiers" in html
@@ -59,7 +59,7 @@ def test_term_page_renders_every_section(built):
     assert "ra:Study.identifier" in html
     assert "badge--sensitive" in html
     assert "Encrypted only" in html  # handling matrix
-    assert "https://w3id.org/unmc/glossary/FullyLoaded" in html  # permanent link
+    assert "https://w3id.org/unmc/terms/FullyLoaded" in html  # permanent link
     assert "Office A" in html and "Office B" in html
     # The stub links to each office's detail page; the named contacts live
     # there, not on the term page.
@@ -68,7 +68,7 @@ def test_term_page_renders_every_section(built):
 
 
 def test_sections_are_omitted_when_there_is_no_data(built):
-    html = (built / "terms" / "beta-term.html").read_text(encoding="utf-8")
+    html = (built / "terms" / "BetaTerm.html").read_text(encoding="utf-8")
     assert "Rules &amp; qualifiers" not in html
     assert "Source of record" not in html
     assert "Where it is used" not in html
@@ -77,14 +77,14 @@ def test_sections_are_omitted_when_there_is_no_data(built):
 
 
 def test_deprecated_term_points_at_its_replacement(built):
-    html = (built / "terms" / "old-thing.html").read_text(encoding="utf-8")
+    html = (built / "terms" / "OldThing.html").read_text(encoding="utf-8")
     assert "badge--deprecated" in html
-    assert "fully-loaded.html" in html
+    assert "FullyLoaded.html" in html
     assert "Use <a" in html
 
 
-def test_glossary_rows_carry_filter_attributes(built):
-    html = (built / "glossary.html").read_text(encoding="utf-8")
+def test_term_rows_carry_filter_attributes(built):
+    html = (built / "terms" / "index.html").read_text(encoding="utf-8")
     assert 'data-area="alpha"' in html
     assert 'data-area="beta"' in html
     assert 'data-status="deprecated"' in html
@@ -93,12 +93,12 @@ def test_glossary_rows_carry_filter_attributes(built):
 
 
 def test_relative_paths_are_depth_correct(built):
-    term = (built / "terms" / "fully-loaded.html").read_text(encoding="utf-8")
+    term = (built / "terms" / "FullyLoaded.html").read_text(encoding="utf-8")
     root = (built / "index.html").read_text(encoding="utf-8")
     # Assets carry a ?v=<digest> cache buster, so match the path prefix only.
     assert 'href="../assets/site.css?v=' in term
     assert 'href="assets/site.css?v=' in root
-    assert 'href="../glossary.html"' in term
+    assert 'href="../terms/index.html"' in term
 
 
 def test_search_index_contents(built):
@@ -108,7 +108,7 @@ def test_search_index_contents(built):
 
     loaded = next(e for e in entries if e["title"] == "Fully Loaded")
     assert "Kitchen Sink" in loaded["alt"]
-    assert loaded["url"] == "terms/fully-loaded.html"
+    assert loaded["url"] == "terms/FullyLoaded.html"
     assert "Office B" in loaded["meta"]
 
     assert any(e["title"] == "Fixture Guide" for e in entries)
@@ -128,13 +128,13 @@ def test_office_page_lists_contacts_and_accountability(built):
     assert "Beta Area" in html and "areas/beta.html" in html
     # Individual terms are not listed here, even ones the office owns or
     # stewards -- they are reachable from the term pages themselves.
-    assert "fully-loaded.html" not in html
-    assert "beta-term.html" not in html
+    assert "FullyLoaded.html" not in html
+    assert "BetaTerm.html" not in html
 
 
 def test_how_to_read_is_generated_from_the_schema(built):
     html = (built / "how-to-read-a-term.html").read_text(encoding="utf-8")
-    # Slot descriptions come straight out of glossary.yaml.
+    # Slot descriptions come straight out of terms.yaml.
     assert "Office, group, or role IRI" in html or "Other names people actually use" in html
     assert "Accountable for approving the definition" in html
     assert "Signed off. Reports may cite it." in html
@@ -147,7 +147,7 @@ def test_hub_counts_come_from_the_data(built):
 
 
 def test_nav_includes_authored_and_generated_groups(built):
-    html = (built / "glossary.html").read_text(encoding="utf-8")
+    html = (built / "terms" / "index.html").read_text(encoding="utf-8")
     assert "Fixture guide" in html
     assert "Alpha Area" in html
     assert "How to read a term" in html
@@ -177,7 +177,7 @@ terms:
         encoding="utf-8",
     )
     code = build_module.build(
-        schema=REPO_ROOT / "src" / "schema" / "glossary.yaml",
+        schema=REPO_ROOT / "src" / "schema" / "terms.yaml",
         definitions_dir=definitions,
         agents=FIXTURES / "agents.yaml",
         content_dir=FIXTURES / "content",

@@ -22,7 +22,7 @@ from pathlib import Path
 
 import re
 
-from .model import Glossary, ROLE_LABELS
+from .model import TermSet, ROLE_LABELS
 
 # `uriorcurie` is checked loosely, so `unmc:Research Project` validates
 # cleanly and then expands to an IRI containing a space, which is invalid and
@@ -52,7 +52,7 @@ def validate_against_schema(
             "-s",
             str(schema),
             "-C",
-            "Glossary",
+            "Terms",
             *[str(p) for p in data_files],
         ],
         capture_output=True,
@@ -66,11 +66,11 @@ def validate_against_schema(
     return [Problem("linkml-validate", line) for line in lines]
 
 
-def check_governance(glossary: Glossary) -> list[Problem]:
+def check_governance(termset: TermSet) -> list[Problem]:
     """Rules LinkML expressions cannot state."""
     problems: list[Problem] = []
 
-    for item in [*glossary.terms, *glossary.areas]:
+    for item in [*termset.terms, *termset.areas]:
         if not VALID_ID.match(item.id):
             problems.append(
                 Problem(
@@ -81,7 +81,7 @@ def check_governance(glossary: Glossary) -> list[Problem]:
                 )
             )
 
-    for term in glossary.terms:
+    for term in termset.terms:
         where = f"{term.source_file} / {term.id}"
         owners = [r for r in term.responsibilities if r.role == "definition_owner"]
         if len(owners) != 1:
@@ -142,7 +142,7 @@ def check_governance(glossary: Glossary) -> list[Problem]:
                 )
                 break
 
-    for area in glossary.areas:
+    for area in termset.areas:
         owners = [r for r in area.responsibilities if r.role == "definition_owner"]
         if len(owners) != 1:
             problems.append(
@@ -155,7 +155,7 @@ def check_governance(glossary: Glossary) -> list[Problem]:
     return problems
 
 
-def warnings(glossary: Glossary) -> list[Problem]:
+def warnings(termset: TermSet) -> list[Problem]:
     """Things worth saying out loud that should not stop a build.
 
     Registering an office before the term that will name it is a normal
@@ -165,10 +165,10 @@ def warnings(glossary: Glossary) -> list[Problem]:
 
     used_agents = {
         r.agent.id
-        for item in [*glossary.terms, *glossary.areas]
+        for item in [*termset.terms, *termset.areas]
         for r in item.responsibilities
     }
-    for agent_id, agent in glossary.agents.items():
+    for agent_id, agent in termset.agents.items():
         if agent_id not in used_agents:
             notes.append(
                 Problem(
@@ -177,8 +177,8 @@ def warnings(glossary: Glossary) -> list[Problem]:
                 )
             )
 
-    staffed = {p.id for agent in glossary.agents.values() for p in agent.contacts}
-    for person_id, person in glossary.people.items():
+    staffed = {p.id for agent in termset.agents.values() for p in agent.contacts}
+    for person_id, person in termset.people.items():
         if person_id not in staffed:
             notes.append(
                 Problem(
@@ -187,7 +187,7 @@ def warnings(glossary: Glossary) -> list[Problem]:
                 )
             )
 
-    for term in glossary.terms:
+    for term in termset.terms:
         if term.status in {"approved", "in_review"} and not term.steward:
             notes.append(
                 Problem(

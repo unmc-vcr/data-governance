@@ -1,6 +1,6 @@
 """Check that every internal link in the built site resolves to a real file.
 
-    python -m glossary_site.linkcheck site
+    python -m terms_site.linkcheck site
 
 Every page computes its own relative path back to the site root so that the
 site works both under a GitHub Pages project subpath and from file:// when a

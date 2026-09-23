@@ -1,7 +1,7 @@
 {% extends "base.html.j2" %}
 {#- Landing page. The hero and any prose come from docs/content/index.md;
     the counts, subject-area cards, recent changes and contacts are generated,
-    so they cannot go stale relative to the glossary data. -#}
+    so they cannot go stale relative to the term data. -#}
 
 {% block content %}
 <div class="hero">
@@ -9,7 +9,7 @@
   <h1 class="page-title page-title--hero">{{ page.title }}</h1>
   {%- if page.lede %}<p class="lede">{{ page.lede }}</p>{% endif %}
   <div class="button-row">
-    <a class="btn btn--primary" href="{{ rel }}glossary.html">Browse the data dictionary</a>
+    <a class="btn btn--primary" href="{{ rel }}terms/index.html">Browse the data dictionary</a>
     <a class="btn btn--secondary" href="{{ rel }}how-to-read-a-term.html">How to read a term</a>
   </div>
 </div>

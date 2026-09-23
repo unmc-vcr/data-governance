@@ -4,14 +4,14 @@ from pathlib import Path
 
 import pytest
 
-from glossary_site import checks
-from glossary_site.model import GlossaryError, load
+from terms_site import checks
+from terms_site.model import TermsError, load
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
-def test_fixture_data_passes_governance_checks(glossary):
-    assert checks.check_governance(glossary) == []
+def test_fixture_data_passes_governance_checks(termset):
+    assert checks.check_governance(termset) == []
 
 
 def test_fixture_data_passes_schema_validation(schema, fixture_definitions, fixture_agents):
@@ -265,11 +265,11 @@ TERM = """
 """
 
 
-def test_office_contacts_resolve_to_people(glossary):
+def test_office_contacts_resolve_to_people(termset):
     # The fixture staffs Office B with Sam Rivera via `contacts`.
-    office_b = glossary.agents["unmc:role/OfficeB"]
+    office_b = termset.agents["unmc:role/OfficeB"]
     assert [p.name for p in office_b.contacts] == ["Sam Rivera"]
-    assert office_b.contacts[0].id in glossary.people
+    assert office_b.contacts[0].id in termset.people
 
 
 def test_dangling_contact_reference_fails(tmp_path):
@@ -287,7 +287,7 @@ agents:
     )
     term = tmp_path / "case.yaml"
     term.write_text(AREA + TERM, encoding="utf-8")
-    with pytest.raises(GlossaryError, match="unmc:person/Ghost"):
+    with pytest.raises(TermsError, match="unmc:person/Ghost"):
         load([term], agents, tmp_path)
 
 
@@ -308,7 +308,7 @@ agents:
     )
     term = tmp_path / "case.yaml"
     term.write_text(AREA + TERM, encoding="utf-8")
-    with pytest.raises(GlossaryError, match="duplicate person"):
+    with pytest.raises(TermsError, match="duplicate person"):
         load([term], agents, tmp_path)
 
 

@@ -1,4 +1,4 @@
-/* UNMC Data Governance site behaviour.
+/* UNMC Research Administration Data Governance site behaviour.
  *
  * Everything here is an enhancement. With JavaScript off the site still works:
  * every term is listed on the glossary page, every row is a real link, and the

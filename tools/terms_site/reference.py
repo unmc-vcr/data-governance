@@ -1,6 +1,6 @@
 """Wrap `gen-doc` output in the site shell.
 
-`gen-doc` documents the schema, not the terms: running it on glossary.yaml
+`gen-doc` documents the schema, not the terms: running it on terms.yaml
 produces pages for Term, SubjectArea, each slot, and each enum, and the word
 "Clinical Trial" appears nowhere in the output. That makes it the secondary,
 technical half of the site -- useful to whoever maintains the schema, useless
@@ -22,7 +22,7 @@ from pathlib import Path
 from markdown_it import MarkdownIt
 
 # gen-doc emits one page per element. Sorted into these buckets for the rail.
-_SECTION_ORDER = ["index", "Glossary", "Term", "SubjectArea", "Responsibility"]
+_SECTION_ORDER = ["index", "TermSet", "Term", "SubjectArea", "Responsibility"]
 
 # gen-doc targets MkDocs, so its output carries MkDocs-isms this site has to
 # undo: a `search: boost:` front-matter block, and pretty-directory links of

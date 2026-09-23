@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-from glossary_site import build as build_module
-from glossary_site import linkcheck
+from terms_site import build as build_module
+from terms_site import linkcheck
 
 FIXTURES = Path(__file__).parent / "fixtures"
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -12,7 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 def _build(out: Path) -> Path:
     assert (
         build_module.build(
-            schema=REPO_ROOT / "src" / "schema" / "glossary.yaml",
+            schema=REPO_ROOT / "src" / "schema" / "terms.yaml",
             definitions_dir=FIXTURES / "definitions",
             agents=FIXTURES / "agents.yaml",
             content_dir=FIXTURES / "content",
@@ -32,10 +32,10 @@ def test_built_site_has_no_broken_links(tmp_path):
 
 def test_broken_link_is_detected(tmp_path):
     site = _build(tmp_path / "site")
-    page = site / "glossary.html"
+    page = site / "terms" / "index.html"
     page.write_text(
         page.read_text(encoding="utf-8").replace(
-            'href="terms/fully-loaded.html"', 'href="terms/gone.html"', 1
+            'href="../terms/FullyLoaded.html"', 'href="terms/gone.html"', 1
         ),
         encoding="utf-8",
     )
