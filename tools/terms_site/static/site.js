@@ -134,13 +134,6 @@
         "</a>"
       );
     });
-    if (hits.length > 8) {
-      html.push(
-        '<a class="search__hit" role="option" href="' + BASE + "search.html?q=" +
-        encodeURIComponent(query) + '"><div class="search__hit-meta">See all ' +
-        hits.length + " results &rarr;</div></a>"
-      );
-    }
     results.innerHTML = html.join("");
     input.setAttribute("aria-expanded", "true");
   }
@@ -165,9 +158,6 @@
         if (first) {
           event.preventDefault();
           window.location.href = first.getAttribute("href");
-        } else if (input.value.trim()) {
-          event.preventDefault();
-          window.location.href = BASE + "search.html?q=" + encodeURIComponent(input.value);
         }
         return;
       }
@@ -201,74 +191,6 @@
         input.select();
       }
     });
-  }
-
-  /* ---------- Search results page ---------- */
-
-  var pageResults = document.querySelector("[data-search-page-results]");
-  if (pageResults) {
-    var summary = document.querySelector("[data-search-summary]");
-    var heading = document.getElementById("search-heading");
-    var kindFilter = "all";
-
-    function queryFromUrl() {
-      var match = /[?&]q=([^&]*)/.exec(window.location.search);
-      return match ? decodeURIComponent(match[1].replace(/\+/g, " ")) : "";
-    }
-
-    function renderPage() {
-      var query = input ? input.value : queryFromUrl();
-      if (!query.trim()) {
-        pageResults.innerHTML = "";
-        return;
-      }
-      var hits = search(query, kindFilter);
-      if (heading) heading.textContent = "Results for “" + query + "”";
-      if (summary) {
-        summary.textContent =
-          hits.length + (hits.length === 1 ? " match" : " matches") +
-          " across terms, subject areas, and standards · sorted by relevance";
-      }
-      if (!hits.length) {
-        pageResults.innerHTML =
-          '<p style="color:var(--ink-2)">Nothing matched. Try a shorter phrase, or browse the ' +
-          '<a href="' + BASE + 'glossary.html">full dictionary</a>.</p>';
-        return;
-      }
-      pageResults.innerHTML = hits
-        .map(function (entry) {
-          return (
-            '<div class="result">' +
-            '<div class="result__head">' +
-            '<span class="badge badge--' + entry.kind + '">' + escapeHtml(entry.kindLabel || entry.kind) + "</span>" +
-            '<span class="result__path">' + escapeHtml(entry.path || "") + "</span>" +
-            "</div>" +
-            '<a class="result__title" href="' + BASE + entry.url + '">' + escapeHtml(entry.title) + "</a>" +
-            '<p class="result__snippet">' + escapeHtml((entry.snippet || "").slice(0, 260)) + "</p>" +
-            '<div class="result__meta"><span>' + escapeHtml(entry.meta || "") + "</span></div>" +
-            "</div>"
-          );
-        })
-        .join("");
-    }
-
-    var filterBar = document.querySelector("[data-search-filters]");
-    if (filterBar) {
-      filterBar.addEventListener("click", function (event) {
-        var button = event.target.closest("[data-kind]");
-        if (!button) return;
-        kindFilter = button.getAttribute("data-kind");
-        filterBar.querySelectorAll("[data-kind]").forEach(function (b) {
-          b.setAttribute("aria-pressed", String(b === button));
-        });
-        renderPage();
-      });
-    }
-
-    var initial = queryFromUrl();
-    if (input && initial) input.value = initial;
-    loadIndex().then(renderPage);
-    if (input) input.addEventListener("input", renderPage);
   }
 
   /* ---------- Glossary filter pills + pagination ---------- */

@@ -157,7 +157,7 @@ def build(
         contacts=_contacts(termset),
     )
     renderer.terms_index()
-    renderer.search_page()
+    renderer.offices_index()
     renderer.not_found_page()
     renderer.how_to_read(reference_url)
 

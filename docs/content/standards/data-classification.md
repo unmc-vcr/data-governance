@@ -1,59 +1,49 @@
 ---
 title: Data classification standard
-eyebrow: Standard · DG-014
+eyebrow: IM-50
 badge: Draft
 lede: >-
-  Every dataset carries one of four tiers. The tier decides where it can live,
-  who can see it, and how long you keep it.
+  Every dataset carries one of four tiers. The tier decides the systems where it can exist,
+  who is authorized to see and use it, and how long it is retained.
 nav_group: Standards
 nav_label: Data classification
 order: 10
 meta:
-  - "Status: PROVISIONAL — not yet approved"
-  - "Owner: Compliance & Privacy (proposed)"
+ # - "Status: PROVISIONAL — not yet approved"
+#  - "Owner: Compliance & Privacy (proposed)"
 toc: true
 ---
 
-> **Required**
-> This page is a **draft**. The four tiers below were carried over from the site
-> design and have not been reviewed or approved by Compliance & Privacy. Do not
-> cite this page as policy, and do not use it to justify a handling decision.
-> Confirm the real scheme with Compliance & Privacy, then replace this page and
-> the `DataClassification` enum in `src/schema/terms.yaml` together.
 
 ## The four tiers
 
-### Public
+### Level 1 – Public
 
-*No approval needed.* Cleared for open release. Anyone inside or outside the
-university may see it.
+*No approval needed.*  Low-risk data that can be shared without restriction. Anyone inside or outside the university may see it. Cleared for open release.
 
-Examples: published abstracts, aggregate enrollment counts, policy documents.
+Examples: published abstracts, aggregate enrollment counts, policy documents, postings, directory information, or published research
 
-### Internal
+### Level 2 – Internal
 
-*UNMC login required.* Routine operating data. Share freely inside the
-university; do not post publicly.
+*UNMC login required.* Moderate-risk data intended for internal use only.  Share freely inside the university; do not post publicly.
 
-Examples: award numbers, protocol numbers, department rosters.
+Examples: budgets, departmental procedures and planning documents, award numbers, protocol numbers, department rosters.
 
-### Sensitive
+### Level 3 – Confidential
 
-*Steward approval required.* Disclosure would cause real harm to a person or to
-the institution. Access is granted per project, with an end date.
+*Steward approval required.* High-risk data requiring authorization to access or store, including personnel records and FERPA-protected information. Disclosure would cause real harm to a person or to the institution. Access is granted per project, with an end date.
 
 Examples: adverse events, consent records, unpublished results.
 
-### Restricted
+### Level 4 – Highly restricted
 
-*Enclave only, IRB tied.* Regulated identifiable data. Never leaves an approved
-environment.
+*Enclave only, IRB tied.*  High-risk data that must be tightly controlled from creation through destruction.  Regulated identifiable data. Never leaves an approved environment.
 
-Examples: PHI with identifiers, genomic sequence, legacy subject identifiers.
+Examples: HIPAA-protected health information, Social Security numbers, PHI with identifiers, genomic sequence, legacy subject identifiers.
 
 ## Handling requirements
 
-| Control | Public | Internal | Sensitive | Restricted |
+| Control | Public | Internal | Confidential | Restricted |
 | --- | --- | --- | --- | --- |
 | Storage | Anywhere | University systems | Approved systems | Enclave only |
 | Sharing outside UNMC | Permitted | With agreement | DUA required | IRB + DUA |
@@ -61,23 +51,3 @@ Examples: PHI with identifiers, genomic sequence, legacy subject identifiers.
 | Local copies | Permitted | Discouraged | Prohibited | Prohibited |
 | Retention | Indefinite | 7 years | Per protocol | Per protocol |
 
-> **In review**
-> The retention figures above are placeholders. Retention is set by records
-> schedule and by protocol, not by classification tier, and the two have to be
-> reconciled before this page can be approved.
-
-## How a tier gets assigned
-
-A term's tier is recorded in its YAML, in the `classification` slot, and appears
-on the term page in the *Handling at a glance* panel. Changing a tier is a
-governance change like any other: open a pull request, and the steward office for
-that subject area reviews it.
-
-## Exceptions
-
-Exceptions are granted for a named project, with an end date, by the
-subject-area steward together with Compliance & Privacy. Every exception is
-recorded here and re-reviewed at expiry.
-
-Once this standard is approved, this section needs a real request route —
-currently there is none.

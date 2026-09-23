@@ -1,0 +1,38 @@
+{% extends "base.html.j2" %}
+{#- Index of every office named in the term data. Each row links to the
+    office's page; the whole list is server-rendered, so it works with
+    JavaScript off. -#}
+
+{% block content %}
+<div style="max-width:980px">
+  <div class="eyebrow">Reference</div>
+  <h1 class="page-title">Offices</h1>
+  <p class="lede">The offices accountable for UNMC business terms. Each holds one or
+  more governance roles; open an office to see who staffs it and what it owns.</p>
+
+  <div class="filter-bar">
+    <span class="filter-bar__count">{{ offices | length }} office{{ "" if offices | length == 1 else "s" }}</span>
+  </div>
+
+  <div class="term-table">
+    <div class="term-row term-row--office term-row--head" aria-hidden="true">
+      <div>Office</div><div>Roles</div><div>Accountable for</div><div></div>
+    </div>
+    {%- for entry in offices %}
+    <a class="term-row term-row--office" href="{{ rel }}{{ entry.office.url }}">
+      <span class="term-row__name">{{ entry.office.pref_label }}</span>
+      <span class="term-row__sub">{{ entry.roles | join(", ") }}</span>
+      <span class="term-row__sub">
+        {%- set parts = [] %}
+        {%- if entry.area_count %}{% set _ = parts.append(entry.area_count ~ " subject area" ~ ("" if entry.area_count == 1 else "s")) %}{% endif %}
+        {%- if entry.term_count %}{% set _ = parts.append(entry.term_count ~ " term" ~ ("" if entry.term_count == 1 else "s")) %}{% endif %}
+        {{ parts | join(" · ") if parts else "—" }}
+      </span>
+      <span class="term-row__chev" aria-hidden="true">&rsaquo;</span>
+    </a>
+    {%- else %}
+    <div class="empty-state">No office holds a governance role yet.</div>
+    {%- endfor %}
+  </div>
+</div>
+{% endblock %}

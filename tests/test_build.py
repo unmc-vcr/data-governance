@@ -32,7 +32,7 @@ def test_expected_pages_exist(built):
     for path in [
         "index.html",
         "terms/index.html",
-        "search.html",
+        "offices/index.html",
         "how-to-read-a-term.html",
         "guide.html",
         "areas/alpha.html",

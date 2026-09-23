@@ -15,11 +15,11 @@ toc: true
 ## Purpose
 
 Two analysts should never answer the same question two ways. Governance is how
-we make that true: one definition per term, one office accountable for it, and a
-written trail of every change.
+we make that true: one definition per term, one office accountable for the term, a verified
+steward, relevant subject matter experts, and a written trail of every change.
 
-If you build reports, request data, or maintain a source system, this applies to
-you.
+If you build reports, request data, or maintain a source system using Research Administration
+data, data governance applies to you.
 
 ## Who does what
 
@@ -30,8 +30,7 @@ data is a guess.
 ### Definition owner
 
 Writes and maintains the wording of a term, including its source of record and
-its calculation rules. Accountable for approving the definition. Exactly one per
-term, enforced by the build.
+its calculation rules. Accountable for approving the definition.
 
 ### Data steward
 
@@ -42,13 +41,6 @@ and answers when the number looks wrong.
 
 Knows how the data is produced in practice. Consulted before any definition
 changes; not accountable for approval.
-
-> **Good to know**
-> Responsibility sits with an office, never with a named individual. An office
-> IRI survives staff turnover; a person's name does not. If you need to know who
-> to ask for by name, the office lists the people who currently staff it — a
-> directory only. A person can staff more than one office, and moving between
-> offices changes nothing about what an office is accountable for.
 
 ## The lifecycle of a term
 
@@ -77,9 +69,3 @@ reviewer, the timestamp, and the diff all attached to it.
    term the way a reader will see it.
 4. **Merge is approval.** `CODEOWNERS` routes each subject-area file to its
    steward office, so the right people are required reviewers automatically.
-
-> **Good to know**
-> `definition_source` records where wording was *adopted from* — an NIH policy
-> page, Uniform Guidance, a professional standard. Most local definitions are
-> written here and correctly have none. Its absence is not a gap; the merged
-> pull request is what records the approval.

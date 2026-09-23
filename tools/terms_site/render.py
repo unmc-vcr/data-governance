@@ -181,8 +181,8 @@ def build_nav(pages: list[ContentPage], has_reference: bool) -> list[NavGroup]:
     # without bound as subject areas are added.
     reference_items = [
         NavItem("All terms", "terms/index.html"),
+        NavItem("Offices", "offices/index.html"),
         NavItem("How to read a term", "how-to-read-a-term.html"),
-        NavItem("Search", "search.html"),
     ]
     nav.append(NavGroup(label="Reference", items=reference_items))
 
@@ -361,7 +361,7 @@ class Renderer:
                 office.url,
                 office.pref_label,
                 breadcrumb=[
-                    {"label": "Terms", "url": "terms/index.html"},
+                    {"label": "Offices", "url": "offices/index.html"},
                     {"label": office.pref_label, "url": None},
                 ],
                 description=f"Who to contact at {office.pref_label} and the terms it is accountable for.",
@@ -429,14 +429,47 @@ class Renderer:
             ),
         )
 
-    def search_page(self) -> None:
+    def offices_index(self) -> None:
+        # Every office that holds a governance role somewhere in the term data,
+        # with the roles it holds and how much it is accountable for. Offices in
+        # the registry that no term or area names are left off: the page is an
+        # index of offices *mentioned in the terms*, not the raw registry.
+        offices = []
+        for office in self.termset.agents.values():
+            roles: set[str] = set()
+            term_count = 0
+            area_count = 0
+            for term in self.termset.terms:
+                held = [r.role for r in term.responsibilities if r.agent.id == office.id]
+                if held:
+                    term_count += 1
+                    roles.update(held)
+            for area in self.termset.areas:
+                held = [r.role for r in area.responsibilities if r.agent.id == office.id]
+                if held:
+                    area_count += 1
+                    roles.update(held)
+            if not roles:
+                continue
+            offices.append(
+                {
+                    "office": office,
+                    "roles": [ROLE_LABELS[r] for r in ROLE_LABELS if r in roles],
+                    "term_count": term_count,
+                    "area_count": area_count,
+                }
+            )
+        offices.sort(key=lambda o: o["office"].pref_label.lower())
+
         self.write(
-            "search.html",
-            "search.html.j2",
+            "offices/index.html",
+            "offices_index.html.j2",
+            offices=offices,
             **self._base_context(
-                "search.html",
-                "Search",
-                breadcrumb=[{"label": "Search", "url": None}],
+                "offices/index.html",
+                "Offices",
+                breadcrumb=[{"label": "Offices", "url": None}],
+                description="Every office that holds a governance role for a UNMC business term, with its roles and what it is accountable for.",
             ),
         )
 
