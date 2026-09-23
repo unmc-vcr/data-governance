@@ -90,15 +90,33 @@ class TermsError(Exception):
     """Raised when the term data cannot be assembled into a site."""
 
 
-def expand_curie(value: str, prefixes: dict[str, str]) -> str:
-    """`unmc:ClinicalTrial` -> `https://w3id.org/unmc/terms/ClinicalTrial`."""
+def expand_curie(value: str, prefixes: dict[str, str], *, where: str = "") -> str:
+    """Resolve a `uriorcurie` value to a full IRI.
+
+    `unmc:ClinicalTrial` -> `https://w3id.org/unmc/terms/ClinicalTrial`.
+
+    An `http(s)://` value is already a URI and passes through unchanged.
+    Anything else is treated as a CURIE: it expands when its prefix is
+    declared in the schema `prefixes:` block, and otherwise raises, so an
+    undefined or mistyped prefix fails the build instead of silently becoming
+    a dead `prefix:local` link on the page.
+    """
     if value.startswith(("http://", "https://")):
         return value
-    prefix, _, local = value.partition(":")
+    prefix, sep, local = value.partition(":")
     base = prefixes.get(prefix)
-    if not base or not local:
-        return value
-    return base + local
+    if base and local:
+        return base + local
+    context = f"{where}: " if where else ""
+    if not sep or not local:
+        raise TermsError(
+            f"{context}{value!r} is neither an http(s) URI nor a prefixed "
+            "CURIE. Use a full URL or a `prefix:local` value."
+        )
+    raise TermsError(
+        f"{context}{value!r} uses prefix {prefix!r}, which is not declared in "
+        "the schema `prefixes:` block. Add the prefix there, or use a full URL."
+    )
 
 
 def slugify(value: str) -> str:
@@ -273,7 +291,7 @@ class Term:
     area: SubjectArea
     code: str | None = None
     alt_labels: list[str] = field(default_factory=list)
-    definition_source: str | None = None
+    definition_source: dict[str,str] | None = None
     classification: str | None = None
     source_of_record: dict | None = None
     rules: list[str] = field(default_factory=list)
@@ -300,10 +318,11 @@ class Term:
     def iri(self) -> str:
         """The term's CURIE expanded to a full IRI, for citation.
 
-        Falls back to the CURIE when the prefix is unknown, which is visibly
-        wrong on the page rather than silently wrong in someone's citation.
+        The id's prefix (unmc/term/area) is always declared, so this resolves;
+        an undeclared prefix raises rather than emit a citation that will not
+        dereference.
         """
-        return expand_curie(self.id, self.prefixes)
+        return expand_curie(self.id, self.prefixes, where=f"{self.source_file} / {self.id}")
 
     @property
     def local_id(self) -> str:
@@ -532,7 +551,18 @@ def load(
             area=area,
             code=raw.get("code"),
             alt_labels=list(raw.get("alt_labels") or []),
-            definition_source=raw.get("definition_source"),
+            definition_source=(
+                {
+                    "source_uri": expand_curie(
+                        raw["definition_source"]["source_uri"],
+                        prefixes,
+                        where=f"{rel} / {raw['id']} / definition_source",
+                    ),
+                    "source_label": raw["definition_source"].get("source_label"),
+                }
+                if raw.get("definition_source")
+                else None
+            ),
             classification=raw.get("classification"),
             source_of_record=raw.get("source_of_record"),
             rules=list(raw.get("rules") or []),
@@ -548,9 +578,18 @@ def load(
             responsibilities=resolve_responsibilities(
                 raw.get("responsibilities"), f"{rel} / {raw['id']}"
             ),
-            exact_match=list(raw.get("exact_match") or []),
-            close_match=list(raw.get("close_match") or []),
-            realized_by=list(raw.get("realized_by") or []),
+            exact_match=[
+                expand_curie(v, prefixes, where=f"{rel} / {raw['id']} / exact_match")
+                for v in raw.get("exact_match") or []
+            ],
+            close_match=[
+                expand_curie(v, prefixes, where=f"{rel} / {raw['id']} / close_match")
+                for v in raw.get("close_match") or []
+            ],
+            realized_by=[
+                expand_curie(v, prefixes, where=f"{rel} / {raw['id']} / realized_by")
+                for v in raw.get("realized_by") or []
+            ],
             source_file=rel,
             prefixes=prefixes,
         )

@@ -56,7 +56,9 @@ def test_term_page_renders_every_section(built):
     assert "FULL_ID" in html
     assert "Monthly Test Summary" in html
     assert "Same as" in html and "Similar to" in html
-    assert "ra:Study.identifier" in html
+    # realized_by is a uriorcurie: the CURIE expands to a full IRI and renders
+    # as a link, rather than being shown as a bare `prefix:local` string.
+    assert "https://w3id.org/unmc/model/Study.identifier" in html
     assert "badge--sensitive" in html
     assert "Encrypted only" in html  # handling matrix
     assert "https://w3id.org/unmc/terms/FullyLoaded" in html  # permanent link

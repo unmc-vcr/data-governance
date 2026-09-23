@@ -33,5 +33,5 @@ terms:
     close_match:
       - term:SomethingSimilar
     realized_by:
-      - ra:Study.identifier
+      - unmc:Study.identifier
     status: approved

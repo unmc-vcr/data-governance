@@ -17,10 +17,16 @@ def test_slugify_splits_camel_case():
 
 def test_expand_curie():
     prefixes = {"term": "https://example.edu/terms/"}
+    # A declared prefix expands.
     assert expand_curie("term:Foo", prefixes) == "https://example.edu/terms/Foo"
-    # Unknown prefix stays visible rather than becoming a wrong IRI.
-    assert expand_curie("other:Foo", prefixes) == "other:Foo"
+    # A full http(s) URI passes through untouched.
     assert expand_curie("https://example.org/x", prefixes) == "https://example.org/x"
+    # An undeclared prefix fails the build rather than becoming a dead link.
+    with pytest.raises(TermsError, match="not declared"):
+        expand_curie("other:Foo", prefixes)
+    # A value that is neither a URI nor a prefixed CURIE also fails.
+    with pytest.raises(TermsError):
+        expand_curie("just-a-string", prefixes)
 
 
 def test_loads_all_terms_and_areas(termset):

@@ -39,7 +39,7 @@
       <p>{{ term.definition }}</p>
       {%- if term.definition_source %}
       <div class="definition-box__source">
-        Adopted from <a href="{{ term.definition_source }}" rel="noopener">{{ term.definition_source | domain }}</a>
+        Adopted from <a href="{{ term.definition_source.source_uri }}" rel="noopener">{{ (term.definition_source.source_label or term.definition_source.source_uri) | domain }}</a>
       </div>
       {%- endif %}
     </div>
@@ -110,7 +110,7 @@
     <h2 class="subhead subhead--term" id="implemented">Implemented in</h2>
     <div class="list-box">
       {%- for target in term.realized_by %}
-      <div class="list-box__row"><div class="list-box__name"><code class="term-code">{{ target }}</code></div></div>
+      <div class="list-box__row"><div class="list-box__name">{{ target | as_link | safe }}</div></div>
       {%- endfor %}
     </div>
     {%- endif %}
