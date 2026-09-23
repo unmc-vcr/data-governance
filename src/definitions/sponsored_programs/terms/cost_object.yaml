@@ -1,5 +1,5 @@
 terms:
-  - id: unmc:CostObject
+  - id: unmc:cost-object
     code: SP.FIN.001
     pref_label: Cost Object (SAP)
     alt_labels: [SAP Cost Object, WBS Element, SAP Account]
@@ -7,14 +7,14 @@ terms:
       The SAP financial account -- WBS element or cost center -- to which a sponsored
       project's expenditures are posted. It is the bridge between an award in SPAdmin and the
       institutional general ledger.
-    in_subject_area: unmc:SponsoredPrograms
+    in_subject_area: unmc:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_SAP.SAP_CostObject (general ledger account in dbo.GA_SAP.SAP_Account)
       format: SAP account identifier linked to an award's GID and award sequence.
     responsibilities:
-      - agent: unmc:role/SponsoredProgramsOffice
+      - agent: unmc:role/sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/ResearchAnalytics
+      - agent: unmc:role/research-analytics
         governance_role: data_steward
     status: draft

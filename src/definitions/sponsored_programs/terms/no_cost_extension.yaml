@@ -1,12 +1,12 @@
 terms:
-  - id: unmc:NoCostExtension
+  - id: unmc:no-cost-extension
     code: SP.COST.006
     pref_label: No-Cost Extension (NCE)
     alt_labels: [NCE]
     definition: >-
       An approved extension of an award's period of performance beyond its original end date
       without any additional funds from the sponsor.
-    in_subject_area: unmc:SponsoredPrograms
+    in_subject_area: unmc:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: >-
@@ -14,8 +14,8 @@ terms:
         dbo.GA_NCE_Log
       format: Indicator, with the pre-extension end date retained for comparison.
     responsibilities:
-      - agent: unmc:role/SponsoredProgramsOffice
+      - agent: unmc:role/sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/ResearchAnalytics
+      - agent: unmc:role/research-analytics
         governance_role: data_steward
     status: draft

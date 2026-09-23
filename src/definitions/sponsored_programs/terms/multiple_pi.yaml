@@ -1,20 +1,20 @@
 terms:
-  - id: unmc:MultiplePI
+  - id: unmc:multiple-pi
     code: SP.PERS.002
     pref_label: Multiple PI (Multi-PI)
     alt_labels: [Multi-PI, MPI, Multiple Principal Investigator]
     definition: >-
       A designation that formal leadership of a sponsored project is shared among two or more
       co-equal principal investigators, each accountable for the project as a whole.
-    broader: [unmc:PrincipalInvestigator]
-    in_subject_area: unmc:SponsoredPrograms
+    broader: [unmc:principal-investigator]
+    in_subject_area: unmc:sponsored-programs
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.Multi_PI and dbo.GA_Staff.Multi_PI
       format: Indicator on the project and on personnel records.
     responsibilities:
-      - agent: unmc:role/SponsoredProgramsOffice
+      - agent: unmc:role/sponsored-programs-office
         governance_role: definition_owner
-      - agent: unmc:role/ResearchAnalytics
+      - agent: unmc:role/research-analytics
         governance_role: data_steward
     status: draft

@@ -1,6 +1,6 @@
-id: https://w3id.org/unmc/glossary
-name: unmc_glossary
-title: UNMC Research Data Glossary
+id: https://w3id.org/unmc/terms/
+name: unmc_terms
+title: UNMC Research Administration Data Governance
 description: >-
   Governed business terms, organized by subject area. Terms are data files
   validated against this schema. The schema describes the shape of a term;
@@ -14,7 +14,7 @@ prefixes:
   dcterms: http://purl.org/dc/terms/
   prov: http://www.w3.org/ns/prov#
   foaf: http://xmlns.com/foaf/0.1/
-  unmc: https://w3id.org/unmc/glossary/
+  unmc: https://w3id.org/unmc/terms/
 default_prefix: unmc
 default_range: string
 
@@ -23,7 +23,7 @@ imports:
 
 classes:
 
-  Glossary:
+  Terms:
     description: >-
       Per-file container for validation only; not part of the published
       vocabulary. Its blank node is stripped before the vocabulary is published
@@ -223,7 +223,7 @@ slots:
   responsibilities:
     description: >-
       Who is accountable for this term. Exactly one definition_owner is
-      required; the check in tools/glossary_site/checks.py enforces that,
+      required; the check in tools/terms_site/checks.py enforces that,
       because LinkML cannot express it.
     slot_uri: prov:qualifiedAttribution
     range: Responsibility
@@ -314,29 +314,29 @@ enums:
     description: What an office is on the hook for.
     permissible_values:
       definition_owner:
-        meaning: unmc:DefinitionOwner
+        meaning: unmc:definition-owner
         description: Accountable for approving the definition.
       data_steward:
-        meaning: unmc:DataSteward
+        meaning: unmc:data-steward
         description: Responsible for quality of implementing data.
       business_sme:
-        meaning: unmc:BusinessSME
+        meaning: unmc:business-sme
         description: Consulted on meaning and use in practice.
 
   TermStatus:
     description: How far a term has moved through review.
     permissible_values:
       draft:
-        meaning: unmc:status/Draft
+        meaning: unmc:status/draft
         description: Written but not yet checked against real data.
       in_review:
-        meaning: unmc:status/InReview
+        meaning: unmc:status/in-review
         description: Steward and SME are validating it. Not citable in reporting.
       approved:
-        meaning: unmc:status/Approved
+        meaning: unmc:status/approved
         description: Signed off. Reports may cite it.
       deprecated:
-        meaning: unmc:status/Deprecated
+        meaning: unmc:status/deprecated
         description: Superseded. Retained for historical reconciliation only.
 
   DataClassification:
@@ -345,16 +345,16 @@ enums:
       confirmation by Compliance and Privacy. Not policy yet.
     permissible_values:
       public:
-        meaning: unmc:classification/Public
+        meaning: unmc:classification/public
         description: Cleared for open release.
       internal:
-        meaning: unmc:classification/Internal
+        meaning: unmc:classification/internal
         description: Routine operating data. UNMC login required.
       sensitive:
-        meaning: unmc:classification/Sensitive
+        meaning: unmc:classification/sensitive
         description: Disclosure would cause real harm. Access granted per project.
       restricted:
-        meaning: unmc:classification/Restricted
+        meaning: unmc:classification/restricted
         description: Regulated identifiable data. Approved enclave only.
 
   GuidanceKind:

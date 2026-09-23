@@ -4,17 +4,17 @@
 # terms/, so a commit changing a definition touches just that term's file and
 # the term's change history stays clean.
 #
-# Validated against src/schema/glossary.yaml as a Glossary document.
+# Validated against src/schema/terms.yaml as a Terms document.
 # Every edit here is a governance change: open a pull request, let the steward
 # office review the rendered preview, and merge. The merged PR is the approval
 # record.
 
 subject_areas:
-  - id: unmc:ClinicalResearch
+  - id: unmc:clinical-research
     pref_label: Clinical Research
     definition: Research involving human participants, their data, or their specimens.
     responsibilities:
-      - agent: unmc:role/ClinicalResearchOffice
+      - agent: unmc:role/clinical-research-office
         governance_role: definition_owner
-      - agent: unmc:role/ResearchAnalytics
+      - agent: unmc:role/research-analytics
         governance_role: data_steward

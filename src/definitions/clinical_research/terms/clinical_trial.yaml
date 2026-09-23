@@ -2,18 +2,18 @@
 # ../clinical_research.yaml.
 
 terms:
-  - id: unmc:ClinicalTrial
+  - id: unmc:clinical-trial
     code: CR.TRI.002
     pref_label: Clinical Trial
     alt_labels: [Interventional Study]
     definition: A clinical study in which participants are prospectively assigned
       to an intervention to evaluate its effects on health-related outcomes.
     definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
-    in_subject_area: unmc:ClinicalResearch
-    broader: [unmc:ClinicalStudy]
+    in_subject_area: unmc:clinical-research
+    broader: [unmc:clinical-study]
     responsibilities:
-      - agent: unmc:role/ClinicalResearchOffice
+      - agent: unmc:role/clinical-research-office
         governance_role: definition_owner
-      - agent: unmc:role/ResearchAnalytics
+      - agent: unmc:role/research-analytics
         governance_role: data_steward
     status: in_review

@@ -10,83 +10,83 @@
 # Moving a person between offices never changes what an office is accountable
 # for -- accountability stays with the office.
 #
-# Validated as a Glossary document (agents + people only) against
-# src/schema/glossary.yaml. Every `agent:` IRI used in src/definitions/ must
+# Validated as a Terms document (agents + people only) against
+# src/schema/terms.yaml. Every `agent:` IRI used in src/definitions/ must
 # resolve to an entry here, and every `contacts:` IRI must resolve to a person;
-# tools/glossary_site/checks.py fails the build otherwise.
+# tools/terms_site/checks.py fails the build otherwise.
 
 people:
-  - id: unmc:person/JamesGeiger
+  - id: unmc:person/james-geiger
     name: James Geiger
     email: james.geiger@unmc.edu
     title: Director, Research Analytics and Decision Support
 
-  - id: unmc:person/JackNoecker
+  - id: unmc:person/jack-noecker
     name: Jack Noecker
     email: jnoecker@unmc.edu
     title: Research Data Specialist
 
-  - id: unmc:person/KatiePenas
+  - id: unmc:person/katie-penas
     name: Katie Penas
     email: kpenas@nebraskamed.com
     title: Director, Research Operations
 
-  - id: unmc:person/CourtneyKennedy
+  - id: unmc:person/courtney-kennedy
     name: Courtney Kennedy
     email: CoKennedy@nebraskamed.com
     title: Manager, Clinical Trials Applications
 
-  - id: unmc:person/BethanyDeCarolis
+  - id: unmc:person/bethany-decarolis
     name: Bethany DeCarolis
     email: bdecarolis@unmc.edu
     title: Director, Sponsored Programs Administration
 
-  - id: unmc:person/KristinMorrissey
+  - id: unmc:person/kristin-morrissey
     name: Kristin Morrissey
     email: kristin.morrissey@unmc.edu
     title: Assistant Director, Sponsored Programs Administration
 
-  - id: unmc:person/LauraWise
+  - id: unmc:person/laura-wise
     name: Laura Wise
     email: laura.wise@unmc.edu
     title: Assistant Director, Sponsored Programs Administration
 
-  - id: unmc:person/BruceGordon
+  - id: unmc:person/bruce-gordon
     name: Bruce Gordon
     email: bgordon@unmc.edu
     title: Assistant Vice Chancellor for Regulatory Affairs
 
-  - id: unmc:person/KristiDeHaai
+  - id: unmc:person/kristi-dehaai
     name: Kristi DeHaai
     email: krdehaai@unmc.edu
     title: Assistant Director, Institutional Review Board
 
 agents:
-  - id: unmc:role/ClinicalResearchOffice
+  - id: unmc:role/clinical-research-office
     pref_label: Clinical Research Office
     email: clinicalresearch@unmc.edu
     contacts:
-      - unmc:person/KatiePenas
-      - unmc:person/CourtneyKennedy
+      - unmc:person/katie-penas
+      - unmc:person/courtney-kennedy
 
-  - id: unmc:role/ResearchAnalytics
+  - id: unmc:role/research-analytics
     pref_label: Research Analytics
     email: researchanalytics@unmc.edu
     contacts:
-      - unmc:person/JamesGeiger
-      - unmc:person/JackNoecker
+      - unmc:person/james-geiger
+      - unmc:person/jack-noecker
 
-  - id: unmc:role/SponsoredProgramsOffice
+  - id: unmc:role/sponsored-programs-office
     pref_label: Sponsored Programs Administration
     email: spa@unmc.edu
     contacts:
-      - unmc:person/BethanyDeCarolis
-      - unmc:person/KristinMorrissey
-      - unmc:person/LauraWise
+      - unmc:person/bethany-decarolis
+      - unmc:person/kristin-morrissey
+      - unmc:person/laura-wise
 
-  - id: unmc:role/RegulatoryAffairs
+  - id: unmc:role/regulatory-affairs
     pref_label: Office of Regulatory Affairs
     email: irbora@unmc.edu
     contacts:
-      - unmc:person/BruceGordon
-      - unmc:person/KristiDeHaai
+      - unmc:person/bruce-gordon
+      - unmc:person/kristi-dehaai
