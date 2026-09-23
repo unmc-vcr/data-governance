@@ -223,6 +223,7 @@ class Term:
     realized_by: list[str] = field(default_factory=list)
     broader: list["Term"] = field(default_factory=list)
     narrower: list["Term"] = field(default_factory=list)
+    related_to: list["Term"] = field(default_factory=list)
     replaced_by: "Term | None" = None
     replaces: list["Term"] = field(default_factory=list)
     history: list[Change] = field(default_factory=list)
@@ -302,6 +303,10 @@ class Term:
         for t in self.narrower:
             if t.id not in seen:
                 out.append((t, "Narrower term"))
+                seen.add(t.id)
+        for t in self.related_to:
+            if t.id not in seen:
+                out.append((t, "Related term"))
                 seen.add(t.id)
         if self.replaced_by and self.replaced_by.id not in seen:
             out.append((self.replaced_by, "Replaces this term"))
@@ -478,6 +483,7 @@ def load(
         )
         # Stashed for the second pass, once every term exists.
         terms[raw["id"]]._raw_broader = list(raw.get("broader") or [])  # type: ignore[attr-defined]
+        terms[raw["id"]]._raw_related = list(raw.get("related") or [])  # type: ignore[attr-defined]
         terms[raw["id"]]._raw_replaced_by = raw.get("replaced_by")  # type: ignore[attr-defined]
 
     # Second pass: term-to-term links, now that every id is known.
@@ -491,6 +497,25 @@ def load(
                 )
             term.broader.append(target)
             target.narrower.append(term)
+        # skos:related is symmetric, so a single assertion surfaces on both
+        # terms' pages. Back-fill the reverse side, de-duping by id in case the
+        # pair asserted it from both ends.
+        for related_id in term._raw_related:  # type: ignore[attr-defined]
+            target = terms.get(related_id)
+            if target is None:
+                raise TermsError(
+                    f"{term.source_file} / {term.id}: related term {related_id!r} "
+                    "does not exist."
+                )
+            if target is term:
+                raise TermsError(
+                    f"{term.source_file} / {term.id}: a term cannot be related to "
+                    "itself."
+                )
+            if target.id not in {t.id for t in term.related_to}:
+                term.related_to.append(target)
+            if term.id not in {t.id for t in target.related_to}:
+                target.related_to.append(term)
         replaced_by_id = term._raw_replaced_by  # type: ignore[attr-defined]
         if replaced_by_id:
             target = terms.get(replaced_by_id)
@@ -504,11 +529,13 @@ def load(
 
     for term in terms.values():
         del term._raw_broader  # type: ignore[attr-defined]
+        del term._raw_related  # type: ignore[attr-defined]
         del term._raw_replaced_by  # type: ignore[attr-defined]
 
     ordered_terms = sorted(terms.values(), key=lambda t: t.pref_label.lower())
     for term in ordered_terms:
         term.narrower.sort(key=lambda t: t.pref_label.lower())
+        term.related_to.sort(key=lambda t: t.pref_label.lower())
         term.area.terms.append(term)
 
     # A page URL collision silently overwrites one of the two pages. Compared
