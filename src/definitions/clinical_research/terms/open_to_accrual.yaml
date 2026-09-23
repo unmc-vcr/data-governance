@@ -1,0 +1,18 @@
+terms:
+  - id: term:open-to-accrual
+    code: CR.ACT.002
+    pref_label: Open to Accrual
+    alt_labels: []
+    definition: >-
+      A clinical study which is enrolling new subjects.  As a singular date, this represents the point 
+      in a clinical study lifecycle upon which participants were first permitted to be enrolled in the study, 
+      following all regulatory and sponsor requirements.
+    in_subject_area: area:clinical-research
+    realized_by:
+      - term:activation-timeline
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-analytics
+        governance_role: data_steward
+    status: draft

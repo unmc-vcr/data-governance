@@ -1,0 +1,17 @@
+terms:
+  - id: term:activation-timeline
+    code: CR.ACT.001
+    pref_label: Activation Timeline
+    alt_labels: [Time to Trial, Startup]
+    definition: >-
+      The amount of time, in calendar days, that it takes for a clinical study to open to accrual to
+      potential participants.
+    in_subject_area: area:clinical-research
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-analytics
+        governance_role: data_steward
+    status: draft
+
+
