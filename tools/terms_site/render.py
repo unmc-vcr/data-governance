@@ -22,6 +22,13 @@ from .model import (
     STATUS_LABELS,
 )
 
+# Schema elements are published here rather than under "reference/", so that
+# the site path matches the IRI sub-path: an element minted as
+# `unmc:Term` expands to https://w3id.org/unmc/model/Term and resolves to
+# /model/Term.html. That keeps the w3id .htaccess to one generic rule -- the
+# IRI path is the site path plus ".html" -- instead of needing a special case.
+SCHEMA_DIR = "model"
+
 TEMPLATES = Path(__file__).parent / "templates"
 STATIC = Path(__file__).parent / "static"
 
@@ -188,7 +195,10 @@ def build_nav(pages: list[ContentPage], has_reference: bool) -> list[NavGroup]:
 
     if has_reference:
         nav.append(
-            NavGroup(label="System", items=[NavItem("Schema reference", "reference/index.html")])
+            NavGroup(
+                label="System",
+                items=[NavItem("Schema reference", f"{SCHEMA_DIR}/index.html")],
+            )
         )
 
     return nav
@@ -205,6 +215,7 @@ class Renderer:
         contact_email: str,
         suggest_change_url: str | None,
         repo_blob_url: str | None = None,
+        base_path: str = "/",
     ) -> None:
         self.out = out_dir
         self.env = make_env()
@@ -214,6 +225,10 @@ class Renderer:
         self.contact_email = contact_email
         self.suggest_change_url = suggest_change_url
         self.repo_blob_url = repo_blob_url
+        # Where the site is served from. "/" for a custom domain,
+        # "/<repo>/" for a GitHub Pages project site. Only 404.html needs
+        # it; every other page computes its own relative prefix.
+        self.base_path = base_path if base_path.endswith("/") else base_path + "/"
         self.built_on = date.today().strftime("%d %b %Y")
         self.written: list[str] = []
         self.asset_version = _asset_version()
@@ -474,12 +489,13 @@ class Renderer:
         )
 
     def not_found_page(self) -> None:
-        """Served by Azure Static Web Apps for any unmatched URL."""
+        """Served by GitHub Pages for any unmatched URL under the site."""
         self.write(
             "404.html",
             "not_found.html.j2",
             asset_version=self.asset_version,
             contact_email=self.contact_email,
+            base_path=self.base_path,
         )
 
     def reference_page(
@@ -495,7 +511,7 @@ class Renderer:
                 out_path,
                 title,
                 breadcrumb=[
-                    {"label": "Schema reference", "url": "reference/index.html"},
+                    {"label": "Schema reference", "url": f"{SCHEMA_DIR}/index.html"},
                     {"label": title, "url": None},
                 ],
             ),

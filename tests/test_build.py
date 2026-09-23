@@ -163,7 +163,7 @@ subject_areas:
     pref_label: A
     definition: d
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
 terms:
   - id: unmc:T
     pref_label: T
@@ -171,7 +171,7 @@ terms:
     in_subject_area: unmc:A
     broader: [unmc:Nope]
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: draft
 """,
         encoding="utf-8",

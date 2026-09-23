@@ -65,6 +65,7 @@ def build(
     out: Path = DEFAULT_OUT,
     skip_reference: bool = False,
     repo_root: Path = REPO_ROOT,
+    base_path: str = "/",
 ) -> int:
     # Recursive: subject areas are laid out as one directory each, with a
     # terms/ subdirectory holding one file per term, so that a commit touching
@@ -137,6 +138,7 @@ def build(
         contact_email=CONTACT_EMAIL,
         suggest_change_url=SUGGEST_CHANGE_URL,
         repo_blob_url=REPO_BLOB_URL,
+        base_path=base_path,
     )
 
     reference_url = None
@@ -233,6 +235,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--agents", type=Path, default=DEFAULT_AGENTS)
     parser.add_argument("--content", type=Path, default=DEFAULT_CONTENT)
     parser.add_argument(
+        "--base-path",
+        default="/",
+        help='where the site is served from; "/" for a custom domain, '
+             '"/<repo>/" for a GitHub Pages project site (404.html only)',
+    )
+    parser.add_argument(
         "--skip-reference",
         action="store_true",
         help="skip the gen-doc schema reference (faster local iteration)",
@@ -246,6 +254,7 @@ def main(argv: list[str] | None = None) -> int:
         content_dir=args.content,
         out=args.out,
         skip_reference=args.skip_reference,
+        base_path=args.base_path,
     )
 
 

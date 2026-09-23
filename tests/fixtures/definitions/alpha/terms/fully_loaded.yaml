@@ -1,11 +1,11 @@
 terms:
-  - id: unmc:FullyLoaded
+  - id: term:FullyLoaded
     code: AL.FUL.001
     pref_label: Fully Loaded
     alt_labels: [Everything Term, Kitchen Sink]
     definition: A term that fills in every optional slot the schema offers.
     definition_source: https://example.edu/standards/fully-loaded
-    in_subject_area: unmc:Alpha
+    in_subject_area: area:Alpha
     classification: sensitive
     source_of_record:
       system: Test System — main module
@@ -24,14 +24,14 @@ terms:
       - guidance_kind: required
         guidance_text: Never join this to identifiable fields outside an approved environment.
     responsibilities:
-      - agent: unmc:role/OfficeA
+      - agent: office:OfficeA
         governance_role: definition_owner
-      - agent: unmc:role/OfficeB
+      - agent: office:OfficeB
         governance_role: data_steward
     exact_match:
       - https://example.org/vocab/FullyLoaded
     close_match:
-      - unmc:SomethingSimilar
+      - term:SomethingSimilar
     realized_by:
       - ra:Study.identifier
     status: approved

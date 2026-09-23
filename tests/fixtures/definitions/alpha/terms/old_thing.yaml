@@ -1,11 +1,11 @@
 terms:
-  - id: unmc:OldThing
+  - id: term:OldThing
     code: AL.OLD.003
     pref_label: Old Thing
     definition: Superseded identifier, retained for reconciliation only.
-    in_subject_area: unmc:Alpha
-    replaced_by: unmc:FullyLoaded
+    in_subject_area: area:Alpha
+    replaced_by: term:FullyLoaded
     responsibilities:
-      - agent: unmc:role/OfficeA
+      - agent: office:OfficeA
         governance_role: definition_owner
     status: deprecated

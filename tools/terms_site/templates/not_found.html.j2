@@ -1,12 +1,13 @@
-{#- Standalone 404, referenced by staticwebapp.config.json.
+{#- Standalone 404. GitHub Pages serves this for any unmatched path.
 
     This page deliberately does NOT extend base.html.j2. Every other page
     computes relative asset paths from its own depth, but a 404 is served in
     response to any URL -- /terms/nope, /a/b/c/nope -- so a relative
-    "assets/site.css" would resolve differently each time. Root-absolute paths
-    are correct here because Azure Static Web Apps serves from the domain root.
-    That makes this the one page that does not work over file://, which is
-    fine: nothing in a downloaded artifact can 404. -#}
+    "assets/site.css" would resolve differently each time. So paths here are
+    built from `base_path`, which must match where the site is served: "/" for
+    a custom domain, or "/<repo>/" for a GitHub Pages project site. That makes
+    this the one page that does not work over file://, which is fine --
+    nothing in a downloaded artifact can 404. -#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v={{ asset_version }}">
+<link rel="stylesheet" href="{{ base_path }}assets/site.css?v={{ asset_version }}">
 <script>
 try {
   var t = localStorage.getItem("unmc-dg-theme");
@@ -26,7 +27,7 @@ try {
 </head>
 <body>
 <header class="header">
-  <a class="brand" href="/index.html">
+  <a class="brand" href="{{ base_path }}index.html">
     <span class="brand__mark" aria-hidden="true">N</span>
     <span class="brand__text">
       <span class="brand__name">Research Administration<br>Data Governance</span>
@@ -44,8 +45,8 @@ try {
       Terms are never deleted &mdash; a deprecated one keeps its page and points at
       whatever replaced it.</p>
       <div class="button-row">
-        <a class="btn btn--primary" href="/terms/index.html">Browse the dictionary</a>
-        <a class="btn btn--secondary" href="/index.html">Governance home</a>
+        <a class="btn btn--primary" href="{{ base_path }}terms/index.html">Browse the dictionary</a>
+        <a class="btn btn--secondary" href="{{ base_path }}index.html">Governance home</a>
       </div>
       <p style="margin-top:32px;font-size:13px;color:var(--ink-3)">
         If you followed a link from inside the site, that's a bug worth reporting to

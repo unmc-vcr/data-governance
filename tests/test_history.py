@@ -18,14 +18,14 @@ subject_areas:
     pref_label: A
     definition: d
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
 terms:
   - id: unmc:One
     pref_label: One
     definition: First definition.
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: draft
 """
 
@@ -39,7 +39,7 @@ TERM_A_PLUS_B = TERM_A_REWORDED + """
     definition: Second term.
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: draft
 """
 
@@ -130,7 +130,7 @@ terms:
     definition: A definition.
     in_subject_area: unmc:A
     responsibilities:
-      - {{agent: 'unmc:role/OfficeA', governance_role: definition_owner}}
+      - {{agent: 'office:OfficeA', governance_role: definition_owner}}
     status: {status}
 """
 

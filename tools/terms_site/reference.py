@@ -21,6 +21,8 @@ from pathlib import Path
 
 from markdown_it import MarkdownIt
 
+from .render import SCHEMA_DIR
+
 # gen-doc emits one page per element. Sorted into these buckets for the rail.
 _SECTION_ORDER = ["index", "TermSet", "Term", "SubjectArea", "Responsibility"]
 
@@ -133,7 +135,7 @@ def render_all(gen_doc_dir: Path, renderer) -> str | None:
                 "stem": stem,
                 "title": _title_of(text, stem),
                 "markdown": text,
-                "url": f"reference/{stem}.html",
+                "url": f"{SCHEMA_DIR}/{stem}.html",
             }
         )
 
@@ -156,7 +158,7 @@ def render_all(gen_doc_dir: Path, renderer) -> str | None:
     # Copy any images or diagrams gen-doc produced alongside the markdown.
     for extra in gen_doc_dir.rglob("*"):
         if extra.is_file() and extra.suffix.lower() in {".png", ".svg", ".jpg", ".jpeg"}:
-            target = renderer.out / "reference" / extra.relative_to(gen_doc_dir)
+            target = renderer.out / SCHEMA_DIR / extra.relative_to(gen_doc_dir)
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(extra, target)
 

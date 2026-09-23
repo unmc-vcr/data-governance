@@ -36,5 +36,10 @@ def termset(fixture_definitions, fixture_agents):
         fixture_definitions,
         fixture_agents,
         FIXTURES,
-        prefixes={"unmc": "https://example.edu/vocab/"},
+        prefixes={
+            "unmc": "https://example.edu/model/",
+            "term": "https://example.edu/terms/",
+            "area": "https://example.edu/areas/",
+            "office": "https://example.edu/offices/",
+        },
     )

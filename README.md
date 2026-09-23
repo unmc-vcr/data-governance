@@ -129,50 +129,35 @@ three flat slots so a fourth role can be added without a schema change.
 
 ## CI/CD
 
-`.github/workflows/site.yml` deploys to **Azure Static Web Apps**. GitHub Pages
-is not used: this repository is private, and Pages on a private repository
-requires GitHub Team or Enterprise Cloud.
+`.github/workflows/site.yml` publishes to **GitHub Pages**.
 
 - **Every pull request** — run tests, validate, build, check internal links,
-  then deploy to a per-PR staging site. The preview URL is posted as a comment
-  on the PR and updated in place on each push. Closing the PR tears the staging
-  site down. The build is also uploaded as the `terms-site` artifact, so a
-  reviewer can open `index.html` from the zip without signing in.
-- **Push to `main`** — the same, then deploy to the production site.
+  and upload the site as the `terms-site` artifact. Download it, unzip, open
+  `index.html`: the site uses relative links throughout, so it needs no server.
+  Nothing deploys.
+- **Push to `main`** — the same, then deploy to Pages.
 
 The checkout uses `fetch-depth: 0` because each term's change history is read
 from the commits touching its own file. With a shallow clone every timeline
-renders empty.
+renders empty, silently.
 
-### One-time setup
+### Setup
 
-1. Create the Static Web App in Azure (the Free plan is enough for a static
-   site of this size).
-2. Confirm the repository secret
-   `AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_GLACIER_0E6778E10` exists. Azure
-   creates it automatically when the Static Web App is linked to the
-   repository, naming it after the resource. If the resource is ever recreated
-   the name changes, and both `azure_static_web_apps_api_token` lines in the
-   workflow have to be updated to match.
-3. Configure the Azure AD identity provider, because `staticwebapp.config.json`
-   requires authentication (see below).
+1. Settings → Pages → Source: **GitHub Actions**.
+2. Pages requires the repository to be public, or GitHub Team / Enterprise
+   Cloud on a private one.
+3. If the site is served from a project subpath
+   (`https://<org>.github.io/<repo>/`) rather than a custom domain, pass that
+   prefix to the build so the 404 page resolves its assets:
 
-### Access control
+   ```bash
+   uv run python -m terms_site.build --base-path /<repo>/
+   ```
 
-`staticwebapp.config.json` is deliberately **closed by default**: every route
-requires an authenticated user, and a 401 redirects to `/.auth/login/aad`. This
-repository is private and the term set carries internal operational
-definitions, so publishing it anonymously should be a deliberate act, not a
-default.
-
-To open the site to anyone with the link, change the `/*` route's
-`allowedRoles` to `["anonymous"]`. To restrict further, assign a custom role in
-Azure and require that instead of `authenticated` — otherwise any account in
-the configured directory can read the site.
-
-The file is tracked at the repository root and copied into `site/` during the
-build, because it has to sit at the root of the deployed content and `site/` is
-gitignored.
+   Every other page computes its own relative prefix and works at any depth;
+   only `404.html` needs this, because it is served in response to arbitrary
+   URLs. A custom domain avoids the flag entirely — and avoids baking the repo
+   name into every w3id redirect target.
 
 ## Known gaps
 
@@ -190,13 +175,10 @@ These are real and deliberate, not oversights:
 - **`CODEOWNERS` uses placeholder team handles.** GitHub does not warn about an
   unknown owner — the rule is silently ineffective. Create the teams and verify
   with a test PR.
-- **The Azure Static Web App has to exist before the first deploy.** Until
-  `AZURE_STATIC_WEB_APPS_API_TOKEN` is set, the deploy step fails while every
-  step before it — tests, validation, build, link check — still runs, and the
-  `terms-site` artifact is still produced.
-- **Anyone in the Azure AD tenant can read the site** once authenticated. The
-  config requires sign-in, not membership of a particular group. Narrow it with
-  a custom role if the term set should be restricted further.
+- **The published site is anonymous.** Pages serves it to anyone with the
+  link, so everything in `src/definitions/` is public once the repository is.
+  Sensitive subject areas belong in a separate private repository — see
+  `docs/plans/` for that design.
 - **Fonts load from Google Fonts.** On a network that blocks them the site
   falls back to system fonts and still reads fine, but the typography is not
   the designed one. Self-host the three families if that matters.

@@ -30,14 +30,14 @@ subject_areas:
     pref_label: A
     definition: d
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
 terms:
   - id: unmc:T
     pref_label: T
     definition: d
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: not_a_real_status
 """,
         encoding="utf-8",
@@ -59,7 +59,7 @@ subject_areas:
     pref_label: A
     definition: d
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
 terms:
 """
 
@@ -74,7 +74,7 @@ def test_term_needs_exactly_one_definition_owner(tmp_path, fixture_agents):
     definition: d
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: data_steward}
+      - {agent: 'office:OfficeA', governance_role: data_steward}
     status: draft
 """,
         fixture_agents,
@@ -92,8 +92,8 @@ def test_two_offices_in_the_same_role_is_flagged(tmp_path, fixture_agents):
     definition: d
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
-      - {agent: 'unmc:role/OfficeB', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeB', governance_role: definition_owner}
     status: draft
 """,
         fixture_agents,
@@ -115,7 +115,7 @@ def test_approved_term_needs_no_definition_source(tmp_path, fixture_agents):
     definition: A definition written here rather than adopted.
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: approved
 """,
         fixture_agents,
@@ -134,7 +134,7 @@ def test_approved_term_cannot_be_a_todo(tmp_path, fixture_agents):
     definition_source: https://example.edu/s
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: approved
 """,
         fixture_agents,
@@ -152,7 +152,7 @@ def test_deprecated_term_needs_a_replacement(tmp_path, fixture_agents):
     definition: d
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: deprecated
 """,
         fixture_agents,
@@ -171,14 +171,14 @@ def test_replaced_by_on_a_live_term_is_flagged(tmp_path, fixture_agents):
     in_subject_area: unmc:A
     replaced_by: unmc:U
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: draft
   - id: unmc:U
     pref_label: U
     definition: d
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: draft
 """,
         fixture_agents,
@@ -197,7 +197,7 @@ def test_broader_cycle_is_flagged(tmp_path, fixture_agents):
     in_subject_area: unmc:A
     broader: [unmc:U]
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: draft
   - id: unmc:U
     pref_label: U
@@ -205,7 +205,7 @@ def test_broader_cycle_is_flagged(tmp_path, fixture_agents):
     in_subject_area: unmc:A
     broader: [unmc:T]
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: draft
 """,
         fixture_agents,
@@ -223,7 +223,7 @@ def test_unused_agent_warns_but_does_not_fail(tmp_path, fixture_agents):
     definition: d
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: draft
 """,
         fixture_agents,
@@ -245,7 +245,7 @@ def test_missing_steward_warns_on_a_live_term(tmp_path, fixture_agents):
     definition_source: https://example.edu/s
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeA', governance_role: definition_owner}
+      - {agent: 'office:OfficeA', governance_role: definition_owner}
     status: approved
 """,
         fixture_agents,
@@ -260,14 +260,14 @@ TERM = """
     definition: d
     in_subject_area: unmc:A
     responsibilities:
-      - {agent: 'unmc:role/OfficeB', governance_role: definition_owner}
+      - {agent: 'office:OfficeB', governance_role: definition_owner}
     status: draft
 """
 
 
 def test_office_contacts_resolve_to_people(termset):
     # The fixture staffs Office B with Sam Rivera via `contacts`.
-    office_b = termset.agents["unmc:role/OfficeB"]
+    office_b = termset.agents["office:OfficeB"]
     assert [p.name for p in office_b.contacts] == ["Sam Rivera"]
     assert office_b.contacts[0].id in termset.people
 
@@ -277,17 +277,17 @@ def test_dangling_contact_reference_fails(tmp_path):
     agents.write_text(
         """
 agents:
-  - id: unmc:role/OfficeA
+  - id: office:OfficeA
     pref_label: Office A
-  - id: unmc:role/OfficeB
+  - id: office:OfficeB
     pref_label: Office B
-    contacts: [unmc:person/Ghost]
+    contacts: [person:Ghost]
 """,
         encoding="utf-8",
     )
     term = tmp_path / "case.yaml"
     term.write_text(AREA + TERM, encoding="utf-8")
-    with pytest.raises(TermsError, match="unmc:person/Ghost"):
+    with pytest.raises(TermsError, match="person:Ghost"):
         load([term], agents, tmp_path)
 
 
@@ -296,12 +296,12 @@ def test_duplicate_person_fails(tmp_path):
     agents.write_text(
         """
 people:
-  - {id: unmc:person/Jane, name: Jane Doe}
-  - {id: unmc:person/Jane, name: Jane Roe}
+  - {id: person:Jane, name: Jane Doe}
+  - {id: person:Jane, name: Jane Roe}
 agents:
-  - id: unmc:role/OfficeA
+  - id: office:OfficeA
     pref_label: Office A
-  - id: unmc:role/OfficeB
+  - id: office:OfficeB
     pref_label: Office B
 """,
         encoding="utf-8",
@@ -317,11 +317,11 @@ def test_unstaffed_person_warns_but_does_not_fail(tmp_path):
     agents.write_text(
         """
 people:
-  - {id: unmc:person/Jane, name: Jane Doe}
+  - {id: person:Jane, name: Jane Doe}
 agents:
-  - id: unmc:role/OfficeA
+  - id: office:OfficeA
     pref_label: Office A
-  - id: unmc:role/OfficeB
+  - id: office:OfficeB
     pref_label: Office B
 """,
         encoding="utf-8",

@@ -1,11 +1,11 @@
 terms:
-  - id: unmc:BetaTerm
+  - id: term:BetaTerm
     code: BE.TRM.001
     pref_label: Beta Term
     definition: A minimal term in the second subject area.
-    in_subject_area: unmc:Beta
+    in_subject_area: area:Beta
     classification: internal
     responsibilities:
-      - agent: unmc:role/OfficeB
+      - agent: office:OfficeB
         governance_role: definition_owner
     status: in_review
