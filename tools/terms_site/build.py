@@ -35,7 +35,7 @@ DEFAULT_OUT = REPO_ROOT / "site"
 
 REPO_URL = "https://github.com/unmc-vcr/data-governance"
 
-CONTACT_EMAIL = "datagovernance@unmc.edu"
+CONTACT_EMAIL = ""
 SUGGEST_CHANGE_URL = (
     f"{REPO_URL}/issues/new"
     "?template=term-change.yml&labels=terms&title=Change+request%3A+&term="
