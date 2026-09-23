@@ -1,0 +1,28 @@
+terms:
+  - id: term:patient-oriented-research-study
+    code: CR.STU.001
+    pref_label: Patient-oriented research study
+    definition: >-
+      Research conducted with human subjects (or on material of human origin such as tissues, 
+      specimens, and cognitive phenomena) for which an investigator (or colleague) directly 
+      interacts with human subjects. It includes: (a) mechanisms of human disease, 
+      (b), therapeutic interventions, (c) clinical trials, or (d) development of new technologies.
+    in_subject_area: area:clinical-research
+    definition_source:
+      source_uri: https://grants.nih.gov/grants/glossary.htm#ClinicalResearch
+    broader: [term:clinical-research]
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    guidance:
+      - guidance_kind: good_to_know
+        guidance_text: >-
+          A local hallmark of a patient-oriented research study at UNMC is whether an individual
+          participant's consent to participate or waiver thereof was collected as part of the 
+          participation process.
+
+          Excluded from this definition are in vitro studies that utilize human tissues 
+          that cannot be linked to a living individual.
+    status: draft

@@ -1,0 +1,22 @@
+terms:
+  - id: term:behavioral-study
+    code: CR.STU.005
+    pref_label: Behavioral and social sciences research
+    definition: >-
+      Research involving the systematic study of behavioral phenomena—the observable 
+      actions of individuals or groups and to mental phenomena such as knowledge, 
+      attitudes, beliefs, motivations, perceptions, cognitions, and emotions—
+      and social phenomena—those interactions between and among individuals, 
+      and to the characteristics, structures, and functions of social groups 
+      and institutions—relevant to a person's complete physical, mental, and 
+      social well-being.
+    definition_source:
+      source_uri: https://obssr.od.nih.gov/about/bssr-definition
+    in_subject_area: area:clinical-research
+    broader: [term:clinical-research]
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

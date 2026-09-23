@@ -1,19 +1,17 @@
-# One term per file. The subject area itself is declared in
-# ../clinical_research.yaml.
-
 terms:
   - id: term:clinical-trial
-    code: CR.TRI.002
-    pref_label: Clinical Trial
+    code: CR.STU.002
+    pref_label: Clinical trial
     alt_labels: [Interventional Study]
     definition: A clinical study in which participants are prospectively assigned
       to an intervention to evaluate its effects on health-related outcomes.
-    definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
+    definition_source:
+      source_uri: https://grants.nih.gov/policy/clinical-trials/definition.htm
     in_subject_area: area:clinical-research
-    broader: [term:clinical-study]
+    broader: [term:patient-oriented-research-study]
     responsibilities:
       - agent: office:clinical-research-office
         governance_role: definition_owner
       - agent: office:research-admin-stewardship-council
         governance_role: data_steward
-    status: in_review
+    status: draft

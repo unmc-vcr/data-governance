@@ -1,0 +1,22 @@
+terms:
+  - id: term:epidemiological_study
+    code: CR.STU.004
+    pref_label: Epidemiological study
+    definition: >-
+      A study that measures the distribution and determinants of health-related 
+      states or events in specified populations, and the application of this
+      study to the control of health problems. May be measured across persons, 
+      places, or time; usually observational rather than interventional.
+    definition_source:
+      source_uri: isbn:9780195141696
+      source_label: Last, JM. 2001. A Dictionary of Epidemiology.
+    in_subject_area: area:clinical-research
+    broader: [term:clinical-research]
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft
+
+

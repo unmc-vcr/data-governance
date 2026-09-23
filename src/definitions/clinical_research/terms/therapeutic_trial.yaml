@@ -1,17 +1,16 @@
 terms:
-  - id: term:activation-timeline
-    code: CR.ACT.001
-    pref_label: Activation timeline
-    alt_labels: [Time to Trial, Startup]
+  - id: term:therapeutic-clinical-trial
+    code: CR.STU.003
+    pref_label: Therapeutic clinical trial
+    alt_labels: []
     definition: >-
-      The amount of time, in calendar days, that it takes for a clinical study to open to accrual to
-      potential participants.
+      A clinical trial in which the primary research objective is to evaluate the
+      effectiveness of a drug or device.
     in_subject_area: area:clinical-research
+    broader: [term:clinical-trial]
     responsibilities:
       - agent: office:clinical-research-office
         governance_role: definition_owner
       - agent: office:research-admin-stewardship-council
         governance_role: data_steward
     status: draft
-
-

@@ -1,7 +1,7 @@
 terms:
   - id: term:open-to-accrual
     code: CR.ACT.002
-    pref_label: Open to Accrual
+    pref_label: Open to accrual
     alt_labels: []
     definition: >-
       A clinical study which is enrolling new subjects.  As a singular date, this represents the point 
