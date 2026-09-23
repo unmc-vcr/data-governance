@@ -664,7 +664,7 @@ h2.subhead--term { font-size: 20px; letter-spacing: .03em; }
 .term-table { display: block; }
 .term-row {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 110px) minmax(0, 130px) 18px;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 110px) 18px;
   gap: 12px;
   align-items: center;
   padding: 15px 16px;

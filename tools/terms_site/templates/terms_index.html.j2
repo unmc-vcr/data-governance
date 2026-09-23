@@ -18,7 +18,7 @@
 
   <div class="term-table">
     <div class="term-row term-row--head" aria-hidden="true">
-      <div>Term</div><div>Subject area</div><div>Status</div><div>Steward</div><div></div>
+      <div>Term</div><div>Subject area</div><div>Status</div><div></div>
     </div>
     {%- for term in terms %}
     <a class="term-row"
@@ -29,7 +29,6 @@
       <span class="term-row__name{% if term.status == 'deprecated' %} term-row__name--deprecated{% endif %}">{{ term.pref_label }}</span>
       <span class="term-row__sub">{{ term.area.pref_label }}</span>
       <span><span class="badge badge--{{ term.status }}">{{ term.status_label }}</span></span>
-      <span class="term-row__sub">{{ term.steward.pref_label if term.steward else "—" }}</span>
       <span class="term-row__chev" aria-hidden="true">&rsaquo;</span>
     </a>
     {%- endfor %}

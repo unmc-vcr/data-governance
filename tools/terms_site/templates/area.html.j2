@@ -19,14 +19,13 @@
     <h2 class="subhead">Terms</h2>
     <div class="term-table">
       <div class="term-row term-row--head" aria-hidden="true">
-        <div>Term</div><div>Code</div><div>Status</div><div>Steward</div><div></div>
+        <div>Term</div><div>Code</div><div>Status</div><div></div>
       </div>
       {%- for term in area.terms %}
       <a class="term-row" href="{{ rel }}{{ term.url }}">
         <span class="term-row__name{% if term.status == 'deprecated' %} term-row__name--deprecated{% endif %}">{{ term.pref_label }}</span>
         <span class="term-row__sub">{{ term.code or "—" }}</span>
         <span><span class="badge badge--{{ term.status }}">{{ term.status_label }}</span></span>
-        <span class="term-row__sub">{{ term.steward.pref_label if term.steward else "—" }}</span>
         <span class="term-row__chev" aria-hidden="true">&rsaquo;</span>
       </a>
       {%- else %}
