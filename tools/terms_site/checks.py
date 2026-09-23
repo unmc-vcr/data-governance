@@ -177,7 +177,11 @@ def warnings(termset: TermSet) -> list[Problem]:
                 )
             )
 
-    staffed = {p.id for agent in termset.agents.values() for p in agent.contacts}
+    staffed = {
+        p.id
+        for agent in termset.agents.values()
+        for p in [*agent.contacts, *(m.person for m in agent.memberships)]
+    }
     for person_id, person in termset.people.items():
         if person_id not in staffed:
             notes.append(

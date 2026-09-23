@@ -17,12 +17,12 @@
     </div>
 
     <h2 class="subhead">People</h2>
-    {%- for c in office.contacts %}
+    {%- for c in office.roster %}
     <div class="contact">
       <div class="avatar" style="background:var(--navy)" aria-hidden="true">{{ c.initials }}</div>
       <div style="min-width:0">
         <div class="contact__name">{{ c.name }}</div>
-        {%- if c.title %}<div class="contact__role">{{ c.title }}</div>{% endif %}
+        {%- if c.secondary %}<div class="contact__role">{{ c.secondary }}</div>{% endif %}
         {%- if c.email %}<a href="mailto:{{ c.email }}">{{ c.email }}</a>{% endif %}
       </div>
     </div>

@@ -27,6 +27,14 @@ ROLE_LABELS = {
     "business_sme": "Business SME",
 }
 
+COUNCIL_ROLE_LABELS = {
+    "chair": "Chair",
+    "security": "Security",
+    "ethics": "Ethics",
+    "documentation": "Documentation",
+    "compliance": "Compliance",
+}
+
 STATUS_LABELS = {
     "draft": "Draft",
     "in_review": "In Review",
@@ -136,11 +144,43 @@ class Person:
 
 
 @dataclass
+class RosterMember:
+    """One person listed on an office page.
+
+    A uniform shape for the office template so a plain office's `contacts` and
+    a council's seated `memberships` render through the same card. `secondary`
+    is the line under the name: a job title for a contact, a council seat for a
+    member.
+    """
+
+    name: str
+    secondary: str | None = None
+    email: str | None = None
+
+    @property
+    def initials(self) -> str:
+        return _initials(self.name)
+
+
+@dataclass
+class Membership:
+    """One person holding one seat on a council. See StewardshipCouncil."""
+
+    person: Person
+    role: str
+
+    @property
+    def role_label(self) -> str:
+        return COUNCIL_ROLE_LABELS.get(self.role, self.role.replace("_", " ").title())
+
+
+@dataclass
 class Agent:
     id: str
     pref_label: str
     email: str | None = None
     contacts: list[Person] = field(default_factory=list)
+    memberships: list[Membership] = field(default_factory=list)
 
     @property
     def initials(self) -> str:
@@ -153,6 +193,28 @@ class Agent:
     @property
     def url(self) -> str:
         return f"offices/{self.slug}.html"
+
+    @property
+    def roster(self) -> list[RosterMember]:
+        """People to list on this agent's page, in a single shape.
+
+        A council lists its seated members with the seat as the secondary line;
+        every other office lists its staff contacts with their job title. Both
+        flow through the same card in office.html.j2.
+        """
+        if self.memberships:
+            return [
+                RosterMember(
+                    name=m.person.name,
+                    secondary=m.role_label,
+                    email=m.person.email,
+                )
+                for m in self.memberships
+            ]
+        return [
+            RosterMember(name=c.name, secondary=c.title, email=c.email)
+            for c in self.contacts
+        ]
 
 
 @dataclass
@@ -391,11 +453,22 @@ def load(
                     "or fix the IRI."
                 )
             contacts.append(person)
+        memberships = []
+        for entry in raw.get("memberships") or []:
+            person = people.get(entry["member"])
+            if person is None:
+                raise TermsError(
+                    f"{agents_path}: agent {raw['id']} seats {entry['member']!r}, "
+                    "which is not in the people registry. Add the person there, "
+                    "or fix the IRI."
+                )
+            memberships.append(Membership(person=person, role=entry["council_role"]))
         agent = Agent(
             id=raw["id"],
             pref_label=raw["pref_label"],
             email=raw.get("email"),
             contacts=contacts,
+            memberships=memberships,
         )
         if agent.id in agents:
             raise TermsError(f"{agents_path}: duplicate agent {agent.id}")

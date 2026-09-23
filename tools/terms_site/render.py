@@ -189,7 +189,7 @@ def build_nav(pages: list[ContentPage], has_reference: bool) -> list[NavGroup]:
     # the term index, and duplicating them in the sidebar makes the nav grow
     # without bound as subject areas are added.
     reference_items = [
-        NavItem("Data Dictionary", "terms/index.html"),
+        NavItem("Business Terms", "terms/index.html"),
         NavItem("Offices", "offices/index.html"),
         NavItem("How to read a term", "how-to-read-a-term.html"),
     ]
@@ -290,7 +290,7 @@ class Renderer:
             areas=self.termset.areas,
             **self._base_context(
                 "terms/index.html",
-                "Data dictionary",
+                "Business Terms",
                 breadcrumb=[{"label": "Terms", "url": None}],
                 description="Every governed business term at UNMC, with its definition, status, and accountable office.",
             ),
@@ -564,7 +564,7 @@ class Renderer:
             )
 
         for office in self.termset.agents.values():
-            names = [c.name for c in office.contacts]
+            names = [m.name for m in office.roster]
             entries.append(
                 {
                     "kind": "office",
