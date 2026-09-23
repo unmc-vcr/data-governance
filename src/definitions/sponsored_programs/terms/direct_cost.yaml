@@ -6,7 +6,8 @@ terms:
       A cost that can be identified specifically with a particular sponsored project, an
       instructional activity, or any other institutional activity, or that can be directly
       assigned to such activities relatively easily with a high degree of accuracy.
-    definition_source: https://grants.nih.gov/grants/policy/nihgps/HTML5/section_7/7.3_direct_costs_and_indirect_costs.htm
+    definition_source:
+      source_uri: https://grants.nih.gov/grants/policy/nihgps/HTML5/section_7/7.3_direct_costs_and_indirect_costs.htm
     in_subject_area: area:sponsored-programs
     responsibilities:
       - agent: office:sponsored-programs-office
