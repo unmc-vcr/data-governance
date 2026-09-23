@@ -8,11 +8,11 @@ terms:
       in a clinical study lifecycle upon which participants were first permitted to be enrolled in the study, 
       following all regulatory and sponsor requirements.
     in_subject_area: area:clinical-research
-    realized_by:
+    related:
       - term:activation-timeline
     responsibilities:
       - agent: office:clinical-research-office
         governance_role: definition_owner
-      - agent: office:research-analytics
+      - agent: office:research-admin-stewardship-council
         governance_role: data_steward
     status: draft

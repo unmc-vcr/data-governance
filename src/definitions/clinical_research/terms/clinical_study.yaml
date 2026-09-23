@@ -7,7 +7,7 @@ terms:
     responsibilities:
       - agent: office:clinical-research-office
         governance_role: definition_owner
-      - agent: office:research-analytics
+      - agent: office:research-admin-stewardship-council
         governance_role: data_steward
     guidance:
       - guidance_kind: draft

@@ -15,6 +15,6 @@ terms:
     responsibilities:
       - agent: office:sponsored-programs-office
         governance_role: definition_owner
-      - agent: office:research-analytics
+      - agent: office:research-admin-stewardship-council
         governance_role: data_steward
     status: draft

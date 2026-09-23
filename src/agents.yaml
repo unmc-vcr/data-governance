@@ -90,3 +90,11 @@ agents:
     contacts:
       - person:bruce-gordon
       - person:kristi-dehaai
+
+  - id: office:research-admin-stewardship-council
+    category: unmc:StewardshipCouncil
+    pref_label: Research Administration Data Stewardship Council
+    email: crsc@unmc.edu
+    memberships:
+      - member: person:james-geiger
+        council_role: chair
