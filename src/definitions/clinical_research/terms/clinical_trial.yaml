@@ -8,7 +8,8 @@ terms:
     alt_labels: [Interventional Study]
     definition: A clinical study in which participants are prospectively assigned
       to an intervention to evaluate its effects on health-related outcomes.
-    definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
+    definition_source:
+      source_uri: https://grants.nih.gov/policy/clinical-trials/definition.htm
     in_subject_area: area:clinical-research
     broader: [term:clinical-study]
     responsibilities:
