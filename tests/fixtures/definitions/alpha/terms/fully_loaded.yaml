@@ -4,7 +4,9 @@ terms:
     pref_label: Fully Loaded
     alt_labels: [Everything Term, Kitchen Sink]
     definition: A term that fills in every optional slot the schema offers.
-    definition_source: https://example.edu/standards/fully-loaded
+    definition_source:
+      source_uri: https://example.edu/standards/fully-loaded
+      source_label: Fully Loaded Standard (2nd ed.)
     in_subject_area: area:Alpha
     classification: sensitive
     source_of_record:

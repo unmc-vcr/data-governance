@@ -56,6 +56,10 @@ def test_term_page_renders_every_section(built):
     assert "FULL_ID" in html
     assert "Monthly Test Summary" in html
     assert "Same as" in html and "Similar to" in html
+    # definition_source is a DefinitionSource object: the source_uri is the
+    # href and the human-readable source_label is the link text.
+    assert 'href="https://example.edu/standards/fully-loaded"' in html
+    assert "Fully Loaded Standard (2nd ed.)" in html
     # realized_by is a uriorcurie: the CURIE expands to a full IRI and renders
     # as a link, rather than being shown as a bare `prefix:local` string.
     assert "https://w3id.org/unmc/model/Study.identifier" in html
