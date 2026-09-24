@@ -208,7 +208,12 @@
                 "measure",
                 "attribute",
                 "state",
-                "classification"
+                "classification",
+                "process",
+                "interval",
+                "role",
+                "agent",
+                "information_artifact"
             ],
             "title": "SemanticType",
             "type": "string"

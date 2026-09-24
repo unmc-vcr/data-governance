@@ -508,3 +508,38 @@ enums:
         description: >-
           A kind or category of study, project, or other planned process.
           E.g. clinical trial, research project.
+      process:
+        meaning: bfo:0000015        # process
+        description: >-
+          A kind or category of activity that unfolds over time -- a study,
+          project, or program type. E.g. clinical trial, research project.
+          (Replaces the earlier "classification": obi:0000011 "planned
+          process" is deprecated, and bfo:0000015 is the next-broadest fit.)
+      interval:
+        meaning: bfo:0000038        # one-dimensional temporal region
+        description: >-
+          A located span of time with a start and an end -- a calendar window,
+          not a count. Distinct from measure: an interval is a region of the
+          time axis (occurrent), a measure is a magnitude (a data item).
+          E.g. period of performance, budget period.
+      role:
+        meaning: bfo:0000023
+        # role (realizable entity)
+        description: >-
+          A role a person or organization holds in a context, realized by
+          taking part in a process. E.g. principal investigator, prime sponsor.
+      agent:
+        meaning: bfo:0000004
+        # independent continuant
+        description: >-
+          A party -- an organization or organizational unit -- named as a kind
+          of thing rather than a role it plays. E.g. sponsor, administering
+          department. (Individual offices and people are modelled as Agent and
+          Person, not as terms; this is for term-level party concepts.)
+      information_artifact:
+        meaning: iao:0000030
+        # information content entity
+        description: >-
+          A document, agreement, record, or identifier -- information that is
+          about something else. E.g. award, proposal, grant ID, unique entity
+          identifier.
