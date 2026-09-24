@@ -131,7 +131,8 @@ def test_approved_term_cannot_be_a_todo(tmp_path, fixture_agents):
   - id: unmc:T
     pref_label: T
     definition: TODO write this
-    definition_source: https://example.edu/s
+    definition_source:
+      source_uri: https://example.edu/s
     in_subject_area: unmc:A
     responsibilities:
       - {agent: 'office:OfficeA', governance_role: definition_owner}
@@ -242,7 +243,8 @@ def test_missing_steward_warns_on_a_live_term(tmp_path, fixture_agents):
   - id: unmc:T
     pref_label: T
     definition: A real definition.
-    definition_source: https://example.edu/s
+    definition_source:
+      source_uri: https://example.edu/s
     in_subject_area: unmc:A
     responsibilities:
       - {agent: 'office:OfficeA', governance_role: definition_owner}
