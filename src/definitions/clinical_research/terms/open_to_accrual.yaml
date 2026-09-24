@@ -11,7 +11,8 @@ terms:
     in_subject_area: area:clinical-research
     semantic_type: event
     related:
-      - term:accrual-status-open
+      - term:study-status
+      - term:study-status-open-to-accrual
       - term:activation-timeline
     responsibilities:
       - agent: office:clinical-research-office
