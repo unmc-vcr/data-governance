@@ -1,0 +1,17 @@
+terms:
+  - id: term:src-submission
+    code: CR.ACT.003
+    pref_label: SRC submission
+    alt_labels: [Scientific Review Committee submission, SRC application submitted]
+    definition: >-
+      The date on which the regulatory coordinator submitted the Scientific Review Committee
+      (SRC) application for a study.
+    in_subject_area: area:clinical-research
+    related:
+      - term:src-approval
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

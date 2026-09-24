@@ -1,0 +1,16 @@
+terms:
+  - id: term:src-approval
+    code: CR.ACT.004
+    pref_label: SRC approval
+    alt_labels: [Scientific Review Committee approval, SRC approved]
+    definition: >-
+      The date on which the Scientific Review Committee (SRC) approved the study.
+    in_subject_area: area:clinical-research
+    related:
+      - term:src-submission
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

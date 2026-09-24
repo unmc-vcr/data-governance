@@ -1,0 +1,26 @@
+terms:
+  - id: term:src-submission-to-open-to-accrual
+    code: CR.ACT.014
+    pref_label: SRC submission to open to accrual
+    alt_labels: []
+    definition: >-
+      The number of calendar days from SRC submission (the date the regulatory coordinator
+      submitted the SRC application) to open to accrual (the date the protocol opened to
+      accrual in the CTMS).
+    in_subject_area: area:clinical-research
+    related:
+      - term:src-submission
+      - term:open-to-accrual
+      - term:activation-timeline
+    rules:
+      - >-
+        The interventional variant restricts the measure to interventional studies.
+      - >-
+        The interventional and treatment (ONC) variant restricts the measure to interventional
+        treatment studies in oncology.
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

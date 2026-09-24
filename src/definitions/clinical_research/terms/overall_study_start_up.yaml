@@ -1,0 +1,20 @@
+terms:
+  - id: term:overall-study-start-up
+    code: CR.ACT.021
+    pref_label: Overall study start-up
+    alt_labels: [Study start-up]
+    definition: >-
+      The number of calendar days from activation activities begin to open to accrual (the date
+      the protocol opened to accrual in the CTMS). This is the end-to-end measure of study
+      start-up.
+    in_subject_area: area:clinical-research
+    related:
+      - term:activation-activities-begin
+      - term:open-to-accrual
+      - term:activation-timeline
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

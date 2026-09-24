@@ -1,0 +1,18 @@
+terms:
+  - id: term:coverage-analysis-preliminary-complete
+    code: CR.ACT.008
+    pref_label: Coverage analysis preliminary complete
+    alt_labels: [CA preliminary complete]
+    definition: >-
+      The date on which the coverage analysis page of the coverage analysis (CA) workbook is
+      completed and initial questions are sent to the PI, coordinator, or department (if
+      applicable).
+    in_subject_area: area:clinical-research
+    related:
+      - term:coverage-analysis-started
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

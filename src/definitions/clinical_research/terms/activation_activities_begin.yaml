@@ -1,0 +1,23 @@
+terms:
+  - id: term:activation-activities-begin
+    code: CR.ACT.013
+    pref_label: Activation activities begin
+    alt_labels: [Activation start, Start-up begin]
+    definition: >-
+      The date on which study activation activities begin. This is the reference point from
+      which queue times and overall study start-up are measured.
+    in_subject_area: area:clinical-research
+    related:
+      - term:open-to-accrual
+    guidance:
+      - guidance_kind: draft
+        guidance_text: >-
+          The source metrics catalog listed this milestone without a written definition. The
+          wording here is provisional and must be confirmed with the Clinical Research Office
+          before this term is cited in reporting.
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

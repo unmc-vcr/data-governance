@@ -1,0 +1,17 @@
+terms:
+  - id: term:study-status-on-hold
+    code: CR.ACT.005
+    pref_label: On Hold
+    alt_labels: [Enrollment suspended, Temporarily closed to accrual]
+    definition: >-
+      An study status in which enrollment of new subjects is temporarily suspended while the study
+      remains active, with the expectation of reopening.
+    in_subject_area: area:clinical-research
+    semantic_type: state
+    value_of: term:accrual-status
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

@@ -1,0 +1,17 @@
+terms:
+  - id: term:regulatory-final-approval
+    code: CR.ACT.006
+    pref_label: Regulatory final approval
+    alt_labels: [Regulatory complete]
+    definition: >-
+      The date on which both Institutional Review Board (IRB) and institutional requirements
+      have been met for a study.
+    in_subject_area: area:clinical-research
+    related:
+      - term:regulatory-review-started
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

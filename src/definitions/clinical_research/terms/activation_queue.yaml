@@ -1,0 +1,17 @@
+terms:
+  - id: term:activation-queue
+    code: CR.ACT.023
+    pref_label: Queue
+    alt_labels: [Activation queue, Queue time]
+    definition: >-
+      The number of calendar days after activation activities begin until a staff member can
+      start the task.
+    in_subject_area: area:clinical-research
+    related:
+      - term:activation-activities-begin
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

@@ -1,0 +1,18 @@
+terms:
+  - id: term:study-status
+    code: CR.ACT.003
+    pref_label:  Study Status
+    alt_labels: [Enrollment status, Recruitment status]
+    definition: >-
+      The enrollment condition of a clinical study with respect to whether it may enroll new
+      subjects. 
+    in_subject_area: area:clinical-research
+    semantic_type: attribute
+    related:
+      - term:open-to-accrual
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft

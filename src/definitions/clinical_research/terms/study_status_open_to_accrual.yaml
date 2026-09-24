@@ -1,0 +1,20 @@
+terms:
+  - id: term:study-status-open-to-accrual
+    code: CR.ACT.004
+    pref_label: Open to Accrual (status)
+    alt_labels: [Open, Enrolling, Accruing]
+    definition: >-
+      A study status in which a study is currently permitted to enroll new subjects. A study is
+      in this state from its open to accrual date until enrollment is placed on hold or the study is
+      closed to accrual.
+    in_subject_area: area:clinical-research
+    semantic_type: state
+    value_of: term:study-status
+    related:
+      - term:open-to-accrual
+    responsibilities:
+      - agent: office:clinical-research-office
+        governance_role: definition_owner
+      - agent: office:research-admin-stewardship-council
+        governance_role: data_steward
+    status: draft
