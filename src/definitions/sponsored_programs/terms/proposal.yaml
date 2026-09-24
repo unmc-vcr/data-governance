@@ -8,6 +8,7 @@ terms:
       sponsored project. The research-administration (RA) type distinguishes the kind of
       request -- new, renewal, supplement, continuation, and so on.
     in_subject_area: area:sponsored-programs
+    semantic_type: information_artifact
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Request, typed by dbo.GA_Request.RA_Type_Code (dbo.GA_RA_Type_Codes)

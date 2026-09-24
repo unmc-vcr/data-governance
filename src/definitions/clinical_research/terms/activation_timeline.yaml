@@ -7,6 +7,7 @@ terms:
       The amount of time, in calendar days, that it takes for a clinical study to open to accrual to
       potential participants.
     in_subject_area: area:clinical-research
+    semantic_type: measure
     responsibilities:
       - agent: office:clinical-research-office
         governance_role: definition_owner

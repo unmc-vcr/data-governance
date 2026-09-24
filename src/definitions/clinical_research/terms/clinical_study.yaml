@@ -4,6 +4,7 @@ terms:
     pref_label: Clinical Study
     definition: TODO - local operational definition (e.g. what counts as a study in the CTMS).
     in_subject_area: area:clinical-research
+    semantic_type: process
     responsibilities:
       - agent: office:clinical-research-office
         governance_role: definition_owner

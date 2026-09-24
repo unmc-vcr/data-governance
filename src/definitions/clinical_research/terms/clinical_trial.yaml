@@ -11,6 +11,7 @@ terms:
     definition_source:
       source_uri: https://grants.nih.gov/policy/clinical-trials/definition.htm
     in_subject_area: area:clinical-research
+    semantic_type: process
     broader: [term:clinical-study]
     responsibilities:
       - agent: office:clinical-research-office

@@ -7,6 +7,7 @@ terms:
       A discrete, separately budgeted interval within a multi-year award -- typically one
       project year -- against which spending and reporting are tracked.
     in_subject_area: area:sponsored-programs
+    semantic_type: interval
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Awards.Project_Year and dbo.GA_Awards.Cycle

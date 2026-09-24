@@ -7,6 +7,7 @@ terms:
       An agreement governing the transfer of tangible research materials between UNMC and
       another organization, setting out permitted use, ownership, and publication terms.
     in_subject_area: area:sponsored-programs
+    semantic_type: information_artifact
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.MTA

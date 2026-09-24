@@ -8,6 +8,7 @@ terms:
       external to the institution or separately by an organizational unit within the institution.
     broader: [term:sponsored-project]
     in_subject_area: area:sponsored-programs
+    semantic_type: process
     responsibilities:
       - agent: office:sponsored-programs-office
         governance_role: definition_owner

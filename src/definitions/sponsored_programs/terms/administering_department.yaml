@@ -7,6 +7,7 @@ terms:
       The UNMC organizational unit accountable for administering a sponsored project, or the
       unit against which a person's project effort is charged.
     in_subject_area: area:sponsored-programs
+    semantic_type: agent
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Departments (keyed by DID); referenced from dbo.GA_Master and dbo.GA_Staff.DID

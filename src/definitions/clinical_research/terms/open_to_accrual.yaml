@@ -4,11 +4,14 @@ terms:
     pref_label: Open to Accrual
     alt_labels: []
     definition: >-
-      A clinical study which is enrolling new subjects.  As a singular date, this represents the point 
-      in a clinical study lifecycle upon which participants were first permitted to be enrolled in the study, 
-      following all regulatory and sponsor requirements.
+      The date in a clinical study's lifecycle on which participants were first permitted to be
+      enrolled, following all regulatory and sponsor requirements. This is the dated milestone that
+      the activation timeline and study start-up measures count to; the ongoing "is it enrolling"
+      condition is a separate term, accrual status.
     in_subject_area: area:clinical-research
+    semantic_type: event
     related:
+      - term:accrual-status-open
       - term:activation-timeline
     responsibilities:
       - agent: office:clinical-research-office

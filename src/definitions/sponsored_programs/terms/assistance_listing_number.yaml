@@ -8,6 +8,7 @@ terms:
       Domestic Assistance (CFDA) number. It ties an award to the specific federal program
       that funds it.
     in_subject_area: area:sponsored-programs
+    semantic_type: information_artifact
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.CFDA

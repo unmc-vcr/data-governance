@@ -532,10 +532,9 @@ enums:
         meaning: bfo:0000004
         # independent continuant
         description: >-
-          A party -- an organization or organizational unit -- named as a kind
+          A party -- a person, an organization, or organizational unit -- named as a kind
           of thing rather than a role it plays. E.g. sponsor, administering
-          department. (Individual offices and people are modelled as Agent and
-          Person, not as terms; this is for term-level party concepts.)
+          department.
       information_artifact:
         meaning: iao:0000030
         # information content entity
