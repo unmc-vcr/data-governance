@@ -7,6 +7,7 @@ terms:
       The individual with primary responsibility for the scientific, technical, and
       administrative conduct of a sponsored project.
     in_subject_area: area:sponsored-programs
+    semantic_type: role
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.Current_PI_SID (original assignment in dbo.GA_Master.Initial_PI_SID)

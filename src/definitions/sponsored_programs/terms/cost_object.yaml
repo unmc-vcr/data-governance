@@ -8,6 +8,7 @@ terms:
       project's expenditures are posted. It is the bridge between an award in SPAdmin and the
       institutional general ledger.
     in_subject_area: area:sponsored-programs
+    semantic_type: information_artifact
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_SAP.SAP_CostObject (general ledger account in dbo.GA_SAP.SAP_Account)

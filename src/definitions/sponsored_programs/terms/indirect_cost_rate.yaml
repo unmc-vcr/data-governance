@@ -7,6 +7,7 @@ terms:
       The negotiated percentage applied to a defined cost base to recover indirect (facilities and
       administrative) costs on an award.
     in_subject_area: area:sponsored-programs
+    semantic_type: measure
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Awards.Indirect_Cost_Rate (subaward rate in dbo.GA_Subout.IDC_Rate)

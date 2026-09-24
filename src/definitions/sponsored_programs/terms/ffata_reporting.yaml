@@ -7,6 +7,7 @@ terms:
       The Federal Funding Accountability and Transparency Act obligation to publicly report
       certain federal awards and their first-tier subawards.
     in_subject_area: area:sponsored-programs
+    semantic_type: process
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.FFATA (subaward reporting flagged in dbo.GA_Subout.FFATA)

@@ -7,6 +7,7 @@ terms:
       The proportion of an individual's total institutional professional activity committed
       to a sponsored project, expressed as a full-time equivalent (FTE) or percentage.
     in_subject_area: area:sponsored-programs
+    semantic_type: measure
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Staff.FTE (against the department FTE base in dbo.GA_Staff.FTE_Dept)

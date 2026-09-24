@@ -8,6 +8,7 @@ terms:
       (pass-through) entity rather than directly from that source. The prime sponsor's terms
       flow down through the pass-through entity to UNMC.
     in_subject_area: area:sponsored-programs
+    semantic_type: role
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master.SOF_Sponsor_Code (resolved against dbo.GA_Sponsor_Codes)

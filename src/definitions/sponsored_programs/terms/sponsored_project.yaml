@@ -10,6 +10,7 @@ terms:
       so on -- is what distinguishes one sponsored project from another; it is not limited
       to research.
     in_subject_area: area:sponsored-programs
+    semantic_type: process
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Master, categorized by dbo.GA_Master.Proposal_Category

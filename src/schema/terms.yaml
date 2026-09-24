@@ -21,6 +21,10 @@ prefixes:
   area:   https://w3id.org/unmc/areas/
   office: https://w3id.org/unmc/offices/
   person: https://w3id.org/unmc/people/
+  obo: http://purl.obolibrary.org/obo/
+  bfo: http://purl.obolibrary.org/obo/BFO_
+  obi: http://purl.obolibrary.org/obo/OBI_
+  iao: http://purl.obolibrary.org/obo/IAO_
 default_prefix: unmc
 default_range: string
 
@@ -56,7 +60,9 @@ classes:
       - definition
       - definition_source
       - in_subject_area
+      - semantic_type
       - broader
+      - value_of
       - related
       - classification
       - source_of_record
@@ -195,10 +201,24 @@ slots:
     range: SubjectArea
     required: true
 
+  semantic_type:
+    description: >-
+      The ontological nature of the entity a term denotes.
+    range: SemanticType
+
   broader:
+    description: >-
+      A term that generalizes this one: genus/subtype (is-a). Not to be used 
+      with determinable value to attribute relationsips; use value_of.
     slot_uri: skos:broader
     range: Term
     multivalued: true
+
+  value_of:
+    description: >-
+      For a term that is a determinate value, the attribute for which it is a permissible value. 
+      This is the controlled-value relation, distinct from broader (generalization).
+    range: Term
 
   related:
     description: >-
@@ -452,3 +472,73 @@ enums:
         description: Warning that this content may change before approval.
       draft:
         description: Warning that this term has no approved basis yet.
+
+  SemanticType:
+    description: >-
+      The ontological nature of what a term denotes. Values are anchored to BFO/OBO
+      upper classes.
+    permissible_values:
+      event:
+        meaning: bfo:0000035
+        # bfo:0000035 - process boundary (occurrent)
+        description: >-
+          A dated point marking a transition in a lifecycle -- a milestone.
+          E.g. the date a study opened to accrual.
+      measure:
+        meaning: iao:0000027
+        # iao:0000027 - data entity
+        description: >-
+          A quantitative datum, such as an elapsed-time count between two
+          events or a negotiated rate.
+      attribute:
+        meaning: bfo:0000019
+        # bfo:0000019 - quality (determinable)
+        description: >-
+          A determinable characteristic realized as one of a controlled set
+          of states. The "field", not its values. E.g. accrual status.
+      state:
+        meaning: bfo:0000019
+        # bfo:0000019 - quality (determinate)
+        description: >-
+          A determinate value of an attribute; one member of its controlled
+          set, linked to the attribute by value_of. E.g. on hold.
+      classification:
+        meaning: obi:0000011
+        # planned process
+        description: >-
+          A kind or category of study, project, or other planned process.
+          E.g. clinical trial, research project.
+      process:
+        meaning: bfo:0000015        # process
+        description: >-
+          A kind or category of activity that unfolds over time -- a study,
+          project, or program type. E.g. clinical trial, research project.
+          (Replaces the earlier "classification": obi:0000011 "planned
+          process" is deprecated, and bfo:0000015 is the next-broadest fit.)
+      interval:
+        meaning: bfo:0000038        # one-dimensional temporal region
+        description: >-
+          A located span of time with a start and an end -- a calendar window,
+          not a count. Distinct from measure: an interval is a region of the
+          time axis (occurrent), a measure is a magnitude (a data item).
+          E.g. period of performance, budget period.
+      role:
+        meaning: bfo:0000023
+        # role (realizable entity)
+        description: >-
+          A role a person or organization holds in a context, realized by
+          taking part in a process. E.g. principal investigator, prime sponsor.
+      agent:
+        meaning: bfo:0000004
+        # independent continuant
+        description: >-
+          A party -- a person, an organization, or organizational unit -- named as a kind
+          of thing rather than a role it plays. E.g. sponsor, administering
+          department.
+      information_artifact:
+        meaning: iao:0000030
+        # information content entity
+        description: >-
+          A document, agreement, record, or identifier -- information that is
+          about something else. E.g. award, proposal, grant ID, unique entity
+          identifier.

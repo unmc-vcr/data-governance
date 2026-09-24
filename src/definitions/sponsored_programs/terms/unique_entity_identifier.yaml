@@ -7,6 +7,7 @@ terms:
       The government-assigned identifier for an organization registered in SAM.gov, used to
       identify a sponsor or recipient. It replaced the DUNS Number.
     in_subject_area: area:sponsored-programs
+    semantic_type: information_artifact
     source_of_record:
       system: SPAdmin reporting database (spareportdb)
       field: dbo.GA_Sponsor_Codes.Unique_Entity_Identifier

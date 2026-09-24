@@ -9,6 +9,7 @@ terms:
     definition_source:
       source_uri: https://grants.nih.gov/grants/policy/nihgps/HTML5/section_7/7.3_direct_costs_and_indirect_costs.htm
     in_subject_area: area:sponsored-programs
+    semantic_type: measure
     responsibilities:
       - agent: office:sponsored-programs-office
         governance_role: definition_owner
