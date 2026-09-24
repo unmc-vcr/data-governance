@@ -21,6 +21,10 @@ prefixes:
   area:   https://w3id.org/unmc/areas/
   office: https://w3id.org/unmc/offices/
   person: https://w3id.org/unmc/people/
+  obo: http://purl.obolibrary.org/obo/
+  bfo: http://purl.obolibrary.org/obo/BFO_
+  obi: http://purl.obolibrary.org/obo/OBI_
+  iao: http://purl.obolibrary.org/obo/IAO_
 default_prefix: unmc
 default_range: string
 
@@ -56,7 +60,9 @@ classes:
       - definition
       - definition_source
       - in_subject_area
+      - semantic_type
       - broader
+      - value_of
       - related
       - classification
       - source_of_record
@@ -195,10 +201,24 @@ slots:
     range: SubjectArea
     required: true
 
+  semantic_type:
+    description: >-
+      The ontological nature of the entity a term denotes.
+    range: SemanticType
+
   broader:
+    description: >-
+      A term that generalizes this one: genus/subtype (is-a). Not to be used 
+      with determinable value to attribute relationsips; use value_of.
     slot_uri: skos:broader
     range: Term
     multivalued: true
+
+  value_of:
+    description: >-
+      For a term that is a determinate value, the attribute for which it is a permissible value. 
+      This is the controlled-value relation, distinct from broader (generalization).
+    range: Term
 
   related:
     description: >-
@@ -452,3 +472,39 @@ enums:
         description: Warning that this content may change before approval.
       draft:
         description: Warning that this term has no approved basis yet.
+
+  SemanticType:
+    description: >-
+      The ontological nature of what a term denotes. Values are anchored to BFO/OBO
+      upper classes.
+    permissible_values:
+      event:
+        meaning: bfo:0000035
+        # bfo:0000035 - process boundary (occurrent)
+        description: >-
+          A dated point marking a transition in a lifecycle -- a milestone.
+          E.g. the date a study opened to accrual.
+      measure:
+        meaning: iao:0000027
+        # iao:0000027 - data entity
+        description: >-
+          A quantitative datum, such as an elapsed-time count between two
+          events or a negotiated rate.
+      attribute:
+        meaning: bfo:0000019
+        # bfo:0000019 - quality (determinable)
+        description: >-
+          A determinable characteristic realized as one of a controlled set
+          of states. The "field", not its values. E.g. accrual status.
+      state:
+        meaning: bfo:0000019
+        # bfo:0000019 - quality (determinate)
+        description: >-
+          A determinate value of an attribute; one member of its controlled
+          set, linked to the attribute by value_of. E.g. on hold.
+      classification:
+        meaning: obi:0000011
+        # planned process
+        description: >-
+          A kind or category of study, project, or other planned process.
+          E.g. clinical trial, research project.

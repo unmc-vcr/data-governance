@@ -201,6 +201,18 @@
             "title": "Responsibility",
             "type": "object"
         },
+        "SemanticType": {
+            "description": "The ontological nature of what a term denotes. Values are anchored to BFO/OBO upper classes.",
+            "enum": [
+                "event",
+                "measure",
+                "attribute",
+                "state",
+                "classification"
+            ],
+            "title": "SemanticType",
+            "type": "string"
+        },
         "SourceOfRecord": {
             "additionalProperties": false,
             "description": "The system that is authoritative for the values behind this term, and where in that system the values live.",
@@ -336,6 +348,7 @@
                     ]
                 },
                 "broader": {
+                    "description": "A term that generalizes this one: genus/subtype (is-a). Not to be used  with determinable value to attribute relationsips; use value_of.",
                     "items": {
                         "type": "string"
                     },
@@ -453,6 +466,10 @@
                         "null"
                     ]
                 },
+                "semantic_type": {
+                    "$ref": "#/$defs/SemanticType",
+                    "description": "The ontological nature of the entity a term denotes."
+                },
                 "source_of_record": {
                     "anyOf": [
                         {
@@ -474,6 +491,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "value_of": {
+                    "description": "For a term that is a determinate value, the attribute for which it is a permissible value.  This is the controlled-value relation, distinct from broader (generalization).",
+                    "type": [
+                        "string",
                         "null"
                     ]
                 }

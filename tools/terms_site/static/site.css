@@ -151,6 +151,41 @@ input { font: inherit; }
 .brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; text-decoration: none; color: inherit; }
 .brand:hover { text-decoration: none; color: inherit; }
 
+/* Mobile nav toggle. Hidden on desktop; the media query below reveals it and
+   collapses the sidebar by default so the page content is not pushed below the
+   fold on narrow screens. */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  padding: 0;
+  background: var(--bg-sub);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.nav-toggle__bars,
+.nav-toggle__bars::before,
+.nav-toggle__bars::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  transition: transform .15s ease, top .15s ease, background .15s ease;
+}
+.nav-toggle__bars { position: relative; }
+.nav-toggle__bars::before,
+.nav-toggle__bars::after { content: ""; position: absolute; left: 0; }
+.nav-toggle__bars::before { top: -6px; }
+.nav-toggle__bars::after { top: 6px; }
+body.nav-open .nav-toggle__bars { background: transparent; }
+body.nav-open .nav-toggle__bars::before { top: 0; transform: rotate(45deg); }
+body.nav-open .nav-toggle__bars::after { top: 0; transform: rotate(-45deg); }
+
 .brand__mark {
   width: 36px;
   height: 36px;
@@ -465,6 +500,9 @@ h2.subhead--term { font-size: 20px; letter-spacing: .03em; }
 .badge--page { background: var(--red-soft); color: var(--red-text); border: 1px solid rgba(173, 18, 42, .25); }
 .badge--area { background: var(--blue-soft); color: var(--navy); border: 1px solid rgba(0, 41, 87, .2); }
 .badge--office { background: var(--bg-sub); color: var(--ink-2); border: 1px solid var(--line); }
+/* Term kind (semantic_type): a plain descriptor, deliberately quieter and in
+   normal case so it reads as "what this is" rather than as a status tag. */
+.badge--kind { background: var(--bg-sub); color: var(--ink-2); border: 1px solid var(--line); text-transform: none; letter-spacing: .02em; }
 
 [data-theme="dark"] .badge--internal,
 [data-theme="dark"] .badge--area { color: #9CC4E4; }
@@ -771,9 +809,42 @@ h2.subhead--term { font-size: 20px; letter-spacing: .03em; }
 .back-link { display: inline-block; margin: 0 0 18px; color: var(--ink-3); font-size: 13px; }
 .back-link:hover { color: var(--red-text); }
 
-.term-tags { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; font-size: 12.5px; color: var(--ink-3); }
+/* Term header meta row: one line of chips under the title, in descending
+   importance -- status (loudest), then type, then code (quietest) -- each with
+   a distinct visual language so they don't read as one undifferentiated block. */
+.term-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 16px 0 26px; }
 
-.term-ids { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 26px; }
+/* 1. Status -- the anchor: colored chip with a leading status dot. */
+.badge--status { gap: 7px; }
+.badge__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; opacity: .9; }
+
+/* 2. Type -- secondary: outlined chip, normal case, quieter than the status. */
+.tag-type {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink-2);
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+/* 3. Code -- tertiary: plain muted monospace, no box. */
+.tag-code { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-3); letter-spacing: .02em; }
+
+/* Reference panel: the term's CURIE and source link, coalesced under the IRI. */
+.ref-row { margin-top: 16px; }
+.ref-row__k {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 3px;
+}
+.ref-row__v { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-2); word-break: break-all; }
+.ref-source { display: inline-block; margin-top: 16px; }
 code.term-code {
   font-family: var(--font-mono);
   font-size: 12.5px;
@@ -1048,7 +1119,10 @@ code.term-code {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
+  .nav-toggle { display: inline-flex; }
+  /* Collapsed by default so the article starts near the top of the page. */
   .sidebar {
+    display: none;
     position: static;
     max-width: none;
     flex-basis: 100%;
@@ -1056,6 +1130,7 @@ code.term-code {
     border-bottom: 1px solid var(--line);
     padding-bottom: 24px;
   }
+  body.nav-open .sidebar { display: block; }
   /* Drop the rail below the article rather than letting it squeeze the
      prose to ~450px, which wraps the handling tables badly. */
   .split__body { flex-basis: 100%; max-width: none; }

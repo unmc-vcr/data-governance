@@ -56,6 +56,20 @@ GUIDANCE_LABELS = {
     "draft": "Draft",
 }
 
+# Human labels for the SemanticType enum (see terms.yaml). Short noun phrases
+# that read plainly in a badge -- "what kind of thing this term denotes".
+SEMANTIC_TYPE_LABELS = {
+    "event": "Event",
+    "process": "Process / activity",
+    "interval": "Time interval",
+    "measure": "Measure",
+    "attribute": "Attribute",
+    "state": "Controlled value",
+    "role": "Role",
+    "agent": "Party / organization",
+    "information_artifact": "Information artifact",
+}
+
 # Handling matrix from the site design. PROVISIONAL -- see the note on
 # DataClassification in the schema. Rendered with a provisional marker.
 HANDLING = {
@@ -301,9 +315,15 @@ class Term:
     exact_match: list[str] = field(default_factory=list)
     close_match: list[str] = field(default_factory=list)
     realized_by: list[str] = field(default_factory=list)
+    semantic_type: str | None = None
     broader: list["Term"] = field(default_factory=list)
     narrower: list["Term"] = field(default_factory=list)
     related_to: list["Term"] = field(default_factory=list)
+    # value_of / values are the determinate<->determinable (state<->attribute)
+    # relation. Kept separate from broader/related_to so the UI can present a
+    # controlled value distinctly from a generalization or an association.
+    value_of: "Term | None" = None
+    values: list["Term"] = field(default_factory=list)
     replaced_by: "Term | None" = None
     replaces: list["Term"] = field(default_factory=list)
     history: list[Change] = field(default_factory=list)
@@ -343,6 +363,14 @@ class Term:
     @property
     def status_label(self) -> str:
         return STATUS_LABELS.get(self.status, self.status)
+
+    @property
+    def semantic_type_label(self) -> str | None:
+        if not self.semantic_type:
+            return None
+        return SEMANTIC_TYPE_LABELS.get(
+            self.semantic_type, self.semantic_type.replace("_", " ").title()
+        )
 
     @property
     def classification_label(self) -> str | None:
@@ -590,12 +618,14 @@ def load(
                 expand_curie(v, prefixes, where=f"{rel} / {raw['id']} / realized_by")
                 for v in raw.get("realized_by") or []
             ],
+            semantic_type=raw.get("semantic_type"),
             source_file=rel,
             prefixes=prefixes,
         )
         # Stashed for the second pass, once every term exists.
         terms[raw["id"]]._raw_broader = list(raw.get("broader") or [])  # type: ignore[attr-defined]
         terms[raw["id"]]._raw_related = list(raw.get("related") or [])  # type: ignore[attr-defined]
+        terms[raw["id"]]._raw_value_of = raw.get("value_of")  # type: ignore[attr-defined]
         terms[raw["id"]]._raw_replaced_by = raw.get("replaced_by")  # type: ignore[attr-defined]
 
     # Second pass: term-to-term links, now that every id is known.
@@ -628,6 +658,23 @@ def load(
                 term.related_to.append(target)
             if term.id not in {t.id for t in target.related_to}:
                 target.related_to.append(term)
+        # value_of: this term is a determinate value of an attribute. Populate
+        # the inverse (values) so the attribute page can list its states.
+        value_of_id = term._raw_value_of  # type: ignore[attr-defined]
+        if value_of_id:
+            target = terms.get(value_of_id)
+            if target is None:
+                raise TermsError(
+                    f"{term.source_file} / {term.id}: value_of {value_of_id!r} "
+                    "does not exist."
+                )
+            if target is term:
+                raise TermsError(
+                    f"{term.source_file} / {term.id}: a term cannot be a value of "
+                    "itself."
+                )
+            term.value_of = target
+            target.values.append(term)
         replaced_by_id = term._raw_replaced_by  # type: ignore[attr-defined]
         if replaced_by_id:
             target = terms.get(replaced_by_id)
@@ -642,12 +689,14 @@ def load(
     for term in terms.values():
         del term._raw_broader  # type: ignore[attr-defined]
         del term._raw_related  # type: ignore[attr-defined]
+        del term._raw_value_of  # type: ignore[attr-defined]
         del term._raw_replaced_by  # type: ignore[attr-defined]
 
     ordered_terms = sorted(terms.values(), key=lambda t: t.pref_label.lower())
     for term in ordered_terms:
         term.narrower.sort(key=lambda t: t.pref_label.lower())
         term.related_to.sort(key=lambda t: t.pref_label.lower())
+        term.values.sort(key=lambda t: t.pref_label.lower())
         term.area.terms.append(term)
 
     # A page URL collision silently overwrites one of the two pages. Compared
