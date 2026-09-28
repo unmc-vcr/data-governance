@@ -12,18 +12,18 @@ glossary_terms:
     broader:
       - term:clinical-research
     responsibilities:
-      - type: dgo:DGO_00000012   # owner
+      - type: dgo:DGO_00000012
         role_of: office:clinical-research-office
-      - type: dgo:DGO_00000013   # steward
+      - type: dgo:DGO_00000013
         role_of: office:research-admin-stewardship-council
 
 term_creations:
-  - id: term:epidemiological_study-creation
+  - id: term:epidemiological-study-creation
     label: Creation of "Epidemiological study"
-    has_output: term:epidemiological_study
+    has_output: term:epidemiological-study
     part_of: office:research-data-governance
 
-term_status_boundaries:   # quote every date
-  - type: dgo:DGO_00000024   # drafted
-    part_of: term:epidemiological_study-creation
+term_status_boundaries:
+  - type: dgo:DGO_00000024
+    part_of: term:epidemiological-study-creation
     occurred_on: "2026-09-28"
