@@ -1,10 +1,10 @@
-# Site configuration for dgo-site. Governance data lives in governance/;
+# Site configuration for dgo-atlas. Governance data lives in governance/;
 # this file only shapes the site. Every setting and its default is in
-# https://github.com/james-geiger/dgo-site/blob/main/dgo-site.example.yaml
+# https://github.com/james-geiger/dgo-atlas/blob/main/dgo-atlas.example.yaml
 
 # The Data Governance Ontology release the data is written against. Change it
 # deliberately: a new release may change what the data must say.
-dgo_version: "v0.1.1"
+dgo_version: "0.1.1"
 
 title: Research Administration Data Governance
 organization: University of Nebraska Medical Center

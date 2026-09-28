@@ -7,8 +7,8 @@
     "asm": false
   },
   "yaml.schemas": {
-    ".dgo-site/governance.schema.json": ["governance/**/*.yaml"],
-    ".dgo-site/config.schema.json": ["dgo-site.yaml"]
+    ".dgo-atlas/governance.schema.json": ["governance/**/*.yaml"],
+    ".dgo-atlas/config.schema.json": ["dgo-atlas.yaml"]
   },
   "yaml.customTags": []
 }

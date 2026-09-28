@@ -16,7 +16,8 @@
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000026"
+                        "dgo:DGO_00000026",
+                        "approved"
                     ],
                     "type": [
                         "string",
@@ -40,7 +41,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 }
             },
             "required": [
@@ -76,12 +78,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000006"
+                        "dgo:DGO_00000006",
+                        "chair"
                     ],
                     "type": [
                         "string",
@@ -118,12 +122,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000010"
+                        "dgo:DGO_00000010",
+                        "compliance steward"
                     ],
                     "type": [
                         "string",
@@ -160,12 +166,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000005"
+                        "dgo:DGO_00000005",
+                        "council role"
                     ],
                     "type": [
                         "string",
@@ -202,12 +210,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000014"
+                        "dgo:DGO_00000014",
+                        "custodian"
                     ],
                     "type": [
                         "string",
@@ -227,7 +237,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "part_of": {
                     "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
@@ -258,7 +269,8 @@
                             {
                                 "type": "string"
                             }
-                        ]
+                        ],
+                        "type": "string"
                     },
                     "type": [
                         "array",
@@ -270,7 +282,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "participates_in": {
                     "description": "The data governance process this council carries out.",
@@ -296,7 +309,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 }
             },
             "required": [
@@ -332,12 +346,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000009"
+                        "dgo:DGO_00000009",
+                        "documentation steward"
                     ],
                     "type": [
                         "string",
@@ -357,7 +373,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "part_of": {
                     "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
@@ -390,7 +407,8 @@
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000024"
+                        "dgo:DGO_00000024",
+                        "drafted"
                     ],
                     "type": [
                         "string",
@@ -437,12 +455,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000008"
+                        "dgo:DGO_00000008",
+                        "ethics steward"
                     ],
                     "type": [
                         "string",
@@ -497,7 +517,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "part_of": {
                     "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
@@ -804,12 +825,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000011"
+                        "dgo:DGO_00000011",
+                        "governance role"
                     ],
                     "type": [
                         "string",
@@ -829,7 +852,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 }
             },
             "required": [
@@ -878,7 +902,8 @@
                             {
                                 "type": "string"
                             }
-                        ]
+                        ],
+                        "type": "string"
                     },
                     "type": [
                         "array",
@@ -890,7 +915,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 }
             },
             "required": [
@@ -926,12 +952,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000012"
+                        "dgo:DGO_00000012",
+                        "owner"
                     ],
                     "type": [
                         "string",
@@ -958,7 +986,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "title": {
                     "description": "A person's job title. (Not foaf:title, which is an honorific such as Dr.)",
@@ -1003,7 +1032,8 @@
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000027"
+                        "dgo:DGO_00000027",
+                        "rejected"
                     ],
                     "type": [
                         "string",
@@ -1050,12 +1080,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000007"
+                        "dgo:DGO_00000007",
+                        "security steward"
                     ],
                     "type": [
                         "string",
@@ -1082,7 +1114,8 @@
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000023"
+                        "dgo:DGO_00000023",
+                        "status boundary"
                     ],
                     "type": [
                         "string",
@@ -1123,12 +1156,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000013"
+                        "dgo:DGO_00000013",
+                        "steward"
                     ],
                     "type": [
                         "string",
@@ -1148,7 +1183,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "part_of": {
                     "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
@@ -1189,12 +1225,14 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The person, organization, or council that bears this role."
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
                 },
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000015"
+                        "dgo:DGO_00000015",
+                        "subject matter expert"
                     ],
                     "type": [
                         "string",
@@ -1221,7 +1259,8 @@
                 "type": {
                     "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
                     "enum": [
-                        "dgo:DGO_00000025"
+                        "dgo:DGO_00000025",
+                        "submitted for review"
                     ],
                     "type": [
                         "string",
@@ -1257,7 +1296,8 @@
                             {
                                 "type": "string"
                             }
-                        ]
+                        ],
+                        "type": "string"
                     },
                     "type": [
                         "array",
@@ -1269,7 +1309,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "part_of": {
                     "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
@@ -1308,7 +1349,8 @@
                             {
                                 "type": "string"
                             }
-                        ]
+                        ],
+                        "type": "string"
                     },
                     "type": [
                         "array",
@@ -1320,7 +1362,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "part_of": {
                     "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
@@ -1359,7 +1402,8 @@
                             {
                                 "type": "string"
                             }
-                        ]
+                        ],
+                        "type": "string"
                     },
                     "type": [
                         "array",
@@ -1371,7 +1415,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "part_of": {
                     "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
@@ -1410,7 +1455,8 @@
                             {
                                 "type": "string"
                             }
-                        ]
+                        ],
+                        "type": "string"
                     },
                     "type": [
                         "array",
@@ -1422,7 +1468,8 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Words"
+                    "description": "Words",
+                    "type": "string"
                 },
                 "part_of": {
                     "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
@@ -1441,7 +1488,7 @@
             "type": "object"
         }
     },
-    "$id": "https://w3id.org/dgo-site/template",
+    "$id": "https://w3id.org/dgo-atlas/template",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "additionalProperties": true,
     "description": "One governance data file. All lists are optional; files are merged by concatenating their lists.",
@@ -1640,7 +1687,7 @@
             ]
         }
     },
-    "title": "dgo_site_template",
+    "title": "dgo_atlas_template",
     "type": "object",
     "version": "0.1.0"
 }

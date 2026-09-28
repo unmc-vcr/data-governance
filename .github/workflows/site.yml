@@ -28,10 +28,10 @@ jobs:
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-      - name: Install dgo-site
+      - name: Install dgo-atlas
         run: uv sync
       - name: Validate and build
-        run: uv run dgo-site build
+        run: uv run dgo-atlas build
       - name: Upload site for review
         uses: actions/upload-artifact@v4
         with:

@@ -464,9 +464,9 @@ wheels = [
 ]
 
 [[package]]
-name = "dgo-site"
-version = "0.1.1"
-source = { git = "https://github.com/james-geiger/dgo-site?rev=v0.1.1#3a5796c0fe3d77449620dc5b981cf0fc5ccaf8a1" }
+name = "dgo-atlas"
+version = "0.5.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
     { name = "linkml" },
@@ -477,6 +477,10 @@ dependencies = [
     { name = "rdflib" },
     { name = "rich" },
     { name = "typer" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7f/9e/8a8b7754c02fa44f872f118218d19e6e68e81369ed283668004dd96a6729/dgo_atlas-0.5.0.tar.gz", hash = "sha256:2db03b9a56d9a480b575aa3d7b511ce5d88b967f870ea044887aea3e657dc907", size = 250134, upload-time = "2026-09-28T20:36:59.532Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/6d/e28597fff464bc96bd193da1dd6cac820839785d9b0d7a6f90c111b071b9/dgo_atlas-0.5.0-py3-none-any.whl", hash = "sha256:c0707404aa8df9cf6348fd8b9ddb1e8b200c7475595f0ce995458c917f5e8396", size = 112766, upload-time = "2026-09-28T20:36:57.954Z" },
 ]
 
 [[package]]
@@ -2118,11 +2122,11 @@ name = "unmc-data-governance"
 version = "0"
 source = { virtual = "." }
 dependencies = [
-    { name = "dgo-site" },
+    { name = "dgo-atlas" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "dgo-site", git = "https://github.com/james-geiger/dgo-site?rev=v0.1.1" }]
+requires-dist = [{ name = "dgo-atlas", specifier = "==0.5.0" }]
 
 [[package]]
 name = "uri-template"

@@ -60,4 +60,4 @@ We think data governance should follow [FAIR principles](https://www.gofair.foun
 
 Here, terms are stored as data written against the
 [Data Governance Ontology](https://github.com/james-geiger/dgo) (DGO), then validated and rendered into
-the site by [dgo-site](https://github.com/james-geiger/dgo-site). If you're interested in the technical status of this work, see **[DEVELOPMENT.md](DEVELOPMENT.md)**.
+the site by [dgo-atlas](https://github.com/james-geiger/dgo-atlas). If you're interested in the technical status of this work, see **[DEVELOPMENT.md](DEVELOPMENT.md)**.

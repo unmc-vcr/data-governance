@@ -99,7 +99,7 @@
         },
         "Paths": {
             "additionalProperties": false,
-            "description": "Where things live, relative to dgo-site.yaml.",
+            "description": "Where things live, relative to dgo-atlas.yaml.",
             "properties": {
                 "content": {
                     "description": "Directory of authored Markdown pages.",
@@ -189,7 +189,7 @@
         },
         "SiteConfig": {
             "additionalProperties": false,
-            "description": "The contents of dgo-site.yaml.",
+            "description": "The contents of dgo-atlas.yaml.",
             "properties": {
                 "base_path": {
                     "description": "Where the site is served from: \"/\" for a custom domain, \"/<repo>/\" for a GitHub Pages project site. Only the 404 page uses it.",
@@ -223,7 +223,7 @@
                     ]
                 },
                 "dgo_source": {
-                    "description": "Import DGO from here instead of the release URL: a URL, or a path relative to dgo-site.yaml, to a single-file DGO schema (for a mirror, a fork, or offline builds). dgo_version still names the release.",
+                    "description": "Import DGO from here instead of the release URL: a URL, or a path relative to dgo-atlas.yaml, to a single-file DGO schema (for a mirror, a fork, or offline builds). dgo_version still names the release.",
                     "type": [
                         "string",
                         "null"
@@ -322,7 +322,7 @@
                             }
                         ]
                     },
-                    "description": "Replacement wording for the site, keyed by text key (e.g. `term.history: Change log`). Run `dgo-site text` to list every key and its default.",
+                    "description": "Replacement wording for the site, keyed by text key (e.g. `term.history: Change log`). Run `dgo-atlas text` to list every key and its default.",
                     "type": [
                         "object",
                         "null"
@@ -343,7 +343,7 @@
         },
         "TextOverride": {
             "additionalProperties": false,
-            "description": "Replacement wording for one text key, written as `key: wording` (e.g. `term.history: Change log`). `dgo-site text` lists the keys.",
+            "description": "Replacement wording for one text key, written as `key: wording` (e.g. `term.history: Change log`). `dgo-atlas text` lists the keys.",
             "properties": {
                 "key": {
                     "type": "string"
@@ -361,7 +361,7 @@
         },
         "TextOverride__identifier_optional": {
             "additionalProperties": false,
-            "description": "Replacement wording for one text key, written as `key: wording` (e.g. `term.history: Change log`). `dgo-site text` lists the keys.",
+            "description": "Replacement wording for one text key, written as `key: wording` (e.g. `term.history: Change log`). `dgo-atlas text` lists the keys.",
             "properties": {
                 "key": {
                     "type": "string"
@@ -377,10 +377,10 @@
             "type": "object"
         }
     },
-    "$id": "https://w3id.org/dgo-site/config",
+    "$id": "https://w3id.org/dgo-atlas/config",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "additionalProperties": true,
-    "description": "The contents of dgo-site.yaml.",
+    "description": "The contents of dgo-atlas.yaml.",
     "metamodel_version": "1.11.0",
     "properties": {
         "base_path": {
@@ -415,7 +415,7 @@
             ]
         },
         "dgo_source": {
-            "description": "Import DGO from here instead of the release URL: a URL, or a path relative to dgo-site.yaml, to a single-file DGO schema (for a mirror, a fork, or offline builds). dgo_version still names the release.",
+            "description": "Import DGO from here instead of the release URL: a URL, or a path relative to dgo-atlas.yaml, to a single-file DGO schema (for a mirror, a fork, or offline builds). dgo_version still names the release.",
             "type": [
                 "string",
                 "null"
@@ -514,7 +514,7 @@
                     }
                 ]
             },
-            "description": "Replacement wording for the site, keyed by text key (e.g. `term.history: Change log`). Run `dgo-site text` to list every key and its default.",
+            "description": "Replacement wording for the site, keyed by text key (e.g. `term.history: Change log`). Run `dgo-atlas text` to list every key and its default.",
             "type": [
                 "object",
                 "null"
@@ -530,7 +530,7 @@
         "title",
         "prefixes"
     ],
-    "title": "dgo_site_config",
+    "title": "dgo_atlas_config",
     "type": "object",
     "version": "0.1.0"
 }

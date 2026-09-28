@@ -11,7 +11,7 @@
 # Nothing enforces that automatically; it is checked at review time.
 
 # The site configuration, the glossary, and the domain affect every subject area.
-/dgo-site.yaml                                          @unmc-vcr/data-governance-program
+/dgo-atlas.yaml                                          @unmc-vcr/data-governance-program
 /governance/glossary.yaml                               @unmc-vcr/data-governance-program
 /governance/research_administration/research_administration.yaml  @unmc-vcr/data-governance-program
 
