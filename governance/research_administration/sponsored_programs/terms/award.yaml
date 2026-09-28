@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:award
+    label: Award
+    alt_labels:
+      - Grant Award
+      - Funded Award
+    definition: >-
+      A sponsor's authorized commitment of funds to a sponsored project for a defined scope
+      and period, distinct from the proposal that requested it. A single sponsored project
+      may accrue several awards over its life.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    # semantic_type: information_artifact   # no slot in DGO 0.1.0 yet
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:award-creation
+    label: Creation of "Award"
+    has_output: term:award
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:award-creation
+    occurred_on: "2026-09-28"

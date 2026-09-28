@@ -1,0 +1,19 @@
+# The glossary every term is part of, and the sources definitions are drawn
+# from. Domains and subject areas are declared under research_administration/.
+
+business_glossaries:
+  - id: area:research-glossary
+    label: Research Administration Business Glossary
+
+# The id is the source's own IRI.
+definition_sources:
+  - id: https://grants.nih.gov/grants/glossary.htm#ClinicalResearch
+    label: 'NIH Grants & Funding Glossary: Clinical Research'
+  - id: https://grants.nih.gov/grants/policy/nihgps/HTML5/section_7/7.3_direct_costs_and_indirect_costs.htm
+    label: NIH Grants Policy Statement, 7.3 Direct Costs and Indirect Costs
+  - id: https://grants.nih.gov/policy/clinical-trials/definition.htm
+    label: NIH Definition of a Clinical Trial
+  - id: https://obssr.od.nih.gov/about/bssr-definition
+    label: NIH OBSSR Definition of Behavioral and Social Sciences Research
+  - id: https://openlibrary.org/isbn/9780195141696
+    label: Last, JM. 2001. A Dictionary of Epidemiology.

@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:activation-queue
+    label: Queue
+    alt_labels:
+      - Activation queue
+      - Queue time
+    definition: >-
+      The number of calendar days after activation activities begin until a staff member can
+      start the task.
+    part_of: area:research-glossary
+    in_subject_area: area:clinical-research
+    related:
+      - term:activation-activities-begin
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:activation-queue-creation
+    label: Creation of "Queue"
+    has_output: term:activation-queue
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:activation-queue-creation
+    occurred_on: "2026-09-28"

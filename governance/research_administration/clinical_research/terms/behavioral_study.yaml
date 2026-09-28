@@ -1,0 +1,31 @@
+glossary_terms:
+  - id: term:behavioral-study
+    label: Behavioral and social sciences research
+    definition: >-
+      Research involving the systematic study of behavioral phenomena—the observable actions
+      of individuals or groups and to mental phenomena such as knowledge, attitudes,
+      beliefs, motivations, perceptions, cognitions, and emotions— and social
+      phenomena—those interactions between and among individuals, and to the
+      characteristics, structures, and functions of social groups and institutions—relevant
+      to a person's complete physical, mental, and social well-being.
+    definition_source: https://obssr.od.nih.gov/about/bssr-definition
+    part_of: area:research-glossary
+    in_subject_area: area:clinical-research
+    broader:
+      - term:clinical-research
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:behavioral-study-creation
+    label: Creation of "Behavioral and social sciences research"
+    has_output: term:behavioral-study
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:behavioral-study-creation
+    occurred_on: "2026-09-28"

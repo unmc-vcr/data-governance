@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:epidemiological_study
+    label: Epidemiological study
+    definition: >-
+      A study that measures the distribution and determinants of health-related states or
+      events in specified populations, and the application of this study to the control of
+      health problems. May be measured across persons, places, or time; usually
+      observational rather than interventional.
+    definition_source: https://openlibrary.org/isbn/9780195141696
+    part_of: area:research-glossary
+    in_subject_area: area:clinical-research
+    broader:
+      - term:clinical-research
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:epidemiological_study-creation
+    label: Creation of "Epidemiological study"
+    has_output: term:epidemiological_study
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:epidemiological_study-creation
+    occurred_on: "2026-09-28"

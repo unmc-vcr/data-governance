@@ -1,0 +1,1622 @@
+{
+    "$defs": {
+        "Approved": {
+            "additionalProperties": false,
+            "description": "The point where a term or modification, resulting from a decision of the responsible data governance council, has been made final.",
+            "properties": {
+                "occurred_on": {
+                    "description": "The date of an action.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000026"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "part_of",
+                "occurred_on"
+            ],
+            "title": "Approved",
+            "type": "object"
+        },
+        "BusinessGlossary": {
+            "additionalProperties": false,
+            "description": "A glossary is a grouping of terms.",
+            "properties": {
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "BusinessGlossary",
+            "type": "object"
+        },
+        "Chair": {
+            "additionalProperties": false,
+            "description": "Convenes the council and owns final sign-off on decisions.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000006"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Chair",
+            "type": "object"
+        },
+        "ComplianceSteward": {
+            "additionalProperties": false,
+            "description": "Advises on regulatory and policy conformance.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000010"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ComplianceSteward",
+            "type": "object"
+        },
+        "CouncilRole": {
+            "additionalProperties": false,
+            "description": "What facet of stewardship the holder is responsible for on a Governance Council.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000005"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "CouncilRole",
+            "type": "object"
+        },
+        "Custodian": {
+            "additionalProperties": false,
+            "description": "Consulted on the collection, storage, and management of data.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000014"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Custodian",
+            "type": "object"
+        },
+        "DataGovernance": {
+            "additionalProperties": false,
+            "description": "A process of governing an organization's data.",
+            "properties": {
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "DataGovernance",
+            "type": "object"
+        },
+        "DataGovernanceCouncil": {
+            "additionalProperties": false,
+            "description": "A group whose collective role is to implement the data governance process to which it is assigned.",
+            "properties": {
+                "has_member": {
+                    "description": "A person or organization that is a member of this council.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "participates_in": {
+                    "description": "The data governance process this council carries out.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "DataGovernanceCouncil",
+            "type": "object"
+        },
+        "DefinitionSource": {
+            "additionalProperties": false,
+            "description": "A source that a term's definition is drawn from. Its id is the source's IRI; its label describes the source. Many terms may cite one source.",
+            "properties": {
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "DefinitionSource",
+            "type": "object"
+        },
+        "DocumentationSteward": {
+            "additionalProperties": false,
+            "description": "Keeps definitions, lineage, and decisions documented.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000009"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DocumentationSteward",
+            "type": "object"
+        },
+        "Domain": {
+            "additionalProperties": false,
+            "description": "A group of glossary terms that relates to a particular section or definable .",
+            "properties": {
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "Domain",
+            "type": "object"
+        },
+        "Drafted": {
+            "additionalProperties": false,
+            "description": "The point where a term or modification has been first drafted.",
+            "properties": {
+                "occurred_on": {
+                    "description": "The date of an action.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000024"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "part_of",
+                "occurred_on"
+            ],
+            "title": "Drafted",
+            "type": "object"
+        },
+        "Entity": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "Entity",
+            "type": "object"
+        },
+        "EthicsSteward": {
+            "additionalProperties": false,
+            "description": "Advises on ethical use and transparency across the organization.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000008"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "EthicsSteward",
+            "type": "object"
+        },
+        "GlossaryTerm": {
+            "additionalProperties": false,
+            "description": "A governed business term that relates, in whole or in part, to data that exists within an organization's governance.",
+            "properties": {
+                "alt_labels": {
+                    "description": "Other names the term is known by (synonyms, abbreviations).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "broader": {
+                    "description": "A more general term. Not transitive; query ancestors with skos:broader+.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "definition": {
+                    "description": "The meaning of the term.",
+                    "type": "string"
+                },
+                "definition_source": {
+                    "description": "The source the term's definition is drawn from.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "in_subject_area": {
+                    "description": "The subject area this term is classified under. Classification, not containment: a term is part of its glossary, never of a subject area. (RO's \"member of\" is a sub-property of part of, so it isn't used here.)",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": "string"
+                },
+                "pref_label": {
+                    "description": "The form of the term shown to readers, when it differs from the label. Must differ from every alt label.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "related": {
+                    "description": "A term associated with this one, not by hierarchy. Symmetric; query in both directions with skos:related|^skos:related.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "replaced_by": {
+                    "description": "The term that succeeds this one, once it is deprecated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "responsibilities": {
+                    "description": "The governance roles held with respect to this term (owner, steward, custodian, subject matter expert), each naming who bears it.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/GovernanceRole"
+                            },
+                            {
+                                "$ref": "#/$defs/Owner"
+                            },
+                            {
+                                "$ref": "#/$defs/Steward"
+                            },
+                            {
+                                "$ref": "#/$defs/Custodian"
+                            },
+                            {
+                                "$ref": "#/$defs/SubjectMatterExpert"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "value_of": {
+                    "description": "The attribute term this term is a value of (e.g. \"on hold\" is a value of \"accrual status\").",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label",
+                "definition",
+                "part_of",
+                "in_subject_area"
+            ],
+            "title": "GlossaryTerm",
+            "type": "object"
+        },
+        "GovernanceRecord": {
+            "additionalProperties": false,
+            "description": "One governance data file. All lists are optional; files are merged by concatenating their lists.",
+            "properties": {
+                "business_glossaries": {
+                    "items": {
+                        "$ref": "#/$defs/BusinessGlossary"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "council_roles": {
+                    "description": "Council roles such as chair; `type` picks the kind.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/CouncilRole"
+                            },
+                            {
+                                "$ref": "#/$defs/Chair"
+                            },
+                            {
+                                "$ref": "#/$defs/SecuritySteward"
+                            },
+                            {
+                                "$ref": "#/$defs/EthicsSteward"
+                            },
+                            {
+                                "$ref": "#/$defs/DocumentationSteward"
+                            },
+                            {
+                                "$ref": "#/$defs/ComplianceSteward"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "councils": {
+                    "description": "Data governance councils.",
+                    "items": {
+                        "$ref": "#/$defs/DataGovernanceCouncil"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "definition_sources": {
+                    "description": "Sources definitions are drawn from; each `id` is the source's IRI.",
+                    "items": {
+                        "$ref": "#/$defs/DefinitionSource"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "domains": {
+                    "items": {
+                        "$ref": "#/$defs/Domain"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "glossary_terms": {
+                    "items": {
+                        "$ref": "#/$defs/GlossaryTerm"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "governance_roles": {
+                    "description": "Governance roles held outside a term. Roles normally sit in a term's responsibilities instead.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/GovernanceRole"
+                            },
+                            {
+                                "$ref": "#/$defs/Owner"
+                            },
+                            {
+                                "$ref": "#/$defs/Steward"
+                            },
+                            {
+                                "$ref": "#/$defs/Custodian"
+                            },
+                            {
+                                "$ref": "#/$defs/SubjectMatterExpert"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "organizations": {
+                    "items": {
+                        "$ref": "#/$defs/Organization"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "people": {
+                    "items": {
+                        "$ref": "#/$defs/Person"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "processes": {
+                    "description": "Data governance processes, nested with part_of.",
+                    "items": {
+                        "$ref": "#/$defs/DataGovernance"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "subject_areas": {
+                    "items": {
+                        "$ref": "#/$defs/SubjectArea"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "term_creations": {
+                    "items": {
+                        "$ref": "#/$defs/TermCreation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "term_deprecations": {
+                    "items": {
+                        "$ref": "#/$defs/TermDeprecation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "term_modifications": {
+                    "items": {
+                        "$ref": "#/$defs/TermModification"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "term_status_boundaries": {
+                    "description": "Dated status boundaries; `type` picks the kind. Quote the dates.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/StatusBoundary"
+                            },
+                            {
+                                "$ref": "#/$defs/Drafted"
+                            },
+                            {
+                                "$ref": "#/$defs/SubmittedForReview"
+                            },
+                            {
+                                "$ref": "#/$defs/Approved"
+                            },
+                            {
+                                "$ref": "#/$defs/Rejected"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "GovernanceRecord",
+            "type": "object"
+        },
+        "GovernanceRole": {
+            "additionalProperties": false,
+            "description": "What an individual or entity is responsible for with respect to a managed term.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000011"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "GovernanceRole",
+            "type": "object"
+        },
+        "Identifiable": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "Identifiable",
+            "type": "object"
+        },
+        "InformationContentEntity": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "InformationContentEntity",
+            "type": "object"
+        },
+        "Object": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "Object",
+            "type": "object"
+        },
+        "ObjectAggregate": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "ObjectAggregate",
+            "type": "object"
+        },
+        "Organization": {
+            "additionalProperties": false,
+            "description": "A group of people organized for a specific purpose or set of purposes within an organization.",
+            "properties": {
+                "email": {
+                    "description": "A contact email address, as a plain string. (Not foaf:mbox, which expects a mailto: IRI.)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "Organization",
+            "type": "object"
+        },
+        "Owner": {
+            "additionalProperties": false,
+            "description": "Accountable for approving data definition.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000012"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Owner",
+            "type": "object"
+        },
+        "Person": {
+            "additionalProperties": false,
+            "description": "An individual human being.",
+            "properties": {
+                "email": {
+                    "description": "A contact email address, as a plain string. (Not foaf:mbox, which expects a mailto: IRI.)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "title": {
+                    "description": "A person's job title. (Not foaf:title, which is an honorific such as Dr.)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "Person",
+            "type": "object"
+        },
+        "Process": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "Process",
+            "type": "object"
+        },
+        "ProcessBoundary": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "ProcessBoundary",
+            "type": "object"
+        },
+        "Rejected": {
+            "additionalProperties": false,
+            "description": "The point where a term or modification, resulting from a decision of the responsible data governance council, is no longer under consideration.",
+            "properties": {
+                "occurred_on": {
+                    "description": "The date of an action.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000027"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "part_of",
+                "occurred_on"
+            ],
+            "title": "Rejected",
+            "type": "object"
+        },
+        "Role": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "Role",
+            "type": "object"
+        },
+        "SecuritySteward": {
+            "additionalProperties": false,
+            "description": "Advises on access controls and safeguarding of the data.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000007"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SecuritySteward",
+            "type": "object"
+        },
+        "StatusBoundary": {
+            "additionalProperties": false,
+            "description": "The moment a term's status changed during a lifecycle process.",
+            "properties": {
+                "occurred_on": {
+                    "description": "The date of an action.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000023"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "part_of",
+                "occurred_on"
+            ],
+            "title": "StatusBoundary",
+            "type": "object"
+        },
+        "Steward": {
+            "additionalProperties": false,
+            "description": "Responsible for quality of implementing data.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000013"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Steward",
+            "type": "object"
+        },
+        "SubjectArea": {
+            "additionalProperties": false,
+            "description": "A governed grouping of terms which is more specific.",
+            "properties": {
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "label",
+                "part_of"
+            ],
+            "title": "SubjectArea",
+            "type": "object"
+        },
+        "SubjectMatterExpert": {
+            "additionalProperties": false,
+            "description": "Consulted on meaning and use of data in practice.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role."
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000015"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SubjectMatterExpert",
+            "type": "object"
+        },
+        "SubmittedForReview": {
+            "additionalProperties": false,
+            "description": "The point where a term or modification has moved into being verified by a data steward.",
+            "properties": {
+                "occurred_on": {
+                    "description": "The date of an action.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000025"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "part_of",
+                "occurred_on"
+            ],
+            "title": "SubmittedForReview",
+            "type": "object"
+        },
+        "TermCreation": {
+            "additionalProperties": false,
+            "description": "The process by which a new governed business term is proposed, validated, and approved for publishing in the  business glossary.",
+            "properties": {
+                "has_output": {
+                    "description": "The term this creation process produced.",
+                    "type": "string"
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "has_output",
+                "id",
+                "label"
+            ],
+            "title": "TermCreation",
+            "type": "object"
+        },
+        "TermDeprecation": {
+            "additionalProperties": false,
+            "description": "The process by which an extant governed business term is proposed to be retired from the business glossary. The term is deprecated once this process reaches its approved boundary.",
+            "properties": {
+                "has_output": {
+                    "description": "The term this creation process produced.",
+                    "type": "string"
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "has_output",
+                "id",
+                "label"
+            ],
+            "title": "TermDeprecation",
+            "type": "object"
+        },
+        "TermLifecycleProcess": {
+            "additionalProperties": false,
+            "description": "A governance process that brings a business term into, or changes it within, the business glossary.",
+            "properties": {
+                "has_output": {
+                    "description": "The term this creation process produced.",
+                    "type": "string"
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "has_output",
+                "id",
+                "label"
+            ],
+            "title": "TermLifecycleProcess",
+            "type": "object"
+        },
+        "TermModification": {
+            "additionalProperties": false,
+            "description": "The process by which an extant governed business term is proposed to be modified, validated, and approved for publishing in the business glossary.",
+            "properties": {
+                "has_output": {
+                    "description": "The term this creation process produced.",
+                    "type": "string"
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "has_output",
+                "id",
+                "label"
+            ],
+            "title": "TermModification",
+            "type": "object"
+        }
+    },
+    "$id": "https://w3id.org/dgo-site/template",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "One governance data file. All lists are optional; files are merged by concatenating their lists.",
+    "metamodel_version": "1.11.0",
+    "properties": {
+        "business_glossaries": {
+            "items": {
+                "$ref": "#/$defs/BusinessGlossary"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "council_roles": {
+            "description": "Council roles such as chair; `type` picks the kind.",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/$defs/CouncilRole"
+                    },
+                    {
+                        "$ref": "#/$defs/Chair"
+                    },
+                    {
+                        "$ref": "#/$defs/SecuritySteward"
+                    },
+                    {
+                        "$ref": "#/$defs/EthicsSteward"
+                    },
+                    {
+                        "$ref": "#/$defs/DocumentationSteward"
+                    },
+                    {
+                        "$ref": "#/$defs/ComplianceSteward"
+                    }
+                ]
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "councils": {
+            "description": "Data governance councils.",
+            "items": {
+                "$ref": "#/$defs/DataGovernanceCouncil"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "definition_sources": {
+            "description": "Sources definitions are drawn from; each `id` is the source's IRI.",
+            "items": {
+                "$ref": "#/$defs/DefinitionSource"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "domains": {
+            "items": {
+                "$ref": "#/$defs/Domain"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "glossary_terms": {
+            "items": {
+                "$ref": "#/$defs/GlossaryTerm"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "governance_roles": {
+            "description": "Governance roles held outside a term. Roles normally sit in a term's responsibilities instead.",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/$defs/GovernanceRole"
+                    },
+                    {
+                        "$ref": "#/$defs/Owner"
+                    },
+                    {
+                        "$ref": "#/$defs/Steward"
+                    },
+                    {
+                        "$ref": "#/$defs/Custodian"
+                    },
+                    {
+                        "$ref": "#/$defs/SubjectMatterExpert"
+                    }
+                ]
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "organizations": {
+            "items": {
+                "$ref": "#/$defs/Organization"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "people": {
+            "items": {
+                "$ref": "#/$defs/Person"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "processes": {
+            "description": "Data governance processes, nested with part_of.",
+            "items": {
+                "$ref": "#/$defs/DataGovernance"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "subject_areas": {
+            "items": {
+                "$ref": "#/$defs/SubjectArea"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "term_creations": {
+            "items": {
+                "$ref": "#/$defs/TermCreation"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "term_deprecations": {
+            "items": {
+                "$ref": "#/$defs/TermDeprecation"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "term_modifications": {
+            "items": {
+                "$ref": "#/$defs/TermModification"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "term_status_boundaries": {
+            "description": "Dated status boundaries; `type` picks the kind. Quote the dates.",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/$defs/StatusBoundary"
+                    },
+                    {
+                        "$ref": "#/$defs/Drafted"
+                    },
+                    {
+                        "$ref": "#/$defs/SubmittedForReview"
+                    },
+                    {
+                        "$ref": "#/$defs/Approved"
+                    },
+                    {
+                        "$ref": "#/$defs/Rejected"
+                    }
+                ]
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        }
+    },
+    "title": "dgo_site_template",
+    "type": "object",
+    "version": "0.1.0"
+}

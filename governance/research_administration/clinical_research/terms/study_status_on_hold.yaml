@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:study-status-on-hold
+    label: On Hold
+    alt_labels:
+      - Enrollment suspended
+      - Temporarily closed to accrual
+    definition: >-
+      An study status in which enrollment of new subjects is temporarily suspended while the
+      study remains active, with the expectation of reopening.
+    part_of: area:research-glossary
+    in_subject_area: area:clinical-research
+    # semantic_type: state   # no slot in DGO 0.1.0 yet
+    value_of: term:study-status
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:study-status-on-hold-creation
+    label: Creation of "On Hold"
+    has_output: term:study-status-on-hold
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:study-status-on-hold-creation
+    occurred_on: "2026-09-28"

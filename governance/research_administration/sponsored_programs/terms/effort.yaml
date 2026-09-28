@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:effort
+    label: Effort
+    alt_labels:
+      - Committed Effort
+      - Percent Effort
+      - FTE Commitment
+    definition: >-
+      The proportion of an individual's total institutional professional activity committed
+      to a sponsored project, expressed as a full-time equivalent (FTE) or percentage.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    # semantic_type: measure   # no slot in DGO 0.1.0 yet
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:effort-creation
+    label: Creation of "Effort"
+    has_output: term:effort
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:effort-creation
+    occurred_on: "2026-09-28"

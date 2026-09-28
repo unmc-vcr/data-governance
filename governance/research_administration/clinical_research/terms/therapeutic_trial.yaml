@@ -1,0 +1,26 @@
+glossary_terms:
+  - id: term:therapeutic-clinical-trial
+    label: Therapeutic clinical trial
+    definition: >-
+      A clinical trial in which the primary research objective is to evaluate the
+      effectiveness of a drug or device.
+    part_of: area:research-glossary
+    in_subject_area: area:clinical-research
+    broader:
+      - term:clinical-trial
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:therapeutic-clinical-trial-creation
+    label: Creation of "Therapeutic clinical trial"
+    has_output: term:therapeutic-clinical-trial
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:therapeutic-clinical-trial-creation
+    occurred_on: "2026-09-28"

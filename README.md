@@ -17,9 +17,9 @@ spreadsheets, the same question quietly gets two answers.
 
 Guiding principals for this project include:
 
-- **One definition per term.** Written down, in plain language, with its source of record and calculation rules.
+- **One definition per term.** Written down, in plain language, with its source where the wording was adopted from elsewhere.
 - **One office accountable** for keeping it right — a role, not a person, so it survives staff turnover.
-- **A status you can trust.** A term is `draft`, `in review`, `approved`, or `deprecated`, and you always know which.
+- **A status you can trust.** A term is *proposed*, *approved*, or *deprecated*, and you always know which.
 - **A full history.** Every change is reviewed and recorded. A report written three years ago stays explicable.
 
 The result is a living catalog you can point to in a meeting, cite in a report, and trust across offices.
@@ -41,7 +41,7 @@ administration data, this applies to you.
 | [Browse terms](https://unmc-vcr.github.io/data-governance/) | The full catalog of governed terms, by subject area. |
 | [How governance works](https://unmc-vcr.github.io/data-governance/how-governance-works.html) | The roles, the term lifecycle, and how a definition becomes official. |
 | [How to read a term](https://unmc-vcr.github.io/data-governance/how-to-read-a-term.html) | What every field on a term page means. |
-| [Standards](https://unmc-vcr.github.io/data-governance/standards/) | Cross-cutting rules, including data classification. |
+| [Data classification](https://unmc-vcr.github.io/data-governance/standards/data-classification.html) | The cross-cutting standard for how data is classified. |
 
 ## Suggest a change
 
@@ -58,5 +58,6 @@ walks through it.
 
 We think data governance should follow [FAIR principles](https://www.gofair.foundation/fair-principles).
 
-Here, terms are stored as data, validated against a lightweight schema, and rendered into the site by a
-small build pipeline. If you're interested in the technical status of this work, see **[DEVELOPMENT.md](DEVELOPMENT.md)**.
+Here, terms are stored as data written against the
+[Data Governance Ontology](https://github.com/james-geiger/dgo) (DGO), then validated and rendered into
+the site by [dgo-site](https://github.com/james-geiger/dgo-site). If you're interested in the technical status of this work, see **[DEVELOPMENT.md](DEVELOPMENT.md)**.
