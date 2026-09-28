@@ -1,15 +1,14 @@
 {
-    "github.copilot.enable": {
-        "*": false,
-        "plaintext": false,
-        "markdown": false,
-        "scminput": false,
-        "asm": false
-    },
-    "yaml.schemas": {
-        "./terms.schema.json": [
-            "src/definitions/**/*.yaml",
-            "src/agents.yaml"
-        ]
-    }
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "asm": false
+  },
+  "yaml.schemas": {
+    ".dgo-site/governance.schema.json": ["governance/**/*.yaml"],
+    ".dgo-site/config.schema.json": ["dgo-site.yaml"]
+  },
+  "yaml.customTags": []
 }

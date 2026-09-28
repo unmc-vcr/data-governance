@@ -1,0 +1,10 @@
+# Clinical Research subject area. Its terms live one per file under terms/,
+# each with the lifecycle that created it.
+#
+# Every edit here is a governance change: open a pull request, let the
+# owning office review the rendered preview, and merge.
+
+subject_areas:
+  - id: area:clinical-research
+    label: Clinical Research
+    part_of: area:research-administration

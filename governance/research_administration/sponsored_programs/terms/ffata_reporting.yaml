@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:ffata-reporting
+    label: FFATA Reporting
+    alt_labels:
+      - FFATA
+      - Transparency Act Reporting
+      - FSRS Reporting
+    definition: >-
+      The Federal Funding Accountability and Transparency Act obligation to publicly report
+      certain federal awards and their first-tier subawards.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    # semantic_type: process   # no slot in DGO 0.1.0 yet
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:ffata-reporting-creation
+    label: Creation of "FFATA Reporting"
+    has_output: term:ffata-reporting
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:ffata-reporting-creation
+    occurred_on: "2026-09-28"

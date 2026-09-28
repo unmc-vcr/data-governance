@@ -7,24 +7,27 @@
 # ineffective -- GitHub does not warn about an unknown owner. Verify with
 # Settings -> Branches -> require review from Code Owners, then open a test PR.
 #
-# The office named here must match the definition_owner in the file itself.
+# The office named here must match the owner in the term files themselves.
 # Nothing enforces that automatically; it is checked at review time.
 
-# Schema changes affect every subject area.
-/src/schema/                @unmc-vcr/data-governance-program
+# The site configuration, the glossary, and the domain affect every subject area.
+/dgo-site.yaml                                          @unmc-vcr/data-governance-program
+/governance/glossary.yaml                               @unmc-vcr/data-governance-program
+/governance/research_administration/research_administration.yaml  @unmc-vcr/data-governance-program
 
-# The agent registry decides who can hold a role at all.
-/src/agents.yaml            @unmc-vcr/data-governance-program
+# The organization registry decides who can hold a role at all.
+/governance/organization.yaml                           @unmc-vcr/data-governance-program
 
 # Subject areas, one line per directory. The directory pattern covers the
 # subject-area file and every term file under terms/, so a new term is routed
 # to the right office without touching this file.
-/src/definitions/clinical_research/     @unmc-vcr/clinical-research-office
-/src/definitions/sponsored_programs/    @unmc-vcr/sponsored-programs-office
+/governance/research_administration/clinical_research/  @unmc-vcr/clinical-research-office
+/governance/research_administration/sponsored_programs/ @unmc-vcr/sponsored-programs-office
 
 # Published narrative and standards.
-/docs/content/              @unmc-vcr/data-governance-program
+/content/                                               @unmc-vcr/data-governance-program
 
 # The build itself.
-/tools/                     @unmc-vcr/data-governance-program
-/.github/                   @unmc-vcr/data-governance-program
+/pyproject.toml                                         @unmc-vcr/data-governance-program
+/uv.lock                                                @unmc-vcr/data-governance-program
+/.github/                                               @unmc-vcr/data-governance-program

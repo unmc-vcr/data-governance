@@ -1,0 +1,28 @@
+glossary_terms:
+  - id: term:period-of-performance
+    label: Period of Performance
+    alt_labels:
+      - Project Period
+      - Performance Period
+    definition: >-
+      The authorized start-through-end date range during which a sponsored project may incur
+      allowable costs against an award.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    # semantic_type: interval   # no slot in DGO 0.1.0 yet
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:period-of-performance-creation
+    label: Creation of "Period of Performance"
+    has_output: term:period-of-performance
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:period-of-performance-creation
+    occurred_on: "2026-09-28"
