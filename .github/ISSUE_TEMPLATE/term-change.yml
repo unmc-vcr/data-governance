@@ -18,7 +18,7 @@ body:
     id: term
     attributes:
       label: Which term?
-      description: The term's name or its ID, e.g. `unmc:ClinicalTrial`.
+      description: The term's name or its ID, e.g. `term:clinical-trial`.
       placeholder: Clinical Trial
     validations:
       required: true
@@ -30,7 +30,7 @@ body:
       options:
         - The definition is wrong
         - The definition is unclear or ambiguous
-        - The source of record is wrong or missing
+        - The definition source is wrong or missing
         - The wrong office is listed as accountable
         - A term is missing entirely
         - Something else

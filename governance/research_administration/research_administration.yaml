@@ -1,0 +1,7 @@
+# Research Administration domain. Its subject areas are declared one per
+# directory below, each with its terms under terms/.
+
+domains:
+  - id: area:research-administration
+    label: Research Administration
+    part_of: area:research-glossary

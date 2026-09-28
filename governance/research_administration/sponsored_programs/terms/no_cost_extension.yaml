@@ -1,0 +1,26 @@
+glossary_terms:
+  - id: term:no-cost-extension
+    label: No-Cost Extension (NCE)
+    alt_labels:
+      - NCE
+    definition: >-
+      An approved extension of an award's period of performance beyond its original end date
+      without any additional funds from the sponsor.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:no-cost-extension-creation
+    label: Creation of "No-Cost Extension (NCE)"
+    has_output: term:no-cost-extension
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:no-cost-extension-creation
+    occurred_on: "2026-09-28"

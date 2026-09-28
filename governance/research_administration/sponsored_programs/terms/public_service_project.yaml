@@ -1,0 +1,32 @@
+glossary_terms:
+  - id: term:public-service-project
+    label: Public Service Project
+    alt_labels:
+      - Public Service
+      - Other Sponsored Activity
+    definition: >-
+      An activity specifically organized and separately budgeted to provide non-
+      instructional public services beneficial to groups external to the institution,
+      whether commissioned by an agency external to the institution or separately by an
+      organizational unit within the institution.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    # semantic_type: process   # no slot in DGO 0.1.0 yet
+    broader:
+      - term:sponsored-project
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:public-service-project-creation
+    label: Creation of "Public Service Project"
+    has_output: term:public-service-project
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:public-service-project-creation
+    occurred_on: "2026-09-28"

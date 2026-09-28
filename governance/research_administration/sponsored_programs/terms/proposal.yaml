@@ -1,0 +1,30 @@
+glossary_terms:
+  - id: term:proposal
+    label: Proposal
+    alt_labels:
+      - Funding Request
+      - Request
+      - Research Administration Request
+    definition: >-
+      A request submitted to a sponsor to establish, continue, or modify funding for a
+      sponsored project. The research-administration (RA) type distinguishes the kind of
+      request -- new, renewal, supplement, continuation, and so on.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    # semantic_type: information_artifact   # no slot in DGO 0.1.0 yet
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:proposal-creation
+    label: Creation of "Proposal"
+    has_output: term:proposal
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:proposal-creation
+    occurred_on: "2026-09-28"

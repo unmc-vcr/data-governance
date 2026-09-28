@@ -1,0 +1,101 @@
+# Who governs: the governance process, the council, and the people and
+# organizations who sit on it or hold roles for terms.
+#
+# Organizations are offices, not people. An office IRI survives staff turnover;
+# a person's name does not. Responsibility for a term lands on an office or the
+# council, never on a person.
+#
+# `type` values are DGO class IRIs. Keep the readable name in a comment.
+
+processes:
+  - id: office:research-data-governance
+    label: Research administration data governance
+
+councils:
+  - id: office:research-admin-stewardship-council
+    label: Research Administration Data Stewardship Council
+    # email: crsc@unmc.edu   # no council email slot in DGO 0.1.0
+    participates_in: office:research-data-governance   # governs terms created within this process
+    has_member:
+      - person:james-geiger
+
+people:
+  - id: person:james-geiger
+    label: James Geiger
+    title: Director, Research Analytics and Decision Support
+    email: james.geiger@unmc.edu
+
+  - id: person:jack-noecker
+    label: Jack Noecker
+    title: Research Data Specialist
+    email: jnoecker@unmc.edu
+
+  - id: person:katie-penas
+    label: Katie Penas
+    title: Director, Research Operations
+    email: kpenas@nebraskamed.com
+
+  - id: person:courtney-kennedy
+    label: Courtney Kennedy
+    title: Manager, Clinical Trials Applications
+    email: CoKennedy@nebraskamed.com
+
+  - id: person:bethany-decarolis
+    label: Bethany DeCarolis
+    title: Director, Sponsored Programs Administration
+    email: bdecarolis@unmc.edu
+
+  - id: person:kristin-morrissey
+    label: Kristin Morrissey
+    title: Assistant Director, Sponsored Programs Administration
+    email: kristin.morrissey@unmc.edu
+
+  - id: person:laura-wise
+    label: Laura Wise
+    title: Assistant Director, Sponsored Programs Administration
+    email: laura.wise@unmc.edu
+
+  - id: person:bruce-gordon
+    label: Bruce Gordon
+    title: Assistant Vice Chancellor for Regulatory Affairs
+    email: bgordon@unmc.edu
+
+  - id: person:kristi-dehaai
+    label: Kristi DeHaai
+    title: Assistant Director, Institutional Review Board
+    email: krdehaai@unmc.edu
+
+organizations:
+  - id: office:clinical-research-office
+    label: Clinical Research Office
+    email: clinicalresearch@unmc.edu
+    # has_member:   # no organization has_member slot in DGO 0.1.0
+    #   - person:katie-penas
+    #   - person:courtney-kennedy
+
+  - id: office:research-analytics
+    label: Research Analytics
+    email: researchanalytics@unmc.edu
+    # has_member:   # no organization has_member slot in DGO 0.1.0
+    #   - person:james-geiger
+    #   - person:jack-noecker
+
+  - id: office:sponsored-programs-office
+    label: Sponsored Programs Administration
+    email: spa@unmc.edu
+    # has_member:   # no organization has_member slot in DGO 0.1.0
+    #   - person:bethany-decarolis
+    #   - person:kristin-morrissey
+    #   - person:laura-wise
+
+  - id: office:regulatory-affairs
+    label: Office of Regulatory Affairs
+    email: irbora@unmc.edu
+    # has_member:   # no organization has_member slot in DGO 0.1.0
+    #   - person:bruce-gordon
+    #   - person:kristi-dehaai
+
+council_roles:
+  - type: dgo:DGO_00000006   # chair
+    role_of: person:james-geiger
+    realized_in: office:research-data-governance

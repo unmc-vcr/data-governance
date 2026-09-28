@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:cost-sharing
+    label: Cost Sharing
+    alt_labels:
+      - Match
+      - Matching
+      - Cost Match
+    definition: >-
+      The portion of a sponsored project's costs borne by UNMC or a third party rather than
+      the sponsor. Mandatory cost sharing is required as a condition of the award; voluntary
+      cost sharing is offered by the institution.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:cost-sharing-creation
+    label: Creation of "Cost Sharing"
+    has_output: term:cost-sharing
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:cost-sharing-creation
+    occurred_on: "2026-09-28"

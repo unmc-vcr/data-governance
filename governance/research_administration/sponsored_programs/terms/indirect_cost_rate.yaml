@@ -1,0 +1,30 @@
+glossary_terms:
+  - id: term:indirect-cost-rate
+    label: Indirect Cost Rate
+    alt_labels:
+      - F&A Cost Rate
+      - IDC Rate
+      - F&A Rate
+      - Facilities and Administrative Rate
+    definition: >-
+      The negotiated percentage applied to a defined cost base to recover indirect
+      (facilities and administrative) costs on an award.
+    part_of: area:research-glossary
+    in_subject_area: area:sponsored-programs
+    # semantic_type: measure   # no slot in DGO 0.1.0 yet
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:indirect-cost-rate-creation
+    label: Creation of "Indirect Cost Rate"
+    has_output: term:indirect-cost-rate
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:indirect-cost-rate-creation
+    occurred_on: "2026-09-28"
