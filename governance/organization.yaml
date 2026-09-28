@@ -14,7 +14,6 @@ processes:
 councils:
   - id: office:research-admin-stewardship-council
     label: Research Administration Data Stewardship Council
-    # email: crsc@unmc.edu   # no council email slot in DGO 0.1.0
     participates_in: office:research-data-governance   # governs terms created within this process
     has_member:
       - person:james-geiger
@@ -69,33 +68,33 @@ organizations:
   - id: office:clinical-research-office
     label: Clinical Research Office
     email: clinicalresearch@unmc.edu
-    # has_member:   # no organization has_member slot in DGO 0.1.0
-    #   - person:katie-penas
-    #   - person:courtney-kennedy
+    has_member:
+      - person:katie-penas
+      - person:courtney-kennedy
 
   - id: office:research-analytics
     label: Research Analytics
     email: researchanalytics@unmc.edu
-    # has_member:   # no organization has_member slot in DGO 0.1.0
-    #   - person:james-geiger
-    #   - person:jack-noecker
+    has_member:
+      - person:james-geiger
+      - person:jack-noecker
 
   - id: office:sponsored-programs-office
     label: Sponsored Programs Administration
     email: spa@unmc.edu
-    # has_member:   # no organization has_member slot in DGO 0.1.0
-    #   - person:bethany-decarolis
-    #   - person:kristin-morrissey
-    #   - person:laura-wise
+    has_member:
+      - person:bethany-decarolis
+      - person:kristin-morrissey
+      - person:laura-wise
 
   - id: office:regulatory-affairs
     label: Office of Regulatory Affairs
     email: irbora@unmc.edu
-    # has_member:   # no organization has_member slot in DGO 0.1.0
-    #   - person:bruce-gordon
-    #   - person:kristi-dehaai
+    has_member:
+      - person:bruce-gordon
+      - person:kristi-dehaai
 
 council_roles:
-  - type: dgo:DGO_00000006   # chair
+  - type: dgo:DGO_00000006
     role_of: person:james-geiger
     realized_in: office:research-data-governance

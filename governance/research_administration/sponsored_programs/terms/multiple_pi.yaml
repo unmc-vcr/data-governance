@@ -10,7 +10,7 @@ glossary_terms:
       more co-equal principal investigators, each accountable for the project as a whole.
     part_of: area:research-glossary
     in_subject_area: area:sponsored-programs
-    # semantic_type: role   # no slot in DGO 0.1.0 yet
+    semantic_type: bfo:0000023   # role (role)
     broader:
       - term:principal-investigator
     responsibilities:

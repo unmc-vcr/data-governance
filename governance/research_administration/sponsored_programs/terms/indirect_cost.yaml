@@ -9,7 +9,7 @@ glossary_terms:
     definition_source: https://grants.nih.gov/grants/policy/nihgps/HTML5/section_7/7.3_direct_costs_and_indirect_costs.htm
     part_of: area:research-glossary
     in_subject_area: area:sponsored-programs
-    # semantic_type: measure   # no slot in DGO 0.1.0 yet
+    semantic_type: iao:0000027   # data item (measure)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:sponsored-programs-office

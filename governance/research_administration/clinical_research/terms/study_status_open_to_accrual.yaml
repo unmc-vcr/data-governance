@@ -11,7 +11,7 @@ glossary_terms:
       the study is closed to accrual.
     part_of: area:research-glossary
     in_subject_area: area:clinical-research
-    # semantic_type: state   # no slot in DGO 0.1.0 yet
+    semantic_type: bfo:0000019   # quality (state)
     related:
       - term:open-to-accrual
     value_of: term:study-status

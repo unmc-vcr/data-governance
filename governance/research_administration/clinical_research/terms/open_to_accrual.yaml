@@ -8,7 +8,7 @@ glossary_terms:
       ongoing "is it enrolling" condition is a separate term, accrual status.
     part_of: area:research-glossary
     in_subject_area: area:clinical-research
-    # semantic_type: event   # no slot in DGO 0.1.0 yet
+    semantic_type: bfo:0000035   # process boundary (event)
     related:
       - term:study-status
       - term:study-status-open-to-accrual

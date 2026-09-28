@@ -10,7 +10,7 @@ glossary_terms:
       so on.
     part_of: area:research-glossary
     in_subject_area: area:sponsored-programs
-    # semantic_type: agent   # no slot in DGO 0.1.0 yet
+    semantic_type: bfo:0000004   # independent continuant (agent)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:sponsored-programs-office

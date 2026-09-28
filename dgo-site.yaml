@@ -4,7 +4,7 @@
 
 # The Data Governance Ontology release the data is written against. Change it
 # deliberately: a new release may change what the data must say.
-dgo_version: "0.1.0"
+dgo_version: "v0.1.1"
 
 title: Research Administration Data Governance
 organization: University of Nebraska Medical Center
@@ -20,6 +20,9 @@ prefixes:
   area: https://w3id.org/unmc/areas/
   office: https://w3id.org/unmc/offices/
   person: https://w3id.org/unmc/people/
+  iao: http://purl.obolibrary.org/obo/IAO_
+  bfo: http://purl.obolibrary.org/obo/BFO_
+
 
 paths:
   data: governance
@@ -36,7 +39,7 @@ suggest_change_url: https://github.com/unmc-vcr/data-governance/issues/new?templ
 
 brand:
   mark: "N"
-  accent: "#AD122A"   # UNMC red
+  accent: "#AD122A"
 
 text:
   nav.directory: Offices

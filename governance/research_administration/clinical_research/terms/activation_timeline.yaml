@@ -9,7 +9,7 @@ glossary_terms:
       accrual to potential participants.
     part_of: area:research-glossary
     in_subject_area: area:clinical-research
-    # semantic_type: measure   # no slot in DGO 0.1.0 yet
+    semantic_type: iao:0000027   # data item (measure)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:clinical-research-office

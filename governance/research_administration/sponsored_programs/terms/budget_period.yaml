@@ -9,7 +9,7 @@ glossary_terms:
       project year -- against which spending and reporting are tracked.
     part_of: area:research-glossary
     in_subject_area: area:sponsored-programs
-    # semantic_type: interval   # no slot in DGO 0.1.0 yet
+    semantic_type: bfo:0000038   # one-dimensional temporal region (interval)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:sponsored-programs-office

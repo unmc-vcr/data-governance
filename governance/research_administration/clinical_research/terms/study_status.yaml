@@ -9,7 +9,7 @@ glossary_terms:
       subjects.
     part_of: area:research-glossary
     in_subject_area: area:clinical-research
-    # semantic_type: attribute   # no slot in DGO 0.1.0 yet
+    semantic_type: bfo:0000019   # quality (attribute)
     related:
       - term:open-to-accrual
     responsibilities:

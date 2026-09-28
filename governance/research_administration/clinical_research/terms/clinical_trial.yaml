@@ -9,7 +9,7 @@ glossary_terms:
     definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
     part_of: area:research-glossary
     in_subject_area: area:clinical-research
-    # semantic_type: process   # no slot in DGO 0.1.0 yet
+    semantic_type: bfo:0000015   # process (process)
     broader:
       - term:clinical-study
     responsibilities:

@@ -11,7 +11,7 @@ glossary_terms:
       organizational unit within the institution.
     part_of: area:research-glossary
     in_subject_area: area:sponsored-programs
-    # semantic_type: process   # no slot in DGO 0.1.0 yet
+    semantic_type: bfo:0000015   # process (process)
     broader:
       - term:sponsored-project
     responsibilities:

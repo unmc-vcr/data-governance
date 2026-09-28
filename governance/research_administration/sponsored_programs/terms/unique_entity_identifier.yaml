@@ -9,7 +9,7 @@ glossary_terms:
       identify a sponsor or recipient. It replaced the DUNS Number.
     part_of: area:research-glossary
     in_subject_area: area:sponsored-programs
-    # semantic_type: information_artifact   # no slot in DGO 0.1.0 yet
+    semantic_type: iao:0000030   # information content entity (information_artifact)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:sponsored-programs-office

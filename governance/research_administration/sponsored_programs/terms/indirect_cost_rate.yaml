@@ -11,7 +11,7 @@ glossary_terms:
       (facilities and administrative) costs on an award.
     part_of: area:research-glossary
     in_subject_area: area:sponsored-programs
-    # semantic_type: measure   # no slot in DGO 0.1.0 yet
+    semantic_type: iao:0000027   # data item (measure)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:sponsored-programs-office

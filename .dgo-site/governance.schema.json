@@ -249,7 +249,7 @@
             "description": "A group whose collective role is to implement the data governance process to which it is assigned.",
             "properties": {
                 "has_member": {
-                    "description": "A person or organization that is a member of this council.",
+                    "description": "A person or organization that is a member of a council or other organization.",
                     "items": {
                         "anyOf": [
                             {
@@ -550,6 +550,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "semantic_type": {
+                    "description": "The kind of thing the term denotes, given as the IRI of a class in an external ontology (e.g. \"clinical trial\" denotes a BFO process). Types the term's referent, not the term itself: the term stays an information content entity.",
+                    "type": [
+                        "string",
                         "null"
                     ]
                 },
@@ -858,6 +865,23 @@
                     "description": "A contact email address, as a plain string. (Not foaf:mbox, which expects a mailto: IRI.)",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "has_member": {
+                    "description": "A person or organization that is a member of a council or other organization.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
                         "null"
                     ]
                 },
