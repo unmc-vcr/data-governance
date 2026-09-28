@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:coverage-analysis-preliminary-complete
+    label: Coverage analysis preliminary complete
+    alt_labels:
+      - CA preliminary complete
+    definition: >-
+      The date on which the coverage analysis page of the coverage analysis (CA) workbook is
+      completed and initial questions are sent to the PI, coordinator, or department (if
+      applicable).
+    part_of: area:research-glossary
+    in_subject_area: area:clinical-research
+    related:
+      - term:coverage-analysis-started
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-admin-stewardship-council
+
+term_creations:
+  - id: term:coverage-analysis-preliminary-complete-creation
+    label: Creation of "Coverage analysis preliminary complete"
+    has_output: term:coverage-analysis-preliminary-complete
+    part_of: office:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:coverage-analysis-preliminary-complete-creation
+    occurred_on: "2026-09-28"

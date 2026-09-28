@@ -1,15 +1,15 @@
 glossary_terms:
-  - id: term:activation-timeline
-    label: Activation timeline
+  - id: term:contract-language-finalized
+    label: Contract language finalized
     alt_labels:
-      - Time to Trial
-      - Startup
+      - Contract finalized
     definition: >-
-      The amount of time, in calendar days, that it takes for a clinical study to open to
-      accrual to potential participants.
+      The date on which both the Sponsor and UNeHealth approve all edits to the contract, so
+      that the contract language is considered final.
     part_of: area:research-glossary
     in_subject_area: area:clinical-research
-    # semantic_type: measure   # no slot in DGO 0.1.0 yet
+    related:
+      - term:contract-negotiation-started
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:clinical-research-office
@@ -17,12 +17,12 @@ glossary_terms:
         role_of: office:research-admin-stewardship-council
 
 term_creations:
-  - id: term:activation-timeline-creation
-    label: Creation of "Activation timeline"
-    has_output: term:activation-timeline
+  - id: term:contract-language-finalized-creation
+    label: Creation of "Contract language finalized"
+    has_output: term:contract-language-finalized
     part_of: office:research-data-governance
 
 term_status_boundaries:   # quote every date
   - type: dgo:DGO_00000024   # drafted
-    part_of: term:activation-timeline-creation
+    part_of: term:contract-language-finalized-creation
     occurred_on: "2026-09-28"

@@ -1,6 +1,6 @@
 glossary_terms:
   - id: term:open-to-accrual
-    label: Open to Accrual
+    label: Open to accrual
     definition: >-
       The date in a clinical study's lifecycle on which participants were first permitted to
       be enrolled, following all regulatory and sponsor requirements. This is the dated
@@ -10,6 +10,8 @@ glossary_terms:
     in_subject_area: area:clinical-research
     # semantic_type: event   # no slot in DGO 0.1.0 yet
     related:
+      - term:study-status
+      - term:study-status-open-to-accrual
       - term:activation-timeline
     responsibilities:
       - type: dgo:DGO_00000012   # owner
@@ -19,7 +21,7 @@ glossary_terms:
 
 term_creations:
   - id: term:open-to-accrual-creation
-    label: Creation of "Open to Accrual"
+    label: Creation of "Open to accrual"
     has_output: term:open-to-accrual
     part_of: office:research-data-governance
 

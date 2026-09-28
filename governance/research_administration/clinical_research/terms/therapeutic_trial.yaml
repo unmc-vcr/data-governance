@@ -1,15 +1,13 @@
 glossary_terms:
-  - id: term:activation-timeline
-    label: Activation timeline
-    alt_labels:
-      - Time to Trial
-      - Startup
+  - id: term:therapeutic-clinical-trial
+    label: Therapeutic clinical trial
     definition: >-
-      The amount of time, in calendar days, that it takes for a clinical study to open to
-      accrual to potential participants.
+      A clinical trial in which the primary research objective is to evaluate the
+      effectiveness of a drug or device.
     part_of: area:research-glossary
     in_subject_area: area:clinical-research
-    # semantic_type: measure   # no slot in DGO 0.1.0 yet
+    broader:
+      - term:clinical-trial
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:clinical-research-office
@@ -17,12 +15,12 @@ glossary_terms:
         role_of: office:research-admin-stewardship-council
 
 term_creations:
-  - id: term:activation-timeline-creation
-    label: Creation of "Activation timeline"
-    has_output: term:activation-timeline
+  - id: term:therapeutic-clinical-trial-creation
+    label: Creation of "Therapeutic clinical trial"
+    has_output: term:therapeutic-clinical-trial
     part_of: office:research-data-governance
 
 term_status_boundaries:   # quote every date
   - type: dgo:DGO_00000024   # drafted
-    part_of: term:activation-timeline-creation
+    part_of: term:therapeutic-clinical-trial-creation
     occurred_on: "2026-09-28"
