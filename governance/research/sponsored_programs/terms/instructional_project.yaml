@@ -1,0 +1,31 @@
+glossary_terms:
+  - id: term:instructional-project
+    label: Instructional Project
+    alt_labels:
+      - Instruction
+      - Training Project
+    definition: >-
+      An activity specifically organized and separately budgeted to produce teaching,
+      training, or other instructional outcomes, whether commissioned by an agency external
+      to the institution or separately by an organizational unit within the institution.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: bfo:0000015   # process (process)
+    broader:
+      - term:sponsored-project
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:instructional-project-creation
+    label: Creation of "Instructional Project"
+    has_output: term:instructional-project
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:instructional-project-creation
+    occurred_on: "2026-09-28"

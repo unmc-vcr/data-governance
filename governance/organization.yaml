@@ -1,22 +1,21 @@
 # Who governs: the governance process, the council, and the people and
 # organizations who sit on it or hold roles for terms.
-#
-# Organizations are offices, not people. An office IRI survives staff turnover;
-# a person's name does not. Responsibility for a term lands on an office or the
-# council, never on a person.
-#
-# `type` values are DGO class IRIs. Keep the readable name in a comment.
 
 processes:
-  - id: office:research-data-governance
+  - id: gov:research-data-governance
     label: Research administration data governance
 
 councils:
-  - id: office:research-admin-stewardship-council
-    label: Research Administration Data Stewardship Council
-    participates_in: office:research-data-governance   # governs terms created within this process
+  - id: office:ra-governance-council
+    label: Data Governance Council
+    participates_in: gov:research-data-governance
     has_member:
       - person:james-geiger
+
+council_roles:
+  - type: dgo:DGO_00000006
+    role_of: person:james-geiger
+    realized_in: gov:research-data-governance
 
 people:
   - id: person:james-geiger
@@ -93,8 +92,3 @@ organizations:
     has_member:
       - person:bruce-gordon
       - person:kristi-dehaai
-
-council_roles:
-  - type: dgo:DGO_00000006
-    role_of: person:james-geiger
-    realized_in: office:research-data-governance

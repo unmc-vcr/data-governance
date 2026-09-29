@@ -1,0 +1,30 @@
+glossary_terms:
+  - id: term:notice-of-grant-award
+    label: Notice of Grant Award (NGA)
+    alt_labels:
+      - NGA
+      - Notice of Award
+      - NoA
+    definition: >-
+      The sponsor's official document obligating funds to an award and stating its terms and
+      conditions. Its date marks the point from which the award is active and costs may be
+      charged.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: iao:0000030   # information content entity (information_artifact)
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:notice-of-grant-award-creation
+    label: Creation of "Notice of Grant Award (NGA)"
+    has_output: term:notice-of-grant-award
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:notice-of-grant-award-creation
+    occurred_on: "2026-09-28"

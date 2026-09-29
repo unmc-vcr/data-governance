@@ -1,0 +1,28 @@
+glossary_terms:
+  - id: term:administering-department
+    label: Administering Department
+    alt_labels:
+      - Department
+      - Home Department
+    definition: >-
+      The UNMC organizational unit accountable for administering a sponsored project, or the
+      unit against which a person's project effort is charged.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: bfo:0000004   # independent continuant (agent)
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:administering-department-creation
+    label: Creation of "Administering Department"
+    has_output: term:administering-department
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:administering-department-creation
+    occurred_on: "2026-09-28"

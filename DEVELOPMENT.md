@@ -78,7 +78,7 @@ The build enforces these:
 - **Ids are CURIEs** using a prefix from `dgo-atlas.yaml` (`term:`, `area:`,
   `office:`, `person:`), except definition sources, whose id is the source's own
   IRI. Ids are the terms' IRIs: never change one.
-- **Every term** has a `label`, a `definition`, `part_of: area:research-glossary`
+- **Every term** has a `label`, a `definition`, `part_of: area:unmc-glossary`
   and one `in_subject_area`.
 - **`type` values are DGO class IRIs**, with the readable name in a comment
   (`dgo:DGO_00000012   # owner`). `dgo:Owner` is rejected.

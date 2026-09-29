@@ -1,0 +1,6 @@
+# The glossary every term is part of, and the sources definitions are drawn
+# from. Domains and subject areas are declared under research_administration/.
+
+business_glossaries:
+  - id: area:unmc-glossary
+    label: Business Glossary

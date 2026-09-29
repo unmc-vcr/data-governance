@@ -1,0 +1,33 @@
+glossary_terms:
+  - id: term:clinical-trial
+    label: Clinical Trial
+    alt_labels:
+      - Interventional Study
+    definition: >-
+      A clinical study in which participants are prospectively assigned to an intervention
+      to evaluate its effects on health-related outcomes.
+    definition_source: https://grants.nih.gov/policy/clinical-trials/definition.htm
+    part_of: area:unmc-glossary
+    in_subject_area: area:clinical-research
+    semantic_type: bfo:0000015   # process (process)
+    broader:
+      - term:clinical-study
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:clinical-trial-creation
+    label: Creation of "Clinical Trial"
+    has_output: term:clinical-trial
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:clinical-trial-creation
+    occurred_on: "2026-09-28"
+  - type: dgo:DGO_00000025   # submitted for review
+    part_of: term:clinical-trial-creation
+    occurred_on: "2026-09-28"

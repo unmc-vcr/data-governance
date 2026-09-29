@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:subaward
+    label: Subaward
+    alt_labels:
+      - Subcontract Out
+      - Subaward Out
+      - Subout
+    definition: >-
+      A portion of a UNMC award passed through to another institution to perform a defined
+      part of the project's scope of work, under a subaward agreement. UNMC is the pass-
+      through entity and the receiving institution is the subrecipient.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:subaward-creation
+    label: Creation of "Subaward"
+    has_output: term:subaward
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:subaward-creation
+    occurred_on: "2026-09-28"

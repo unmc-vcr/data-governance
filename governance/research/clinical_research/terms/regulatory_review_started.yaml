@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:regulatory-review-started
+    label: Regulatory review started
+    alt_labels:
+      - Regulatory started
+      - Regulatory review start
+    definition: >-
+      The date on which the regulatory coordinator began reading the protocol and its
+      associated documents.
+    part_of: area:unmc-glossary
+    in_subject_area: area:clinical-research
+    related:
+      - term:regulatory-final-approval
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:regulatory-review-started-creation
+    label: Creation of "Regulatory review started"
+    has_output: term:regulatory-review-started
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:regulatory-review-started-creation
+    occurred_on: "2026-09-28"

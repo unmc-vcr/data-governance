@@ -1,0 +1,31 @@
+glossary_terms:
+  - id: term:multiple-pi
+    label: Multiple PI (Multi-PI)
+    alt_labels:
+      - Multi-PI
+      - MPI
+      - Multiple Principal Investigator
+    definition: >-
+      A designation that formal leadership of a sponsored project is shared among two or
+      more co-equal principal investigators, each accountable for the project as a whole.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: bfo:0000023   # role (role)
+    broader:
+      - term:principal-investigator
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:sponsored-programs-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:multiple-pi-creation
+    label: Creation of "Multiple PI (Multi-PI)"
+    has_output: term:multiple-pi
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:multiple-pi-creation
+    occurred_on: "2026-09-28"

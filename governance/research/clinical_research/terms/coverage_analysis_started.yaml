@@ -1,0 +1,29 @@
+glossary_terms:
+  - id: term:coverage-analysis-started
+    label: Coverage analysis started
+    alt_labels:
+      - CA started
+      - Coverage analysis start
+    definition: >-
+      The date on which the Clinical Trials Analyst began the preliminary coverage analysis
+      by reading the protocol and its associated documents.
+    part_of: area:unmc-glossary
+    in_subject_area: area:clinical-research
+    related:
+      - term:coverage-analysis-preliminary-complete
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:coverage-analysis-started-creation
+    label: Creation of "Coverage analysis started"
+    has_output: term:coverage-analysis-started
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:coverage-analysis-started-creation
+    occurred_on: "2026-09-28"

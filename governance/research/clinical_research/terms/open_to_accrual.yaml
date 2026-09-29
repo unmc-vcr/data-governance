@@ -1,0 +1,31 @@
+glossary_terms:
+  - id: term:open-to-accrual
+    label: Open to accrual
+    definition: >-
+      The date in a clinical study's lifecycle on which participants were first permitted to
+      be enrolled, following all regulatory and sponsor requirements. This is the dated
+      milestone that the activation timeline and study start-up measures count to; the
+      ongoing "is it enrolling" condition is a separate term, accrual status.
+    part_of: area:unmc-glossary
+    in_subject_area: area:clinical-research
+    semantic_type: bfo:0000035   # process boundary (event)
+    related:
+      - term:study-status
+      - term:study-status-open-to-accrual
+      - term:activation-timeline
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:open-to-accrual-creation
+    label: Creation of "Open to accrual"
+    has_output: term:open-to-accrual
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:open-to-accrual-creation
+    occurred_on: "2026-09-28"

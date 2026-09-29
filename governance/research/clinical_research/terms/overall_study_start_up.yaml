@@ -1,0 +1,31 @@
+glossary_terms:
+  - id: term:overall-study-start-up
+    label: Overall study start-up
+    alt_labels:
+      - Study start-up
+    definition: >-
+      The number of calendar days from activation activities begin to open to accrual (the
+      date the protocol opened to accrual in the CTMS). This is the end-to-end measure of
+      study start-up.
+    part_of: area:unmc-glossary
+    in_subject_area: area:clinical-research
+    related:
+      - term:activation-activities-begin
+      - term:open-to-accrual
+      - term:activation-timeline
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:overall-study-start-up-creation
+    label: Creation of "Overall study start-up"
+    has_output: term:overall-study-start-up
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:overall-study-start-up-creation
+    occurred_on: "2026-09-28"

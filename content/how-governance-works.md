@@ -3,12 +3,12 @@ title: How research administration data governance works
 eyebrow: Start here
 lede: >-
   A term becomes official when a definition owner writes it, a steward validates
-  it against real data, and the change is merged.
+  it against real data, and the changed is approved by the council.
 nav_group: Start here
 nav_label: How governance works
 order: 10
 meta:
-  - "Maintained by: Research Administration Data Governance Program"
+  #- "Maintained by: Research Administration Data Governance Program"
 toc: true
 ---
 
@@ -21,11 +21,6 @@ steward, relevant subject matter experts, and a written trail of every change.
 If you build reports, request data, or maintain a source system using Research Administration
 data, data governance applies to you.
 
-## Who does what
-
-Every term names exactly one **definition owner**. The other two roles are
-optional but strongly encouraged — a definition nobody has checked against real
-data is a guess.
 
 ### Definition owner
 
@@ -34,8 +29,8 @@ its calculation rules. Accountable for approving the definition.
 
 ### Data steward
 
-Responsible for the quality of the data implementing the term. Approves access,
-and answers when the number looks wrong.
+Responsible for the quality of the data implementing the term. Approves access, answers questions
+from the data community, and responds to data quality issues.
 
 ### Business SME
 
@@ -59,18 +54,5 @@ history — a report written three years ago has to remain explicable.
 
 ## Requesting a change
 
-Changes are pull requests against this repository. That is the whole mechanism,
-and it is deliberate: the merged pull request *is* the approval record, with the
-reviewer, the timestamp, and the diff all attached to it.
-
-1. **Open a request.** Use the *Suggest a change* link on the term page, or edit
-   the term's YAML file directly and open a pull request.
-2. **The build checks it.** Validation runs on every pull request: every file is
-   checked against the Data Governance Ontology and every reference is resolved.
-3. **The steward reviews the rendered page, not the diff.** Every pull request
-   publishes a preview of the site as a downloadable artifact. Reviewers read the
-   term the way a reader will see it.
-4. **Merge is approval.** A pull request that approves a term adds a dated
-   *approved* step to the term's file. `CODEOWNERS` routes each subject area's
-   files to its steward office, so the right people are required reviewers
-   automatically.
+Use the *Suggest a change* link on the term page, or edit the term's YAML 
+source file directly and open a pull request.

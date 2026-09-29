@@ -1,0 +1,30 @@
+glossary_terms:
+  - id: term:patient-oriented-research-study
+    label: Patient-oriented research study
+    definition: >-
+      Research conducted with human subjects (or on material of human origin such as
+      tissues, specimens, and cognitive phenomena) for which an investigator (or colleague)
+      directly interacts with human subjects. It includes: (a) mechanisms of human disease,
+      (b), therapeutic interventions, (c) clinical trials, or (d) development of new
+      technologies.
+    definition_source: https://grants.nih.gov/grants/glossary.htm#ClinicalResearch
+    part_of: area:unmc-glossary
+    in_subject_area: area:clinical-research
+    broader:
+      - term:clinical-research
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:clinical-research-office
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:ra-governance-council
+
+term_creations:
+  - id: term:patient-oriented-research-study-creation
+    label: Creation of "Patient-oriented research study"
+    has_output: term:patient-oriented-research-study
+    part_of: gov:research-data-governance
+
+term_status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:patient-oriented-research-study-creation
+    occurred_on: "2026-09-28"

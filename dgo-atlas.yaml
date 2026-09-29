@@ -19,6 +19,7 @@ prefixes:
   term: https://w3id.org/unmc/terms/
   area: https://w3id.org/unmc/areas/
   office: https://w3id.org/unmc/offices/
+  gov: https://w3id.org/unmc/governance/
   person: https://w3id.org/unmc/people/
   iao: http://purl.obolibrary.org/obo/IAO_
   bfo: http://purl.obolibrary.org/obo/BFO_
