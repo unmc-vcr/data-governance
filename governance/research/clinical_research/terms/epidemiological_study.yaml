@@ -13,9 +13,9 @@ glossary_terms:
       - term:clinical-research
     responsibilities:
       - type: dgo:DGO_00000012
-        role_of: office:clinical-research-office
-      - type: dgo:DGO_00000013
         role_of: office:ra-governance-council
+      - type: dgo:DGO_00000013
+        role_of: office:clinical-research-office
 
 term_creations:
   - id: term:epidemiological-study-creation

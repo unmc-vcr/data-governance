@@ -16,9 +16,11 @@ glossary_terms:
       - term:sponsored-project
     responsibilities:
       - type: dgo:DGO_00000012   # owner
-        role_of: office:sponsored-programs-office
-      - type: dgo:DGO_00000013   # steward
         role_of: office:ra-governance-council
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
 
 term_creations:
   - id: term:public-service-project-creation

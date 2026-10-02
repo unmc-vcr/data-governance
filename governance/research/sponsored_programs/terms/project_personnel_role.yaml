@@ -13,9 +13,11 @@ glossary_terms:
     semantic_type: bfo:0000023   # role (role)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
-        role_of: office:sponsored-programs-office
-      - type: dgo:DGO_00000013   # steward
         role_of: office:ra-governance-council
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
 
 term_creations:
   - id: term:project-personnel-role-creation

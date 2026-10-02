@@ -23,6 +23,11 @@ people:
     title: Director, Research Analytics and Decision Support
     email: james.geiger@unmc.edu
 
+  - id: person:teresa-pisasale
+    label: Teresa Pisasale
+    title: Sr Software Engineer
+    email: tpisasal@unmc.edu
+
   - id: person:jack-noecker
     label: Jack Noecker
     title: Research Data Specialist
@@ -70,6 +75,12 @@ organizations:
     has_member:
       - person:katie-penas
       - person:courtney-kennedy
+
+  - id: office:research-devops
+    label: DevOps Research Team
+    email: apsr@unmc.edu
+    has_member:
+      - person:teresa-pisasale
 
   - id: office:research-analytics
     label: Research Analytics

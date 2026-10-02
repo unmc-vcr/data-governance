@@ -15,9 +15,11 @@ glossary_terms:
       - term:clinical-research
     responsibilities:
       - type: dgo:DGO_00000012   # owner
-        role_of: office:clinical-research-office
-      - type: dgo:DGO_00000013   # steward
         role_of: office:ra-governance-council
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:clinical-research-office
 
 term_creations:
   - id: term:behavioral-study-creation
