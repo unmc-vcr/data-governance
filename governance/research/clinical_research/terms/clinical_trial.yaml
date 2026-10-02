@@ -11,7 +11,7 @@ glossary_terms:
     in_subject_area: area:clinical-research
     semantic_type: bfo:0000015   # process (process)
     broader:
-      - term:clinical-study
+      - term:patient-oriented-research-study
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:ra-governance-council
