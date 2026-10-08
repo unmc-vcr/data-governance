@@ -4,7 +4,7 @@ version = "0"
 description = "Governance data and site configuration, built with dgo-atlas."
 requires-python = ">=3.10"
 dependencies = [
-    "dgo-atlas==0.5.1",
+    "dgo-atlas==0.5.2",
 ]
 
 [tool.uv]
