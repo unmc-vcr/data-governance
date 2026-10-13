@@ -5,14 +5,13 @@ glossary_terms:
       - Department
       - Home Department
     definition: >-
-      The UNMC organizational unit accountable for administering a sponsored project, or the
-      unit against which a person's project effort is charged.
+      The organizational unit accountable for administering a sponsored project.
     part_of: area:unmc-glossary
     in_subject_area: area:sponsored-programs
     semantic_type: bfo:0000004   # independent continuant (agent)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
-        role_of: office:ra-governance-council
+        role_of: office:research-stewardship-committee
       - type: dgo:DGO_00000013   # steward
         role_of: office:research-analytics
       - type: subject matter expert

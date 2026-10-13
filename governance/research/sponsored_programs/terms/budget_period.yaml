@@ -3,16 +3,15 @@ glossary_terms:
     label: Budget Period
     alt_labels:
       - Project Year
-      - Cycle
     definition: >-
-      A discrete, separately budgeted interval within a multi-year award -- typically one
-      project year -- against which spending and reporting are tracked.
+      A discrete, separately budgeted interval within a multi-year award
+      against which spending and reporting are tracked.
     part_of: area:unmc-glossary
     in_subject_area: area:sponsored-programs
     semantic_type: bfo:0000038   # one-dimensional temporal region (interval)
     responsibilities:
       - type: dgo:DGO_00000012   # owner
-        role_of: office:ra-governance-council
+        role_of: office:research-stewardship-committee
       - type: dgo:DGO_00000013   # steward
         role_of: office:research-analytics
       - type: subject matter expert

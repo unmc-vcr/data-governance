@@ -13,7 +13,7 @@ glossary_terms:
       - term:coverage-analysis-started
     responsibilities:
       - type: dgo:DGO_00000012   # owner
-        role_of: office:ra-governance-council
+        role_of: office:research-stewardship-committee
       - type: dgo:DGO_00000013   # steward
         role_of: office:research-analytics
       - type: subject matter expert

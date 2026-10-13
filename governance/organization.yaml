@@ -2,15 +2,23 @@
 # organizations who sit on it or hold roles for terms.
 
 processes:
+  - id: gov:un-data-governance
+    label: University of Nebraska data governance
+
   - id: gov:research-data-governance
     label: Research administration data governance
+    part_of: gov:un-data-governance
 
 councils:
-  - id: office:ra-governance-council
-    label: Data Governance Council
+  - id: office:research-stewardship-committee
+    label: Research Stewardship Committee
     participates_in: gov:research-data-governance
     has_member:
       - person:james-geiger
+
+  - id: office:nu-governance-council
+    label: University of Nebraska Data Governance Council
+    participates_in: gov:un-data-governance
 
 council_roles:
   - type: dgo:DGO_00000006

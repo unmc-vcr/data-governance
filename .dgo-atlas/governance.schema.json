@@ -705,6 +705,16 @@
                         "null"
                     ]
                 },
+                "local_classes": {
+                    "description": "Local subclasses of DGO classes.",
+                    "items": {
+                        "$ref": "#/$defs/LocalClass"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "organizations": {
                     "items": {
                         "$ref": "#/$defs/Organization"
@@ -867,6 +877,38 @@
             "additionalProperties": false,
             "description": "",
             "title": "InformationContentEntity",
+            "type": "object"
+        },
+        "LocalClass": {
+            "additionalProperties": false,
+            "description": "A subclass of a DGO class with meaning only locally, such as an institution's own risk level or kind of steward. Once declared, its name can be used as a `type` wherever its DGO parent can. It adds no fields.",
+            "properties": {
+                "description": {
+                    "description": "What makes something a member of this class.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "is_a": {
+                    "description": "The class this one is a subclass of: a DGO class, by name or CURIE, or another local class, by name or id.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The class's name, used as a `type` value (e.g. data trustee).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "is_a"
+            ],
+            "title": "LocalClass",
             "type": "object"
         },
         "Object": {
@@ -1590,6 +1632,16 @@
                         "$ref": "#/$defs/SubjectMatterExpert"
                     }
                 ]
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "local_classes": {
+            "description": "Local subclasses of DGO classes.",
+            "items": {
+                "$ref": "#/$defs/LocalClass"
             },
             "type": [
                 "array",
