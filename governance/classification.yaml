@@ -1,7 +1,5 @@
 # Sensitivity levels from the UNMC data classification standard
-# (content/standards/data-classification.md), as DGO 0.2.0 sensitivity levels.
 #
-# PROVISIONAL: the four tiers have not been approved by Compliance & Privacy.
 # Severity is the tier number; higher means more harm on disclosure.
 
 sensitivity_levels:
@@ -24,7 +22,7 @@ sensitivity_levels:
     definition: >-
       High-risk data whose disclosure would cause real harm to a person or to the
       institution, such as personnel records and FERPA-protected information. Steward
-      approval required; access is granted per project, with an end date.
+      approval required.
     severity: 3
 
   - id: data:highly-restricted
@@ -32,5 +30,5 @@ sensitivity_levels:
     definition: >-
       Regulated identifiable data that must be tightly controlled from creation
       through destruction and never leaves an approved environment, such as
-      HIPAA-protected health information. Enclave only, IRB tied.
+      HIPAA-protected health information.
     severity: 4
