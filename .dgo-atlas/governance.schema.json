@@ -2,7 +2,7 @@
     "$defs": {
         "Approved": {
             "additionalProperties": false,
-            "description": "The point where a term or modification, resulting from a decision of the responsible data governance council, has been made final.",
+            "description": "The point where a term, modification, or certification, resulting from a decision of the responsible data governance council, has been made final.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -228,6 +228,137 @@
             "title": "Custodian",
             "type": "object"
         },
+        "DataClassification": {
+            "additionalProperties": false,
+            "description": "A level in an organization's scheme for classifying data, which prescribes how data so classified must be handled. Organizations define their own levels as instances of its subclasses.",
+            "properties": {
+                "definition": {
+                    "description": "The meaning of the term.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "label",
+                "definition"
+            ],
+            "title": "DataClassification",
+            "type": "object"
+        },
+        "DataElement": {
+            "additionalProperties": false,
+            "description": "A field or column within one data set: all of that set's values for one attribute. The same attribute held in another set is another data element, linked to this one by derived from. Its subject areas, and so its domains, are those of its data set.",
+            "properties": {
+                "derived_from": {
+                    "description": "The data set or data element this one was produced from. Not transitive; follow a lineage back to its source of truth with a property path (derived from, one or more times).",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "description": "A human-readable account of the thing, for readers.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": "string"
+                },
+                "regulatory_categories": {
+                    "description": "The regulatory regimes this data falls under.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "responsibilities": {
+                    "description": "The governance roles held with respect to this term, data store, data set or data element (owner, steward, custodian, subject matter expert), each naming who bears it.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/GovernanceRole"
+                            },
+                            {
+                                "$ref": "#/$defs/Owner"
+                            },
+                            {
+                                "$ref": "#/$defs/Steward"
+                            },
+                            {
+                                "$ref": "#/$defs/Custodian"
+                            },
+                            {
+                                "$ref": "#/$defs/SubjectMatterExpert"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "security_level": {
+                    "description": "The security level this data requires.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "sensitivity": {
+                    "description": "The sensitivity level of this data.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label",
+                "part_of"
+            ],
+            "title": "DataElement",
+            "type": "object"
+        },
+        "DataEntity": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "DataEntity",
+            "type": "object"
+        },
         "DataGovernance": {
             "additionalProperties": false,
             "description": "A process of governing an organization's data.",
@@ -300,6 +431,227 @@
             "title": "DataGovernanceCouncil",
             "type": "object"
         },
+        "DataSet": {
+            "additionalProperties": false,
+            "description": "A governed collection of data elements (IAO data collection: a data entity that consists of multiple data entities). Its domains follow from its subject areas; its terms are those informed by its data elements. A data set is certified when a data set certification that has it as output reaches an approved boundary. A data set that is derived from no other is a source of truth.",
+            "properties": {
+                "derived_from": {
+                    "description": "The data set or data element this one was produced from. Not transitive; follow a lineage back to its source of truth with a property path (derived from, one or more times).",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "description": "A human-readable account of the thing, for readers.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "in_subject_area": {
+                    "description": "The subject area this term or data set is classified under, and through it the domain.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "regulatory_categories": {
+                    "description": "The regulatory regimes this data falls under.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "responsibilities": {
+                    "description": "The governance roles held with respect to this term, data store, data set or data element (owner, steward, custodian, subject matter expert), each naming who bears it.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/GovernanceRole"
+                            },
+                            {
+                                "$ref": "#/$defs/Owner"
+                            },
+                            {
+                                "$ref": "#/$defs/Steward"
+                            },
+                            {
+                                "$ref": "#/$defs/Custodian"
+                            },
+                            {
+                                "$ref": "#/$defs/SubjectMatterExpert"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "security_level": {
+                    "description": "The security level this data requires.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "sensitivity": {
+                    "description": "The sensitivity level of this data.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "stored_in": {
+                    "description": "The data store that carries this data set (RO generically depends on).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "DataSet",
+            "type": "object"
+        },
+        "DataSetCertification": {
+            "additionalProperties": false,
+            "description": "The process by which a data set is reviewed and approved as fit for consumers by the responsible data governance council. The data set is certified once this process reaches its approved boundary, whose date is the certification date.",
+            "properties": {
+                "has_output": {
+                    "description": "What this lifecycle process produced or changed.",
+                    "type": "string"
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "has_output",
+                "id",
+                "label"
+            ],
+            "title": "DataSetCertification",
+            "type": "object"
+        },
+        "DataStore": {
+            "additionalProperties": false,
+            "description": "A system kept and governed for storing data (a data warehouse, a clinical system's reporting database, a file share): the material information bearer, often an aggregate of disks and servers, in which the data sets it carries are concretized. The data sets generically depend on it. The operational system, not its logical design: a database schema is an information content entity, not a data store. It carries no domain of its own: the data sets and data elements it holds are what carry domains.",
+            "properties": {
+                "description": {
+                    "description": "A human-readable account of the thing, for readers.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "responsibilities": {
+                    "description": "The governance roles held with respect to this term, data store, data set or data element (owner, steward, custodian, subject matter expert), each naming who bears it.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/GovernanceRole"
+                            },
+                            {
+                                "$ref": "#/$defs/Owner"
+                            },
+                            {
+                                "$ref": "#/$defs/Steward"
+                            },
+                            {
+                                "$ref": "#/$defs/Custodian"
+                            },
+                            {
+                                "$ref": "#/$defs/SubjectMatterExpert"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "DataStore",
+            "type": "object"
+        },
         "DefinitionSource": {
             "additionalProperties": false,
             "description": "A source that a term's definition is drawn from. Its id is the source's IRI; its label describes the source. Many terms may cite one source.",
@@ -318,6 +670,12 @@
                 "label"
             ],
             "title": "DefinitionSource",
+            "type": "object"
+        },
+        "DirectiveInformationEntity": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "DirectiveInformationEntity",
             "type": "object"
         },
         "DocumentationSteward": {
@@ -393,7 +751,7 @@
         },
         "Drafted": {
             "additionalProperties": false,
-            "description": "The point where a term or modification has been first drafted.",
+            "description": "The point where a term, modification, or certification has been first drafted.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -513,8 +871,18 @@
                     "type": "string"
                 },
                 "in_subject_area": {
-                    "description": "The subject area this term is classified under. Classification, not containment: a term is part of its glossary, never of a subject area. (RO's \"member of\" is a sub-property of part of, so it isn't used here.)",
+                    "description": "The subject area this term or data set is classified under, and through it the domain.",
                     "type": "string"
+                },
+                "informed_by": {
+                    "description": "The data elements whose values define or determine this term (e.g. a protocol status and an open date together determine \"active study\"). Information flows up from the data into the term.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 },
                 "label": {
                     "description": "Words",
@@ -549,7 +917,7 @@
                     ]
                 },
                 "responsibilities": {
-                    "description": "The governance roles held with respect to this term (owner, steward, custodian, subject matter expert), each naming who bears it.",
+                    "description": "The governance roles held with respect to this term, data store, data set or data element (owner, steward, custodian, subject matter expert), each naming who bears it.",
                     "items": {
                         "anyOf": [
                             {
@@ -620,6 +988,9 @@
                                 "$ref": "#/$defs/CouncilRole"
                             },
                             {
+                                "$ref": "#/$defs/Member"
+                            },
+                            {
                                 "$ref": "#/$defs/Chair"
                             },
                             {
@@ -645,6 +1016,45 @@
                     "description": "Data governance councils.",
                     "items": {
                         "$ref": "#/$defs/DataGovernanceCouncil"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_elements": {
+                    "description": "Fields or columns; each is part_of exactly one data set.",
+                    "items": {
+                        "$ref": "#/$defs/DataElement"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_set_certifications": {
+                    "description": "Certifications of data sets; their status boundaries go in status_boundaries.",
+                    "items": {
+                        "$ref": "#/$defs/DataSetCertification"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_sets": {
+                    "items": {
+                        "$ref": "#/$defs/DataSet"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_stores": {
+                    "description": "Systems that carry data sets. Lists of this kind need DGO 0.2.0 or later.",
+                    "items": {
+                        "$ref": "#/$defs/DataStore"
                     },
                     "type": [
                         "array",
@@ -743,6 +1153,62 @@
                         "null"
                     ]
                 },
+                "regulations": {
+                    "description": "The regulatory categories data may fall under.",
+                    "items": {
+                        "$ref": "#/$defs/RegulatoryCategory"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "security_levels": {
+                    "description": "The organization's security levels, ordered by severity.",
+                    "items": {
+                        "$ref": "#/$defs/SecurityLevel"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "sensitivity_levels": {
+                    "description": "The organization's sensitivity levels, ordered by severity.",
+                    "items": {
+                        "$ref": "#/$defs/SensitivityLevel"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "status_boundaries": {
+                    "description": "Dated status boundaries of term lifecycle processes and data set certifications; `type` picks the kind. Quote the dates.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/StatusBoundary"
+                            },
+                            {
+                                "$ref": "#/$defs/Drafted"
+                            },
+                            {
+                                "$ref": "#/$defs/SubmittedForReview"
+                            },
+                            {
+                                "$ref": "#/$defs/Approved"
+                            },
+                            {
+                                "$ref": "#/$defs/Rejected"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "subject_areas": {
                     "items": {
                         "$ref": "#/$defs/SubjectArea"
@@ -780,7 +1246,7 @@
                     ]
                 },
                 "term_status_boundaries": {
-                    "description": "Dated status boundaries; `type` picks the kind. Quote the dates.",
+                    "description": "The former name of status_boundaries; still read.",
                     "items": {
                         "anyOf": [
                             {
@@ -879,12 +1345,67 @@
             "title": "InformationContentEntity",
             "type": "object"
         },
+        "LifecycleProcess": {
+            "additionalProperties": false,
+            "description": "A governance process that brings a governed artifact (a glossary term, a data set) into, or changes its standing within, governance. Its progress is marked by status boundaries.",
+            "properties": {
+                "has_output": {
+                    "description": "What this lifecycle process produced or changed.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
+            "title": "LifecycleProcess",
+            "type": "object"
+        },
         "LocalClass": {
             "additionalProperties": false,
             "description": "A subclass of a DGO class with meaning only locally, such as an institution's own risk level or kind of steward. Once declared, its name can be used as a `type` wherever its DGO parent can. It adds no fields.",
             "properties": {
                 "description": {
-                    "description": "What makes something a member of this class.",
+                    "description": "A human-readable account of the thing, for readers.",
                     "type": [
                         "string",
                         "null"
@@ -909,6 +1430,62 @@
                 "is_a"
             ],
             "title": "LocalClass",
+            "type": "object"
+        },
+        "MaterialEntity": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "MaterialEntity",
+            "type": "object"
+        },
+        "MaterialInformationBearer": {
+            "additionalProperties": false,
+            "description": "",
+            "title": "MaterialInformationBearer",
+            "type": "object"
+        },
+        "Member": {
+            "additionalProperties": false,
+            "description": "An individual convened as part of a council to provide general advisement without a specific leadership role, e.g. as an at-large participant.",
+            "properties": {
+                "realized_in": {
+                    "description": "The governance process in which this role is realized.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role_of": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person, organization, or council that bears this role.",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000035",
+                        "member"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Member",
             "type": "object"
         },
         "Object": {
@@ -1032,7 +1609,7 @@
                     "type": "string"
                 },
                 "title": {
-                    "description": "A person's job title. (Not foaf:title, which is an honorific such as Dr.)",
+                    "description": "A person's job title.",
                     "type": [
                         "string",
                         "null"
@@ -1058,9 +1635,34 @@
             "title": "ProcessBoundary",
             "type": "object"
         },
+        "RegulatoryCategory": {
+            "additionalProperties": false,
+            "description": "A regulatory regime the data falls under (e.g. PHI under HIPAA, FERPA education records, 42 CFR Part 2). Unordered: data may fall under several.",
+            "properties": {
+                "definition": {
+                    "description": "The meaning of the term.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "label",
+                "definition"
+            ],
+            "title": "RegulatoryCategory",
+            "type": "object"
+        },
         "Rejected": {
             "additionalProperties": false,
-            "description": "The point where a term or modification, resulting from a decision of the responsible data governance council, is no longer under consideration.",
+            "description": "The point where a term, modification, or certification, resulting from a decision of the responsible data governance council, is no longer under consideration.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -1094,6 +1696,38 @@
             "additionalProperties": false,
             "description": "",
             "title": "Role",
+            "type": "object"
+        },
+        "SecurityLevel": {
+            "additionalProperties": false,
+            "description": "A level of access control the data requires (e.g. open, role-based, need-to-know).",
+            "properties": {
+                "definition": {
+                    "description": "The meaning of the term.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "severity": {
+                    "description": "The level's position within its organization's scheme: higher means more harm on disclosure (sensitivity) or stricter controls (security). Lets lineage checks find the most severe level along a path.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label",
+                "definition"
+            ],
+            "title": "SecurityLevel",
             "type": "object"
         },
         "SecuritySteward": {
@@ -1140,9 +1774,41 @@
             "title": "SecuritySteward",
             "type": "object"
         },
+        "SensitivityLevel": {
+            "additionalProperties": false,
+            "description": "A level of harm that disclosure of the data would cause (e.g. public, internal, confidential, restricted).",
+            "properties": {
+                "definition": {
+                    "description": "The meaning of the term.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "severity": {
+                    "description": "The level's position within its organization's scheme: higher means more harm on disclosure (sensitivity) or stricter controls (security). Lets lineage checks find the most severe level along a path.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "label",
+                "definition"
+            ],
+            "title": "SensitivityLevel",
+            "type": "object"
+        },
         "StatusBoundary": {
             "additionalProperties": false,
-            "description": "The moment a term's status changed during a lifecycle process.",
+            "description": "The moment a governed artifact's status changed during a lifecycle process.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -1287,7 +1953,7 @@
         },
         "SubmittedForReview": {
             "additionalProperties": false,
-            "description": "The point where a term or modification has moved into being verified by a data steward.",
+            "description": "The point where a term, modification, or certification has moved into being verified by a data steward.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -1322,7 +1988,7 @@
             "description": "The process by which a new governed business term is proposed, validated, and approved for publishing in the  business glossary.",
             "properties": {
                 "has_output": {
-                    "description": "The term this creation process produced.",
+                    "description": "What this lifecycle process produced or changed.",
                     "type": "string"
                 },
                 "has_participant": {
@@ -1375,7 +2041,7 @@
             "description": "The process by which an extant governed business term is proposed to be retired from the business glossary. The term is deprecated once this process reaches its approved boundary.",
             "properties": {
                 "has_output": {
-                    "description": "The term this creation process produced.",
+                    "description": "What this lifecycle process produced or changed.",
                     "type": "string"
                 },
                 "has_participant": {
@@ -1428,7 +2094,7 @@
             "description": "A governance process that brings a business term into, or changes it within, the business glossary.",
             "properties": {
                 "has_output": {
-                    "description": "The term this creation process produced.",
+                    "description": "What this lifecycle process produced or changed.",
                     "type": "string"
                 },
                 "has_participant": {
@@ -1481,7 +2147,7 @@
             "description": "The process by which an extant governed business term is proposed to be modified, validated, and approved for publishing in the business glossary.",
             "properties": {
                 "has_output": {
-                    "description": "The term this creation process produced.",
+                    "description": "What this lifecycle process produced or changed.",
                     "type": "string"
                 },
                 "has_participant": {
@@ -1553,6 +2219,9 @@
                         "$ref": "#/$defs/CouncilRole"
                     },
                     {
+                        "$ref": "#/$defs/Member"
+                    },
+                    {
                         "$ref": "#/$defs/Chair"
                     },
                     {
@@ -1578,6 +2247,45 @@
             "description": "Data governance councils.",
             "items": {
                 "$ref": "#/$defs/DataGovernanceCouncil"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "data_elements": {
+            "description": "Fields or columns; each is part_of exactly one data set.",
+            "items": {
+                "$ref": "#/$defs/DataElement"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "data_set_certifications": {
+            "description": "Certifications of data sets; their status boundaries go in status_boundaries.",
+            "items": {
+                "$ref": "#/$defs/DataSetCertification"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "data_sets": {
+            "items": {
+                "$ref": "#/$defs/DataSet"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "data_stores": {
+            "description": "Systems that carry data sets. Lists of this kind need DGO 0.2.0 or later.",
+            "items": {
+                "$ref": "#/$defs/DataStore"
             },
             "type": [
                 "array",
@@ -1676,6 +2384,62 @@
                 "null"
             ]
         },
+        "regulations": {
+            "description": "The regulatory categories data may fall under.",
+            "items": {
+                "$ref": "#/$defs/RegulatoryCategory"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "security_levels": {
+            "description": "The organization's security levels, ordered by severity.",
+            "items": {
+                "$ref": "#/$defs/SecurityLevel"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "sensitivity_levels": {
+            "description": "The organization's sensitivity levels, ordered by severity.",
+            "items": {
+                "$ref": "#/$defs/SensitivityLevel"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "status_boundaries": {
+            "description": "Dated status boundaries of term lifecycle processes and data set certifications; `type` picks the kind. Quote the dates.",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/$defs/StatusBoundary"
+                    },
+                    {
+                        "$ref": "#/$defs/Drafted"
+                    },
+                    {
+                        "$ref": "#/$defs/SubmittedForReview"
+                    },
+                    {
+                        "$ref": "#/$defs/Approved"
+                    },
+                    {
+                        "$ref": "#/$defs/Rejected"
+                    }
+                ]
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
         "subject_areas": {
             "items": {
                 "$ref": "#/$defs/SubjectArea"
@@ -1713,7 +2477,7 @@
             ]
         },
         "term_status_boundaries": {
-            "description": "Dated status boundaries; `type` picks the kind. Quote the dates.",
+            "description": "The former name of status_boundaries; still read.",
             "items": {
                 "anyOf": [
                     {

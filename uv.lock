@@ -465,7 +465,7 @@ wheels = [
 
 [[package]]
 name = "dgo-atlas"
-version = "0.5.2"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
@@ -478,9 +478,9 @@ dependencies = [
     { name = "rich" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/27/71/95b092551ca8f5f4f31f58b67e3f9216799879f3ca633df76388b6fa7697/dgo_atlas-0.5.2.tar.gz", hash = "sha256:16e3b0c11f3c56ba8749dd6b35020989651fb4c183541d0bb24b95927b5228b5", size = 264595, upload-time = "2026-10-08T13:31:06.037Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5f/a6/b48fc609d60d54928f8e2e5fe98396800266dde77b4f857a9188b30bf944/dgo_atlas-0.6.0.tar.gz", hash = "sha256:f4a73b0eb1aaa5006848081c1f8d8130b99f9c3d65598d90b3e4a87369a1f188", size = 287014, upload-time = "2026-11-17T22:19:44.536Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d8/19/80406fb81fd8879b54a543bf5f80d09fe6bcf2dec4431a0fbbcb4ae6e133/dgo_atlas-0.5.2-py3-none-any.whl", hash = "sha256:71ce501664b89fe634f84679362759d0f92ef796f0b70bfb9183844b99f794be", size = 124818, upload-time = "2026-10-08T13:31:04.672Z" },
+    { url = "https://files.pythonhosted.org/packages/34/29/9fccee9d44ed8ccdabb03e08441fa0e1bbb0e166bbc12b7be384df0b2600/dgo_atlas-0.6.0-py3-none-any.whl", hash = "sha256:60203d36a032f980927143a1d7a66f7fd9ce6c4b93458bfa6ad1d1e4157b0522", size = 143926, upload-time = "2026-11-17T22:19:43.343Z" },
 ]
 
 [[package]]
@@ -2126,7 +2126,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "dgo-atlas", specifier = "==0.5.2" }]
+requires-dist = [{ name = "dgo-atlas", specifier = "==0.6.0" }]
 
 [[package]]
 name = "uri-template"
