@@ -1,0 +1,36 @@
+# Sensitivity levels from the UNMC data classification standard
+# (content/standards/data-classification.md), as DGO 0.2.0 sensitivity levels.
+#
+# PROVISIONAL: the four tiers have not been approved by Compliance & Privacy.
+# Severity is the tier number; higher means more harm on disclosure.
+
+sensitivity_levels:
+  - id: data:public
+    label: Public
+    definition: >-
+      Low-risk data that can be shared without restriction inside or outside the
+      university, and is cleared for open release. No approval needed.
+    severity: 1
+
+  - id: data:internal
+    label: Internal
+    definition: >-
+      Moderate-risk data intended for internal use only: share freely inside the
+      university, but do not post publicly. UNMC login required.
+    severity: 2
+
+  - id: data:confidential
+    label: Confidential
+    definition: >-
+      High-risk data whose disclosure would cause real harm to a person or to the
+      institution, such as personnel records and FERPA-protected information. Steward
+      approval required; access is granted per project, with an end date.
+    severity: 3
+
+  - id: data:highly-restricted
+    label: Highly restricted
+    definition: >-
+      Regulated identifiable data that must be tightly controlled from creation
+      through destruction and never leaves an approved environment, such as
+      HIPAA-protected health information. Enclave only, IRB tied.
+    severity: 4

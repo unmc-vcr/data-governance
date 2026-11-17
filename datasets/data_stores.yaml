@@ -1,0 +1,19 @@
+# The systems that carry governed data sets (DGO 0.2.0 data stores).
+
+data_stores:
+  - id: data:radb
+    label: RADB
+    description: >-
+      The legacy research administration database: the system of record for
+      sponsored projects, their proposals (requests), awards, personnel and sponsors.
+
+  - id: data:research-warehouse
+    label: Research Analytics data warehouse
+    description: >-
+      The SQL Server warehouse that dbt builds the research analytics marts in. It
+      carries the dlt landings of RADB (WAREHOUSE_PROD.raw), the audited
+      fiscal-year snapshots (VCRDA.sponsored_projects), and the marts consumers
+      read (WAREHOUSE_PROD.marts).
+    responsibilities:
+      - type: dgo:DGO_00000014   # custodian
+        role_of: office:research-analytics
