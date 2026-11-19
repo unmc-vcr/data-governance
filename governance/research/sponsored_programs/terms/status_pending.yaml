@@ -1,0 +1,28 @@
+glossary_terms:
+  - id: term:sponsored-program-status-pending
+    label: Pending
+    definition: >-
+      A status indicating that a request has been submitted to the sponsor and a
+      funding decision has not yet been made.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: bfo:0000019   # quality (state)
+    value_of: term:sponsored-program-status
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:sponsored-program-status-pending-creation
+    label: Creation of "Pending"
+    has_output: term:sponsored-program-status-pending
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:sponsored-program-status-pending-creation
+    occurred_on: "2026-11-18"

@@ -1,0 +1,45 @@
+# Sensitivity levels from the UNMC data classification standard
+#
+# Severity is the tier number; higher means more harm on disclosure.
+
+sensitivity_levels:
+  - id: data:classifications#low-risk
+    label: Low Risk
+    definition: >-
+      Data or IT systems are Low Risk if: They are not considered to be Medium or High Risk;
+      The data can generally be made available to the public without harm to the University, 
+      entities with an affiliation to the University, or to individuals; and The loss of 
+      confidentiality, integrity, or availability would have a limited adverse effect 
+      on organizational mission, operations, assets, regulation, or on individuals.
+    severity: 1
+
+  - id: data:classifications#medium-risk
+    label: Medium Risk
+    definition: >-
+      Data or IT systems are Medium Risk if they are not considered to be High Risk; and: 
+      The data is not legally available to the public; or The loss of confidentiality,
+      integrity, or availability could have a moderate adverse impact on organizational 
+      mission, operations, assets, reputation, or on individuals.
+    severity: 2
+
+  - id: data:classifications#high-risk
+    label: High Risk
+    definition: >-
+      Data or IT systems are High Risk if: Data is confidential, restricted, or sensitive; Protection 
+      of the data is required by law, regulation, or sponsor requirements; The University is 
+      required to self-report to the government and/or provide notice to the individual if the 
+      data is inappropriately accessed; or The loss of confidentiality, integrity, or 
+      availability could have a significant adverse impact on organizational mission, 
+      operations, assets, reputation, or on individuals.
+    severity: 3
+
+security_levels:
+  - id: data:security-level#role-based
+    label: Role-based
+    definition: access is granted to roles approved by the data owner
+    severity: 2
+
+  - id: data:security-level#public
+    label: Public
+    definition: access is available to the public
+    severity: 0

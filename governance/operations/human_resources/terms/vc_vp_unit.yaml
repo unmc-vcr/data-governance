@@ -1,0 +1,28 @@
+glossary_terms:
+  - id: term:vc-vp-unit
+    label: Unit
+    alt_labels:
+      - VC/VP Unit
+      - Vice Chancellor Unit
+      - College
+    definition: >-
+      The top level of the campus organizational hierarchy. The organizational unit led by a
+      vice chancellor or dean, such as a college or an administrative area. A
+      unit is made up of departments.
+    part_of: area:unmc-glossary
+    in_subject_area: area:human-resources
+    semantic_type: bfo:0000004   # independent continuant (agent)
+    broader:
+      - term:organizational-unit
+
+
+term_creations:
+  - id: term:vc-vp-unit-creation
+    label: Creation of "Unit"
+    has_output: term:vc-vp-unit
+    part_of: gov:operations-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:vc-vp-unit-creation
+    occurred_on: "2026-11-18"

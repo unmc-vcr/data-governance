@@ -1,0 +1,32 @@
+glossary_terms:
+  - id: term:project-type-contract
+    label: Contract
+    alt_labels:
+      - Sponsored Contract
+      - Procurement Contract
+    definition: >-
+      A project type in which the sponsor acquires specified goods, services, or deliverables
+      from UNMC for its own direct benefit or use, under terms that are typically negotiated
+      and enforceable as a procurement.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: iao:0000030   # information content entity (information_artifact)
+    value_of: term:project-type
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:project-type-contract-creation
+    label: Creation of "Contract"
+    has_output: term:project-type-contract
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:project-type-contract-creation
+    occurred_on: "2026-11-18"

@@ -23,7 +23,7 @@ term_creations:
     has_output: term:epidemiological-study
     part_of: gov:research-data-governance
 
-term_status_boundaries:
+status_boundaries:
   - type: dgo:DGO_00000024
     part_of: term:epidemiological-study-creation
     occurred_on: "2026-09-28"

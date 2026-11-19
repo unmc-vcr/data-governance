@@ -1,0 +1,33 @@
+glossary_terms:
+  - id: term:project-type-grant
+    label: Grant
+    alt_labels:
+      - Grant Agreement
+      - Cooperative Agreement
+    definition: >-
+      A project type in which the sponsor provides financial assistance to support a public
+      purpose UNMC proposes to carry out, rather than to acquire goods or services for the
+      sponsor's own use. Cooperative agreements, in which the sponsor is substantially
+      involved in the work, are included.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: iao:0000030   # information content entity (information_artifact)
+    value_of: term:project-type
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:project-type-grant-creation
+    label: Creation of "Grant"
+    has_output: term:project-type-grant
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:project-type-grant-creation
+    occurred_on: "2026-11-18"

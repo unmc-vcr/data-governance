@@ -1,0 +1,33 @@
+glossary_terms:
+  - id: term:proposal-status
+    label: Proposal Status
+    alt_labels:
+      - Request Status
+    definition: >-
+      The status of an individual proposal, i.e. where the request stands with respect to the sponsor's decision on it.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: bfo:0000019   # quality (attribute)
+    broader:
+      - term:sponsored-program-status
+    related:
+      - term:proposal
+      - term:project-status
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:proposal-status-creation
+    label: Creation of "Proposal Status"
+    has_output: term:proposal-status
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:proposal-status-creation
+    occurred_on: "2026-11-18"

@@ -1,0 +1,19 @@
+glossary_terms:
+  - id: term:project-category
+    label: Project Category
+    definition: >-
+      The kind of activity a sponsored project carries out.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+
+
+term_creations:
+  - id: term:project-category-creation
+    label: Creation of "Project Category"
+    has_output: term:project-category
+    part_of: gov:research-data-governance
+
+status_boundaries:
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:project-category-creation
+    occurred_on: "2026-11-17"

@@ -1,0 +1,37 @@
+glossary_terms:
+  - id: term:total-cost
+    label: Total Cost
+    alt_labels:
+      - Total Costs
+      - Total Award Amount
+      - Total Request Amount
+    definition: >-
+      The sum of the direct costs and indirect (F&A) costs of an award or proposal for its
+      budget period. Total cost excludes cost sharing: it counts only what the sponsor
+      provides or is asked to provide.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: iao:0000027   # data item (measure)
+    related:
+      - term:direct-cost
+      - term:indirect-cost
+      - term:budget-period
+      - term:cost-sharing
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:total-cost-creation
+    label: Creation of "Total Cost"
+    has_output: term:total-cost
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:total-cost-creation
+    occurred_on: "2026-11-18"

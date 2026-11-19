@@ -1,0 +1,34 @@
+glossary_terms:
+  - id: term:project-type
+    label: Project Type
+    alt_labels:
+      - Award Type
+      - Funding Instrument
+    definition: >-
+      The kind of legal instrument under which a sponsor funds a sponsored project -- grant,
+      contract, or formula allocation -- which determines the relationship between the
+      sponsor and UNMC and the terms the work is carried out under.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: bfo:0000019   # quality (attribute)
+    related:
+      - term:sponsored-project
+      - term:project-category
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:project-type-creation
+    label: Creation of "Project Type"
+    has_output: term:project-type
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:project-type-creation
+    occurred_on: "2026-11-18"
