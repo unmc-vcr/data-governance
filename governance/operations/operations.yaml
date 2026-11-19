@@ -1,0 +1,13 @@
+domains:
+  - id: area:operations
+    label: Business Operations
+    part_of: area:unmc-glossary
+
+subject_areas:
+  - id: area:finance
+    label: Finance
+    part_of: area:operations
+
+  - id: area:human-resources
+    label: Human Resources
+    part_of: area:operations

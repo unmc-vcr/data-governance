@@ -5,3 +5,12 @@ domains:
   - id: area:research
     label: Research
     part_of: area:unmc-glossary
+
+subject_areas:
+  - id: area:clinical-research
+    label: Clinical Research
+    part_of: area:research
+
+  - id: area:sponsored-programs
+    label: Sponsored Programs
+    part_of: area:research

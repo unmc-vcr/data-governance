@@ -255,7 +255,7 @@
         },
         "DataElement": {
             "additionalProperties": false,
-            "description": "A field or column within one data set: all of that set's values for one attribute. The same attribute held in another set is another data element, linked to this one by derived from. Its subject areas, and so its domains, are those of its data set.",
+            "description": "A field or column within one data set: all of that set's values for one attribute. The same attribute held in another set is another data element, linked to this one by derived from. It represents the glossary term that gives its values their meaning. Its subject areas, and so its domains, are those of its data set.",
             "properties": {
                 "derived_from": {
                     "description": "The data set or data element this one was produced from. Not transitive; follow a lineage back to its source of truth with a property path (derived from, one or more times).",
@@ -301,6 +301,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "represents": {
+                    "description": "The glossary term whose definition gives this data element's values their meaning (e.g. the column tot_dir_cost represents the term \"direct cost\"). The values are instances of what the term defines; the element is not about the term. Following derived from, it shows which terms a lineage shares and where the meaning changes.",
+                    "type": [
+                        "string",
                         "null"
                     ]
                 },
@@ -433,7 +440,7 @@
         },
         "DataSet": {
             "additionalProperties": false,
-            "description": "A governed collection of data elements (IAO data collection: a data entity that consists of multiple data entities). Its domains follow from its subject areas; its terms are those informed by its data elements. A data set is certified when a data set certification that has it as output reaches an approved boundary. A data set that is derived from no other is a source of truth.",
+            "description": "A governed collection of data elements (IAO data collection: a data entity that consists of multiple data entities). Its domains follow from its subject areas; its terms are those its data elements represent. A data set is certified when a data set certification that has it as output reaches an approved boundary. A data set that is derived from no other is a source of truth.",
             "properties": {
                 "derived_from": {
                     "description": "The data set or data element this one was produced from. Not transitive; follow a lineage back to its source of truth with a property path (derived from, one or more times).",
@@ -873,16 +880,6 @@
                 "in_subject_area": {
                     "description": "The subject area this term or data set is classified under, and through it the domain.",
                     "type": "string"
-                },
-                "informed_by": {
-                    "description": "The data elements whose values define or determine this term (e.g. a protocol status and an open date together determine \"active study\"). Information flows up from the data into the term.",
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
                 },
                 "label": {
                     "description": "Words",

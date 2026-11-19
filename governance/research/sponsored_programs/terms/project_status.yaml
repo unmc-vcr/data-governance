@@ -1,0 +1,34 @@
+glossary_terms:
+  - id: term:project-status
+    label: Project Status
+    definition: >-
+      The sponsored program status of a sponsored project as a whole: where the project stands
+      from its first request through award, performance, and closeout. Its values are Pending,
+      Not Funded, Withdrawn, Active, Closed, and Terminated. It is distinct from the proposal
+      status of each of the project's individual requests.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: bfo:0000019   # quality (attribute)
+    broader:
+      - term:sponsored-program-status
+    related:
+      - term:sponsored-project
+      - term:proposal-status
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:project-status-creation
+    label: Creation of "Project Status"
+    has_output: term:project-status
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:project-status-creation
+    occurred_on: "2026-11-18"

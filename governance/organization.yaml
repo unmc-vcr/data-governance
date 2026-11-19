@@ -9,6 +9,10 @@ processes:
     label: Research administration data governance
     part_of: gov:un-data-governance
 
+  - id: gov:operations-data-governance
+    label: Business operations data governance
+    part_of: gov:un-data-governance
+
 councils:
   - id: office:research-stewardship-committee
     label: Research Stewardship Committee
@@ -16,6 +20,10 @@ councils:
     has_member:
       - person:james-geiger
 
+  - id: office:operations-stewardship-committee
+    label: Business Operations Stewardship Committee
+    participates_in: gov:operations-data-governance
+    
   - id: office:nu-governance-council
     label: University of Nebraska Data Governance Council
     participates_in: gov:un-data-governance

@@ -1,0 +1,26 @@
+glossary_terms:
+  - id: term:department
+    label: Department
+    alt_labels:
+      - Academic Department
+    definition: >-
+      The second level of UNMC's organizational hierarchy: an academic or administrative
+      organizational unit within a vice chancellor or vice president unit. A department may
+      be divided into divisions.
+    part_of: area:unmc-glossary
+    in_subject_area: area:human-resources
+    semantic_type: bfo:0000004   # independent continuant (agent)
+    broader:
+      - term:organizational-unit
+
+
+term_creations:
+  - id: term:department-creation
+    label: Creation of "Department"
+    has_output: term:department
+    part_of: gov:operations-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:department-creation
+    occurred_on: "2026-11-18"

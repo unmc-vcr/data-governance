@@ -5,7 +5,7 @@
 # (relation marts.sp_dept_awards_requests). The dbt exposure and every column in
 # that model carry the IRIs declared here.
 #
-# `# informs:` marks the glossary terms a column determines. DGO records that on
+# `represents:` marks the glossary terms a column determines. DGO records that on
 # the term (glossary term `informed_by`), which dgo-atlas 0.5.2 can't resolve yet;
 # see datasets/README.md for the move into governance/.
 
@@ -22,7 +22,7 @@ data_sets:
       - data:research-warehouse
     in_subject_area:
       - area:sponsored-programs
-    sensitivity: data:internal
+    sensitivity: data:classifications#medium-risk
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:sponsored-programs-office
@@ -37,7 +37,7 @@ data_sets:
       - data:research-warehouse
     in_subject_area:
       - area:sponsored-programs
-    sensitivity: data:internal
+    sensitivity: data:classifications#medium-risk
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:sponsored-programs-office
@@ -58,7 +58,8 @@ data_sets:
     derived_from:
       - data:radb-sponsored-projects
       - data:spa-audited-snapshot
-    sensitivity: data:internal
+    sensitivity: data:classifications#medium-risk
+    security_level: data:security-level#role-based
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:research-stewardship-committee
@@ -76,13 +77,12 @@ data_elements:
     description: >-
       Whether the row is an award action ('award') or a proposal ('submission').
     part_of: data:dept-awards-requests
-    # informs: term:award, term:proposal
 
   - id: data:dept-awards-requests/project_id
     label: project_id
     description: The Grant ID (GID) of the sponsored project the record belongs to.
     part_of: data:dept-awards-requests
-    # informs: term:grant-id
+    represents: term:grant-id
 
   - id: data:dept-awards-requests/record_id
     label: record_id
@@ -90,7 +90,6 @@ data_elements:
       The record's sequence within its project: the award sequence for awards, the
       request sequence for proposals. Unique within a project and record category.
     part_of: data:dept-awards-requests
-    # informs: term:award, term:proposal
 
   - id: data:dept-awards-requests/record_date
     label: record_date
@@ -103,50 +102,49 @@ data_elements:
     label: record_type_code
     description: >-
       The research-administration (RA) type code of the record (new, renewal,
-      supplement, continuation, and so on). Null for awards in closed fiscal years:
-      the audited snapshot keeps only the label.
+      supplement, continuation, and so on).
     part_of: data:dept-awards-requests
-    # informs: term:proposal
 
   - id: data:dept-awards-requests/record_type_label
     label: record_type_label
     description: The research-administration (RA) type of the record, as a label.
     part_of: data:dept-awards-requests
-    # informs: term:proposal
+    represents: term:proposal
 
   - id: data:dept-awards-requests/record_begin_date
     label: record_begin_date
     description: Start of the budget period the award or request covers.
     part_of: data:dept-awards-requests
-    # informs: term:budget-period
+    represents: term:budget-period
 
   - id: data:dept-awards-requests/record_end_date
     label: record_end_date
     description: End of the budget period the award or request covers.
     part_of: data:dept-awards-requests
-    # informs: term:budget-period
+    represents: term:budget-period
 
   - id: data:dept-awards-requests/record_status_code
     label: record_status_code
     description: >-
       Status code of the award or request (for requests, the effective status).
-      Null for awards in closed fiscal years.
     part_of: data:dept-awards-requests
+    represents: term:proposal-status
 
   - id: data:dept-awards-requests/record_status_label
     label: record_status_label
     description: >-
-      Status of the award or request, as a label. Null for awards in closed fiscal
-      years.
+      Status of the award or request, as a label.
     part_of: data:dept-awards-requests
+    represents: term:proposal-status
 
   # --- the project --------------------------------------------------------------
 
   - id: data:dept-awards-requests/project_status
     label: project_status
     description: >-
-      The project's proposal status code. Null for awards in closed fiscal years.
+      The project's status code.
     part_of: data:dept-awards-requests
+    represents: term:project-status
 
   - id: data:dept-awards-requests/project_status_label
     label: project_status_label
@@ -154,37 +152,40 @@ data_elements:
       The project's status, as a label. For awards in closed fiscal years, the
       status recorded in the audited snapshot.
     part_of: data:dept-awards-requests
+    represents: term:project-status
 
   - id: data:dept-awards-requests/project_type
     label: project_type
     description: Whether the sponsored project is a Grant, a Contract, or Other.
     part_of: data:dept-awards-requests
+    represents: term:project-type
 
   - id: data:dept-awards-requests/project_category_label
     label: project_category_label
     description: >-
       The project's category of activity (Research, Instructional, Public Service,
-      and so on), which is what distinguishes one kind of sponsored project from
+      etc.), which is what distinguishes one kind of sponsored project from
       another.
     part_of: data:dept-awards-requests
-    # informs: term:research-project, term:instructional-project, term:public-service-project
+    represents: term:project-category
 
   - id: data:dept-awards-requests/project_title
     label: project_title
     description: The sponsored project's title.
     part_of: data:dept-awards-requests
+    represents: term:project-title
 
   - id: data:dept-awards-requests/project_begin_date
     label: project_begin_date
     description: Start of the project's period of performance.
     part_of: data:dept-awards-requests
-    # informs: term:period-of-performance
+    represents: term:period-of-performance
 
   - id: data:dept-awards-requests/project_end_date
     label: project_end_date
     description: End of the project's period of performance.
     part_of: data:dept-awards-requests
-    # informs: term:period-of-performance
+    represents: term:period-of-performance
 
   # --- sponsors and funding -----------------------------------------------------
 
@@ -195,19 +196,18 @@ data_elements:
       federal_subcontract when the prime sponsor is federal, otherwise federal,
       state, industry, other or formula from the direct sponsor's type.
     part_of: data:dept-awards-requests
-    # informs: term:federal-pass-through
 
   - id: data:dept-awards-requests/sponsor_direct_name
     label: sponsor_direct_name
     description: The sponsor that funds UNMC directly.
     part_of: data:dept-awards-requests
-    # informs: term:sponsor
+    represents: term:sponsor
 
   - id: data:dept-awards-requests/sponsor_direct_type_label
     label: sponsor_direct_type_label
     description: The direct sponsor's type (Federal agencies, Industry, and so on).
     part_of: data:dept-awards-requests
-    # informs: term:sponsor
+    represents: term:sponsor
 
   - id: data:dept-awards-requests/sponsor_prime_name
     label: sponsor_prime_name
@@ -215,35 +215,37 @@ data_elements:
       The originating source of funds when UNMC is funded through a pass-through
       entity. Null when the direct sponsor is the source.
     part_of: data:dept-awards-requests
-    # informs: term:prime-sponsor
+    represents: term:prime-sponsor
 
   - id: data:dept-awards-requests/sponsor_prime_type_label
     label: sponsor_prime_type_label
     description: The prime sponsor's type.
     part_of: data:dept-awards-requests
-    # informs: term:prime-sponsor
+    represents: term:prime-sponsor
 
   - id: data:dept-awards-requests/direct_cost
     label: direct_cost
     description: Direct costs of the award action or request, in dollars (0 when absent).
     part_of: data:dept-awards-requests
-    # informs: term:direct-cost
+    represents: term:direct-cost
 
   - id: data:dept-awards-requests/indirect_cost
     label: indirect_cost
     description: Indirect (F&A) costs of the award action or request, in dollars (0 when absent).
     part_of: data:dept-awards-requests
-    # informs: term:indirect-cost
+    represents: term:indirect-cost
 
   - id: data:dept-awards-requests/total_cost
     label: total_cost
     description: direct_cost plus indirect_cost.
     part_of: data:dept-awards-requests
+    represents: term:total-cost
 
   - id: data:dept-awards-requests/activity_code
     label: activity_code
     description: The sponsor's activity code for the record (for NIH, e.g. R01).
     part_of: data:dept-awards-requests
+    represents: term:activity-code
 
   # --- the principal investigator's home department -----------------------------
   # These are the PI's own organization, not the project's administering
@@ -253,16 +255,19 @@ data_elements:
     label: unit
     description: The college or unit of the PI's home department.
     part_of: data:dept-awards-requests
+    represents: term:vc-vp-unit
 
   - id: data:dept-awards-requests/department
     label: department
     description: The PI's home department.
     part_of: data:dept-awards-requests
+    represents: term:department
 
   - id: data:dept-awards-requests/division
     label: division
     description: The PI's division or section within the department, when there is one.
     part_of: data:dept-awards-requests
+    represents: term:division
 
   - id: data:dept-awards-requests/hr_org_unit
     label: hr_org_unit
@@ -275,25 +280,25 @@ data_elements:
     label: pi_name_first
     description: The PI's first name.
     part_of: data:dept-awards-requests
-    # informs: term:principal-investigator
+    represents: term:principal-investigator
 
   - id: data:dept-awards-requests/pi_name_last
     label: pi_name_last
     description: The PI's last name.
     part_of: data:dept-awards-requests
-    # informs: term:principal-investigator
+    represents: term:principal-investigator
 
   - id: data:dept-awards-requests/pi_personnel_number
     label: pi_personnel_number
-    description: The PI's personnel (payroll) number.
+    description: The PI's personnel number.
     part_of: data:dept-awards-requests
-    # informs: term:principal-investigator
+    represents: term:principal-investigator
 
   - id: data:dept-awards-requests/pi_nuid
     label: pi_nuid
     description: The PI's NUID (University of Nebraska ID).
     part_of: data:dept-awards-requests
-    # informs: term:principal-investigator
+    represents: term:principal-investigator
 
   # --- fiscal calendar ----------------------------------------------------------
 
@@ -323,3 +328,22 @@ data_elements:
       1 when record_date falls in the current fiscal year. Those award rows come
       from RADB; award rows with 0 come from the audited snapshot.
     part_of: data:dept-awards-requests
+
+data_set_certifications:
+  - id: data:dept-awards-requests#certification
+    label: Certification of "Department Awards & Requests"
+    has_output: data:dept-awards-requests
+    part_of: gov:research-data-governance
+
+status_boundaries:
+  - type: drafted
+    part_of: data:dept-awards-requests#certification
+    occurred_on: "2026-10-14"
+  - type: submitted for review
+    part_of: data:dept-awards-requests#certification
+    occurred_on: "2026-11-19"
+  #- type: approved
+  #  part_of: data:dept-awards-requests#certification
+  #  occurred_on: 
+
+

@@ -1,0 +1,31 @@
+glossary_terms:
+  - id: term:project-title
+    label: Project Title
+    alt_labels:
+      - Title
+    definition: >-
+      The descriptive name of a sponsored project, as given in its proposal and carried on
+      its awards.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: iao:0000030   # information content entity (information_artifact)
+    related:
+      - term:sponsored-project
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:project-title-creation
+    label: Creation of "Project Title"
+    has_output: term:project-title
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:project-title-creation
+    occurred_on: "2026-11-18"

@@ -1,0 +1,34 @@
+glossary_terms:
+  - id: term:activity-code
+    label: Activity Code
+    alt_labels:
+      - Funding Mechanism
+      - Mechanism
+    definition: >-
+      A sponsor-assigned code identifying the category of support a sponsored project
+      receives, such as R01 (research project grant), K08 (career development award), or
+      T32 (institutional training grant). NIH activity codes are the most common; other
+      sponsors may use their own.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: iao:0000030   # information content entity (information_artifact)
+    related:
+      - term:sponsored-project
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:activity-code-creation
+    label: Creation of "Activity Code"
+    has_output: term:activity-code
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:activity-code-creation
+    occurred_on: "2026-11-18"

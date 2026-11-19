@@ -11,6 +11,7 @@ glossary_terms:
     part_of: area:unmc-glossary
     in_subject_area: area:sponsored-programs
     semantic_type: bfo:0000015   # process (process)
+    value_of: term:project-category
     broader:
       - term:sponsored-project
     responsibilities:

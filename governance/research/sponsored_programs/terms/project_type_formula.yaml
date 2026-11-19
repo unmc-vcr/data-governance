@@ -1,0 +1,32 @@
+glossary_terms:
+  - id: term:project-type-formula
+    label: Formula
+    alt_labels:
+      - Formula Grant
+      - Formula Funds
+    definition: >-
+      A project type in which funds are allocated to UNMC by a formula set in statute or
+      regulation (for example, by population or other measured need) rather than through
+      competitive review of a proposal.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: iao:0000030   # information content entity (information_artifact)
+    value_of: term:project-type
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+
+term_creations:
+  - id: term:project-type-formula-creation
+    label: Creation of "Formula"
+    has_output: term:project-type-formula
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:project-type-formula-creation
+    occurred_on: "2026-11-18"
