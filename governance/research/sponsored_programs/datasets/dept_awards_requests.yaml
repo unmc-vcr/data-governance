@@ -102,7 +102,7 @@ data_elements:
     label: record_type_code
     description: >-
       The research-administration (RA) type code of the record (new, renewal,
-      supplement, continuation, and so on).
+      supplement, continuation, and so on).  De-obligation actions are not included.
     part_of: data:dept-awards-requests
 
   - id: data:dept-awards-requests/record_type_label
@@ -280,25 +280,25 @@ data_elements:
     label: pi_name_first
     description: The PI's first name.
     part_of: data:dept-awards-requests
-    represents: term:principal-investigator
+    represents: term:contact-principal-investigator
 
   - id: data:dept-awards-requests/pi_name_last
     label: pi_name_last
     description: The PI's last name.
     part_of: data:dept-awards-requests
-    represents: term:principal-investigator
+    represents: term:contact-principal-investigator
 
   - id: data:dept-awards-requests/pi_personnel_number
     label: pi_personnel_number
     description: The PI's personnel number.
     part_of: data:dept-awards-requests
-    represents: term:principal-investigator
+    represents: term:contact-principal-investigator
 
   - id: data:dept-awards-requests/pi_nuid
     label: pi_nuid
     description: The PI's NUID (University of Nebraska ID).
     part_of: data:dept-awards-requests
-    represents: term:principal-investigator
+    represents: term:contact-principal-investigator
 
   # --- fiscal calendar ----------------------------------------------------------
 
