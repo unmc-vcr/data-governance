@@ -1,0 +1,35 @@
+glossary_terms:
+  - id: term:contact-principal-investigator
+    label: Contact Principal Investigator
+    alt_labels:
+      - Contact PI
+    definition: >-
+      The principal investigator who is responsible for fielding inquiries regarding the project.
+      On a project with co-equal principal investigators, this individual may be listed as the sole
+      PI in systems of record which only support or display a single PI per project.
+    part_of: area:unmc-glossary
+    in_subject_area: area:sponsored-programs
+    semantic_type: bfo:0000023   # role (role)
+    responsibilities:
+      - type: dgo:DGO_00000012   # owner
+        role_of: office:research-stewardship-committee
+      - type: dgo:DGO_00000013   # steward
+        role_of: office:research-analytics
+      - type: subject matter expert
+        role_of: office:sponsored-programs-office
+    broader:
+      - term:principal-investigator
+    related:
+      - term:multiple-pi
+
+lifecycle_processes:
+  - id: term:contact-principal-investigator#creation
+    type: creation
+    label: Creation of "Contact Principal Investigator"
+    has_output: term:contact-principal-investigator
+    part_of: gov:research-data-governance
+
+status_boundaries:   # quote every date
+  - type: dgo:DGO_00000024   # drafted
+    part_of: term:contact-principal-investigator#creation
+    occurred_on: "2026-11-20"
