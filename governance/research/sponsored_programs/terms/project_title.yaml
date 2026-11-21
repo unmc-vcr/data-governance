@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:project-title-creation
+    type: creation
     label: Creation of "Project Title"
     has_output: term:project-title
     part_of: gov:research-data-governance

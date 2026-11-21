@@ -21,8 +21,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:sbir-sttr-creation
+    type: creation
     label: Creation of "SBIR/STTR"
     has_output: term:sbir-sttr
     part_of: gov:research-data-governance

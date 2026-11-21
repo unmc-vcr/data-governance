@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:clinical-trial-creation
+    type: creation
     label: Creation of "Clinical Trial"
     has_output: term:clinical-trial
     part_of: gov:research-data-governance

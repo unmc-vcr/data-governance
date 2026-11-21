@@ -17,8 +17,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:direct-cost-creation
+    type: creation
     label: Creation of "Direct Cost"
     has_output: term:direct-cost
     part_of: gov:research-data-governance

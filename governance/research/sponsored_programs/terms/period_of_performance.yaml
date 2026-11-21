@@ -18,8 +18,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:period-of-performance-creation
+    type: creation
     label: Creation of "Period of Performance"
     has_output: term:period-of-performance
     part_of: gov:research-data-governance

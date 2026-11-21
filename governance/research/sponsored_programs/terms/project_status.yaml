@@ -22,8 +22,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:project-status-creation
+    type: creation
     label: Creation of "Project Status"
     has_output: term:project-status
     part_of: gov:research-data-governance

@@ -21,8 +21,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:open-to-accrual-creation
+    type: creation
     label: Creation of "Open to accrual"
     has_output: term:open-to-accrual
     part_of: gov:research-data-governance

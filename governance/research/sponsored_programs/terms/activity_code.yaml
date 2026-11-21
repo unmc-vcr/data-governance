@@ -22,8 +22,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:activity-code-creation
+    type: creation
     label: Creation of "Activity Code"
     has_output: term:activity-code
     part_of: gov:research-data-governance

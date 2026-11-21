@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:patient-oriented-research-study-creation
+    type: creation
     label: Creation of "Patient-oriented research study"
     has_output: term:patient-oriented-research-study
     part_of: gov:research-data-governance

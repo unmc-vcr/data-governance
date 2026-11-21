@@ -86,19 +86,20 @@ The build enforces these:
 
 ### Term state
 
-There is no status field. A term's state follows from its **term creation**
-(in the same file as the term) and the dated **status boundaries** on it. A term
-with no term creation is not published at all.
+There is no status field. A term's state follows from its **creation** (a
+`lifecycle_processes` entry with `type: creation` and the term as `has_output`,
+in the same file as the term) and the dated **status boundaries** on it. A term
+with no creation is not published at all.
 
 | Boundaries on the creation | Shown as |
 | --- | --- |
 | drafted (`dgo:DGO_00000024`) | Proposed |
 | drafted, submitted for review (`dgo:DGO_00000025`) | Proposed |
 | …, approved (`dgo:DGO_00000026`) | Approved |
-| a `term_deprecations` entry with an approved boundary | Deprecated |
+| a `type: deprecation` entry with an approved boundary | Deprecated |
 
 To move a term forward, add a boundary with the date it happened. To change an
-approved term, edit it in place and record a `term_modifications` entry. Never
+approved term, edit it in place and record a `type: modification` entry. Never
 delete a term: deprecate it and set `replaced_by`.
 
 `definition_source` is optional. It records where wording was *adopted from*,

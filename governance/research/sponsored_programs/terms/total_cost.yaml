@@ -25,8 +25,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:total-cost-creation
+    type: creation
     label: Creation of "Total Cost"
     has_output: term:total-cost
     part_of: gov:research-data-governance

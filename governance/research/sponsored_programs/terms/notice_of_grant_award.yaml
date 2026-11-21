@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:notice-of-grant-award-creation
+    type: creation
     label: Creation of "Notice of Grant Award (NGA)"
     has_output: term:notice-of-grant-award
     part_of: gov:research-data-governance

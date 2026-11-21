@@ -17,8 +17,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:budget-period-creation
+    type: creation
     label: Creation of "Budget Period"
     has_output: term:budget-period
     part_of: gov:research-data-governance

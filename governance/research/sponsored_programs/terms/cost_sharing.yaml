@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:cost-sharing-creation
+    type: creation
     label: Creation of "Cost Sharing"
     has_output: term:cost-sharing
     part_of: gov:research-data-governance

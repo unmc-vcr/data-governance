@@ -21,8 +21,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:overall-study-start-up-creation
+    type: creation
     label: Creation of "Overall study start-up"
     has_output: term:overall-study-start-up
     part_of: gov:research-data-governance

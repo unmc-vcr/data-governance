@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:activation-queue-creation
+    type: creation
     label: Creation of "Queue"
     has_output: term:activation-queue
     part_of: gov:research-data-governance

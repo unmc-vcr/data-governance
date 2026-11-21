@@ -13,8 +13,9 @@ glossary_terms:
       - term:organizational-unit
 
 
-term_creations:
+lifecycle_processes:
   - id: term:sub-department-creation
+    type: creation
     label: Creation of "Sub-Department"
     has_output: term:sub-department
     part_of: gov:operations-data-governance

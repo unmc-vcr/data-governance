@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:prime-sponsor-creation
+    type: creation
     label: Creation of "Prime Sponsor"
     has_output: term:prime-sponsor
     part_of: gov:research-data-governance

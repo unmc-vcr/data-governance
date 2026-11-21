@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:project-type-contract-creation
+    type: creation
     label: Creation of "Contract"
     has_output: term:project-type-contract
     part_of: gov:research-data-governance

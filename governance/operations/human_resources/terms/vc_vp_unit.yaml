@@ -16,8 +16,9 @@ glossary_terms:
       - term:organizational-unit
 
 
-term_creations:
+lifecycle_processes:
   - id: term:vc-vp-unit-creation
+    type: creation
     label: Creation of "Unit"
     has_output: term:vc-vp-unit
     part_of: gov:operations-data-governance

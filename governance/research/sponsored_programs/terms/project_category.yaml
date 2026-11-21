@@ -7,8 +7,9 @@ glossary_terms:
     in_subject_area: area:sponsored-programs
 
 
-term_creations:
+lifecycle_processes:
   - id: term:project-category-creation
+    type: creation
     label: Creation of "Project Category"
     has_output: term:project-category
     part_of: gov:research-data-governance

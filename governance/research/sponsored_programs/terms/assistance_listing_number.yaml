@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:assistance-listing-number-creation
+    type: creation
     label: Creation of "Assistance Listing Number"
     has_output: term:assistance-listing-number
     part_of: gov:research-data-governance

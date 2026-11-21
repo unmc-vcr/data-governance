@@ -14,8 +14,9 @@ glossary_terms:
       - term:organizational-unit
 
 
-term_creations:
+lifecycle_processes:
   - id: term:department-creation
+    type: creation
     label: Creation of "Department"
     has_output: term:department
     part_of: gov:operations-data-governance
