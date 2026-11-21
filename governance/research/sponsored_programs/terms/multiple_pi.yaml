@@ -1,6 +1,6 @@
 glossary_terms:
   - id: term:multiple-pi
-    label: Multiple PI (Multi-PI)
+    label: Multiple PI
     alt_labels:
       - Multi-PI
       - MPI
