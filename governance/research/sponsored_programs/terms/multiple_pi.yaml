@@ -11,8 +11,9 @@ glossary_terms:
     part_of: area:unmc-glossary
     in_subject_area: area:sponsored-programs
     semantic_type: bfo:0000023   # role (role)
-    broader:
+    related:
       - term:principal-investigator
+      - term:contact-principal-investigator
     responsibilities:
       - type: dgo:DGO_00000012   # owner
         role_of: office:research-stewardship-committee
