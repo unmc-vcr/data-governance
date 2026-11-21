@@ -18,8 +18,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:sponsored-program-status-closed-creation
+    type: creation
     label: Creation of "Closed"
     has_output: term:sponsored-program-status-closed
     part_of: gov:research-data-governance

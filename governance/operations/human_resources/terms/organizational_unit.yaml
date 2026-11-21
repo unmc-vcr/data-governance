@@ -11,8 +11,9 @@ glossary_terms:
     related:
       - term:administering-department
 
-term_creations:
+lifecycle_processes:
   - id: term:organizational-unit-creation
+    type: creation
     label: Creation of "Organizational Unit"
     has_output: term:organizational-unit
     part_of: gov:research-data-governance

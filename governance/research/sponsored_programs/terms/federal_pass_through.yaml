@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:federal-pass-through-creation
+    type: creation
     label: Creation of "Federal Pass-Through Funding"
     has_output: term:federal-pass-through
     part_of: gov:research-data-governance

@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:study-status-closed-to-accrual-creation
+    type: creation
     label: Creation of "Closed to Accrual"
     has_output: term:study-status-closed-to-accrual
     part_of: gov:research-data-governance

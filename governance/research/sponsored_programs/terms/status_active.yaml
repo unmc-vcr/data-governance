@@ -18,8 +18,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:sponsored-program-status-active-creation
+    type: creation
     label: Creation of "Active"
     has_output: term:sponsored-program-status-active
     part_of: gov:research-data-governance

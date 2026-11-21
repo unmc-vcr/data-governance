@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:indirect-cost-rate-creation
+    type: creation
     label: Creation of "Indirect Cost Rate"
     has_output: term:indirect-cost-rate
     part_of: gov:research-data-governance

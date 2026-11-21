@@ -21,8 +21,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:multiple-pi-creation
+    type: creation
     label: Creation of "Multiple PI (Multi-PI)"
     has_output: term:multiple-pi
     part_of: gov:research-data-governance

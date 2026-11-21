@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:src-submission-to-open-to-accrual-creation
+    type: creation
     label: Creation of "SRC submission to open to accrual"
     has_output: term:src-submission-to-open-to-accrual
     part_of: gov:research-data-governance

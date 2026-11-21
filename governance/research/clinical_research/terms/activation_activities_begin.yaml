@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:activation-activities-begin-creation
+    type: creation
     label: Creation of "Activation activities begin"
     has_output: term:activation-activities-begin
     part_of: gov:research-data-governance

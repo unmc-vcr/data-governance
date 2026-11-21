@@ -16,8 +16,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:no-cost-extension-creation
+    type: creation
     label: Creation of "No-Cost Extension (NCE)"
     has_output: term:no-cost-extension
     part_of: gov:research-data-governance

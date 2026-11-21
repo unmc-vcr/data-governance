@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:confidential-disclosure-agreement-creation
+    type: creation
     label: Creation of "Confidential Disclosure Agreement (CDA)"
     has_output: term:confidential-disclosure-agreement
     part_of: gov:research-data-governance

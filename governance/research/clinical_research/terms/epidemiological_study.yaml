@@ -17,8 +17,9 @@ glossary_terms:
       - type: dgo:DGO_00000015
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:epidemiological-study-creation
+    type: creation
     label: Creation of "Epidemiological study"
     has_output: term:epidemiological-study
     part_of: gov:research-data-governance

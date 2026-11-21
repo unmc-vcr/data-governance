@@ -22,8 +22,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:instructional-project-creation
+    type: creation
     label: Creation of "Instructional Project"
     has_output: term:instructional-project
     part_of: gov:research-data-governance

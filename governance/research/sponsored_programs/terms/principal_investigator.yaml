@@ -18,8 +18,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:principal-investigator-creation
+    type: creation
     label: Creation of "Principal Investigator (PI)"
     has_output: term:principal-investigator
     part_of: gov:research-data-governance

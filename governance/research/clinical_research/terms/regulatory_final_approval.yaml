@@ -18,8 +18,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:clinical-research-office
 
-term_creations:
+lifecycle_processes:
   - id: term:regulatory-final-approval-creation
+    type: creation
     label: Creation of "Regulatory final approval"
     has_output: term:regulatory-final-approval
     part_of: gov:research-data-governance

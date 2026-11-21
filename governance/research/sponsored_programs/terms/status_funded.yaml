@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:sponsored-program-status-funded-creation
+    type: creation
     label: Creation of "Funded"
     has_output: term:sponsored-program-status-funded
     part_of: gov:research-data-governance

@@ -23,8 +23,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:public-service-project-creation
+    type: creation
     label: Creation of "Public Service Project"
     has_output: term:public-service-project
     part_of: gov:research-data-governance

@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:effort-creation
+    type: creation
     label: Creation of "Effort"
     has_output: term:effort
     part_of: gov:research-data-governance

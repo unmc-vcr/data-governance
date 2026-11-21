@@ -465,8 +465,8 @@ wheels = [
 
 [[package]]
 name = "dgo-atlas"
-version = "0.6.1"
-source = { editable = "../../dgo-atlas" }
+version = "0.7.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
     { name = "linkml" },
@@ -478,22 +478,10 @@ dependencies = [
     { name = "rich" },
     { name = "typer" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "jinja2", specifier = ">=3.1" },
-    { name = "linkml", specifier = "==1.11.1" },
-    { name = "linkml-runtime", specifier = ">=1.8" },
-    { name = "markdown-it-py", specifier = ">=3.0" },
-    { name = "pydantic", specifier = ">=2.0" },
-    { name = "pyyaml", specifier = ">=6.0" },
-    { name = "rdflib", specifier = ">=7.0" },
-    { name = "rich", specifier = ">=15.0.0" },
-    { name = "typer", specifier = ">=0.27.2" },
+sdist = { url = "https://files.pythonhosted.org/packages/5a/6d/bfbd6d2c617b96547a4f437ba01e2419387a6b495aae28f668edf98579e5/dgo_atlas-0.7.0.tar.gz", hash = "sha256:ed773a0bd2d21ded522e1a673341b3666c1084b93196882919848fd16aa5bd73", size = 291255, upload-time = "2026-11-21T00:00:28.335Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c9/f7/d96c413f4675a663acda380e0937832f8278014798a89020aeba76484c8f/dgo_atlas-0.7.0-py3-none-any.whl", hash = "sha256:825f9e72d6bc73559fdb0987ada470bc19bf1e2fa54e9868d18ae55f8aa9dd95", size = 144921, upload-time = "2026-11-21T00:00:26.927Z" },
 ]
-
-[package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=8.0" }]
 
 [[package]]
 name = "docutils"
@@ -2138,7 +2126,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "dgo-atlas", editable = "../../dgo-atlas" }]
+requires-dist = [{ name = "dgo-atlas", specifier = "==0.7.0" }]
 
 [[package]]
 name = "uri-template"

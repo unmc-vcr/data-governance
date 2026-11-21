@@ -58,7 +58,7 @@ Once dgo-atlas supports data sets:
 3. Add `informed_by` to each glossary term below, listing the data elements
    marked `# informs:` in `dept_awards_requests.yaml`. Direct Cost, Indirect
    Cost and Research Project are already approved, so record a
-   `term_modifications` entry for each of those.
+   `lifecycle_processes` entry with `type: modification` for each of those.
 
 | Term | Informed by columns of `dept_awards_requests` |
 | --- | --- |

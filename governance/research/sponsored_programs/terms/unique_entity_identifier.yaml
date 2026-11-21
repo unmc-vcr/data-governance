@@ -18,8 +18,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:unique-entity-identifier-creation
+    type: creation
     label: Creation of "Unique Entity Identifier (UEI)"
     has_output: term:unique-entity-identifier
     part_of: gov:research-data-governance

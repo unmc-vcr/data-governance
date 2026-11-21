@@ -1,5 +1,5 @@
 # Department Awards & Requests: the data set behind the Department Dashboards
-# Tableau workbook, written as DGO 0.2.0 instance data.
+# Tableau workbook, written as DGO 0.3.0 instance data.
 #
 # Built by the dbt model `dept_awards_requests` in unmc-vcr/data-orchestration
 # (relation marts.sp_dept_awards_requests). The dbt exposure and every column in
@@ -329,8 +329,9 @@ data_elements:
       from RADB; award rows with 0 come from the audited snapshot.
     part_of: data:dept-awards-requests
 
-data_set_certifications:
+lifecycle_processes:
   - id: data:dept-awards-requests#certification
+    type: creation
     label: Certification of "Department Awards & Requests"
     has_output: data:dept-awards-requests
     part_of: gov:research-data-governance

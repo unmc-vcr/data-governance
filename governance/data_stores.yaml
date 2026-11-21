@@ -1,4 +1,4 @@
-# The systems that carry governed data sets (DGO 0.2.0 data stores).
+# The systems that carry governed data sets (DGO 0.3.0 data stores).
 
 data_stores:
   - id: data:radb

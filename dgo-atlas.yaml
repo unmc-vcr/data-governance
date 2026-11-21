@@ -4,7 +4,7 @@
 
 # The Data Governance Ontology release the data is written against. Change it
 # deliberately: a new release may change what the data must say.
-dgo_version: "0.2.0"
+dgo_version: "0.3.0"
 
 title: Research Administration Data Governance
 organization: University of Nebraska Medical Center
@@ -22,7 +22,7 @@ prefixes:
   gov: https://w3id.org/unmc/governance/
   person: https://w3id.org/unmc/people/
   # Data stores, data sets, data elements and classification levels
-  # (datasets/, DGO 0.2.0; not read by dgo-atlas 0.5.2 yet).
+  # (DGO 0.2.0 and later).
   data: https://w3id.org/unmc/data/
   iao: http://purl.obolibrary.org/obo/IAO_
   bfo: http://purl.obolibrary.org/obo/BFO_

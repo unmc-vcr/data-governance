@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:proposal-creation
+    type: creation
     label: Creation of "Proposal"
     has_output: term:proposal
     part_of: gov:research-data-governance

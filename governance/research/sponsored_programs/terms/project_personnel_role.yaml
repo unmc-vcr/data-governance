@@ -19,8 +19,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:project-personnel-role-creation
+    type: creation
     label: Creation of "Project Personnel Role"
     has_output: term:project-personnel-role
     part_of: gov:research-data-governance

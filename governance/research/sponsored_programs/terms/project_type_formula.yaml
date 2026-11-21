@@ -20,8 +20,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:project-type-formula-creation
+    type: creation
     label: Creation of "Formula"
     has_output: term:project-type-formula
     part_of: gov:research-data-governance

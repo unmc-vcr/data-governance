@@ -2,7 +2,7 @@
     "$defs": {
         "Approved": {
             "additionalProperties": false,
-            "description": "The point where a term, modification, or certification, resulting from a decision of the responsible data governance council, has been made final.",
+            "description": "The point at which the responsible data governance council approves a proposed change to a governed artifact, and the change takes effect: a new artifact is released, a modification is applied, or a deprecated artifact is retired.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -184,6 +184,70 @@
             "title": "CouncilRole",
             "type": "object"
         },
+        "Creation": {
+            "additionalProperties": false,
+            "description": "The process by which a new governed artifact is proposed, reviewed, and approved for release.",
+            "properties": {
+                "has_output": {
+                    "description": "What this lifecycle process produced or changed.",
+                    "type": "string"
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000021",
+                        "creation"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "has_output",
+                "id",
+                "label"
+            ],
+            "title": "Creation",
+            "type": "object"
+        },
         "Custodian": {
             "additionalProperties": false,
             "description": "Consulted on the collection, storage, and management of data.",
@@ -363,6 +427,20 @@
         "DataEntity": {
             "additionalProperties": false,
             "description": "",
+            "properties": {
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
             "title": "DataEntity",
             "type": "object"
         },
@@ -440,7 +518,7 @@
         },
         "DataSet": {
             "additionalProperties": false,
-            "description": "A governed collection of data elements (IAO data collection: a data entity that consists of multiple data entities). Its domains follow from its subject areas; its terms are those its data elements represent. A data set is certified when a data set certification that has it as output reaches an approved boundary. A data set that is derived from no other is a source of truth.",
+            "description": "A governed collection of data elements (IAO data collection: a data entity that consists of multiple data entities). Its domains follow from its subject areas; its terms are those its data elements represent. A data set is certified once a creation with it as output reaches an approved boundary. A data set that is derived from no other is a source of truth.",
             "properties": {
                 "derived_from": {
                     "description": "The data set or data element this one was produced from. Not transitive; follow a lineage back to its source of truth with a property path (derived from, one or more times).",
@@ -553,59 +631,6 @@
             "title": "DataSet",
             "type": "object"
         },
-        "DataSetCertification": {
-            "additionalProperties": false,
-            "description": "The process by which a data set is reviewed and approved as fit for consumers by the responsible data governance council. The data set is certified once this process reaches its approved boundary, whose date is the certification date.",
-            "properties": {
-                "has_output": {
-                    "description": "What this lifecycle process produced or changed.",
-                    "type": "string"
-                },
-                "has_participant": {
-                    "description": "Who took part in this process.",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ],
-                        "type": "string"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
-                "id": {
-                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
-                    "type": "string"
-                },
-                "label": {
-                    "description": "Words",
-                    "type": "string"
-                },
-                "part_of": {
-                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                }
-            },
-            "required": [
-                "has_output",
-                "id",
-                "label"
-            ],
-            "title": "DataSetCertification",
-            "type": "object"
-        },
         "DataStore": {
             "additionalProperties": false,
             "description": "A system kept and governed for storing data (a data warehouse, a clinical system's reporting database, a file share): the material information bearer, often an aggregate of disks and servers, in which the data sets it carries are concretized. The data sets generically depend on it. The operational system, not its logical design: a database schema is an information content entity, not a data store. It carries no domain of its own: the data sets and data elements it holds are what carry domains.",
@@ -677,6 +702,70 @@
                 "label"
             ],
             "title": "DefinitionSource",
+            "type": "object"
+        },
+        "Deprecation": {
+            "additionalProperties": false,
+            "description": "The process by which an existing governed artifact is proposed to be retired. The artifact is deprecated once this process reaches its approved boundary.",
+            "properties": {
+                "has_output": {
+                    "description": "What this lifecycle process produced or changed.",
+                    "type": "string"
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000031",
+                        "deprecation"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "has_output",
+                "id",
+                "label"
+            ],
+            "title": "Deprecation",
             "type": "object"
         },
         "DirectiveInformationEntity": {
@@ -758,7 +847,7 @@
         },
         "Drafted": {
             "additionalProperties": false,
-            "description": "The point where a term, modification, or certification has been first drafted.",
+            "description": "The point at which a proposed change to a governed artifact (a new artifact, a modification, or a deprecation) is first drafted.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -1030,9 +1119,9 @@
                     ]
                 },
                 "data_set_certifications": {
-                    "description": "Certifications of data sets; their status boundaries go in status_boundaries.",
+                    "description": "The former list of data set certifications; still read into lifecycle_processes.",
                     "items": {
-                        "$ref": "#/$defs/DataSetCertification"
+                        "$ref": "#/$defs/Creation"
                     },
                     "type": [
                         "array",
@@ -1049,7 +1138,7 @@
                     ]
                 },
                 "data_stores": {
-                    "description": "Systems that carry data sets. Lists of this kind need DGO 0.2.0 or later.",
+                    "description": "Systems that carry data sets.",
                     "items": {
                         "$ref": "#/$defs/DataStore"
                     },
@@ -1104,6 +1193,26 @@
                             },
                             {
                                 "$ref": "#/$defs/SubjectMatterExpert"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "lifecycle_processes": {
+                    "description": "Creations, modifications and deprecations of glossary terms and data sets; `type` picks the kind and `has_output` names what it governs. A data set is certified by a creation of it. Their status boundaries go in status_boundaries.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Creation"
+                            },
+                            {
+                                "$ref": "#/$defs/Modification"
+                            },
+                            {
+                                "$ref": "#/$defs/Deprecation"
                             }
                         ]
                     },
@@ -1181,7 +1290,7 @@
                     ]
                 },
                 "status_boundaries": {
-                    "description": "Dated status boundaries of term lifecycle processes and data set certifications; `type` picks the kind. Quote the dates.",
+                    "description": "Dated status boundaries of lifecycle processes; `type` picks the kind. Quote the dates.",
                     "items": {
                         "anyOf": [
                             {
@@ -1216,8 +1325,9 @@
                     ]
                 },
                 "term_creations": {
+                    "description": "The former list of term creations; still read into lifecycle_processes.",
                     "items": {
-                        "$ref": "#/$defs/TermCreation"
+                        "$ref": "#/$defs/Creation"
                     },
                     "type": [
                         "array",
@@ -1225,8 +1335,9 @@
                     ]
                 },
                 "term_deprecations": {
+                    "description": "The former list of term deprecations; still read into lifecycle_processes.",
                     "items": {
-                        "$ref": "#/$defs/TermDeprecation"
+                        "$ref": "#/$defs/Deprecation"
                     },
                     "type": [
                         "array",
@@ -1234,8 +1345,9 @@
                     ]
                 },
                 "term_modifications": {
+                    "description": "The former list of term modifications; still read into lifecycle_processes.",
                     "items": {
-                        "$ref": "#/$defs/TermModification"
+                        "$ref": "#/$defs/Modification"
                     },
                     "type": [
                         "array",
@@ -1339,6 +1451,20 @@
         "InformationContentEntity": {
             "additionalProperties": false,
             "description": "",
+            "properties": {
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "label"
+            ],
             "title": "InformationContentEntity",
             "type": "object"
         },
@@ -1348,10 +1474,7 @@
             "properties": {
                 "has_output": {
                     "description": "What this lifecycle process produced or changed.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "type": "string"
                 },
                 "has_participant": {
                     "description": "Who took part in this process.",
@@ -1388,9 +1511,21 @@
                         "string",
                         "null"
                     ]
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000036",
+                        "lifecycle process"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 }
             },
             "required": [
+                "has_output",
                 "id",
                 "label"
             ],
@@ -1483,6 +1618,70 @@
                 }
             },
             "title": "Member",
+            "type": "object"
+        },
+        "Modification": {
+            "additionalProperties": false,
+            "description": "The process by which an existing governed artifact is proposed to be modified, reviewed, and approved for release.",
+            "properties": {
+                "has_output": {
+                    "description": "What this lifecycle process produced or changed.",
+                    "type": "string"
+                },
+                "has_participant": {
+                    "description": "Who took part in this process.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Words",
+                    "type": "string"
+                },
+                "part_of": {
+                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "type": {
+                    "description": "The specific subclass this object instantiates, given as its class IRI (e.g. a chair). Lets instance data name a subclass; emitted as rdf:type.",
+                    "enum": [
+                        "dgo:DGO_00000022",
+                        "modification"
+                    ],
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "has_output",
+                "id",
+                "label"
+            ],
+            "title": "Modification",
             "type": "object"
         },
         "Object": {
@@ -1659,7 +1858,7 @@
         },
         "Rejected": {
             "additionalProperties": false,
-            "description": "The point where a term, modification, or certification, resulting from a decision of the responsible data governance council, is no longer under consideration.",
+            "description": "The point at which the responsible data governance council rejects a proposed change to a governed artifact. The change does not take effect: the artifact stays as it was, or a proposed new artifact is not released.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -1950,7 +2149,7 @@
         },
         "SubmittedForReview": {
             "additionalProperties": false,
-            "description": "The point where a term, modification, or certification has moved into being verified by a data steward.",
+            "description": "The point at which a proposed change to a governed artifact is submitted to a data steward for review.",
             "properties": {
                 "occurred_on": {
                     "description": "The date of an action.",
@@ -1978,218 +2177,6 @@
                 "occurred_on"
             ],
             "title": "SubmittedForReview",
-            "type": "object"
-        },
-        "TermCreation": {
-            "additionalProperties": false,
-            "description": "The process by which a new governed business term is proposed, validated, and approved for publishing in the  business glossary.",
-            "properties": {
-                "has_output": {
-                    "description": "What this lifecycle process produced or changed.",
-                    "type": "string"
-                },
-                "has_participant": {
-                    "description": "Who took part in this process.",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ],
-                        "type": "string"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
-                "id": {
-                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
-                    "type": "string"
-                },
-                "label": {
-                    "description": "Words",
-                    "type": "string"
-                },
-                "part_of": {
-                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                }
-            },
-            "required": [
-                "has_output",
-                "id",
-                "label"
-            ],
-            "title": "TermCreation",
-            "type": "object"
-        },
-        "TermDeprecation": {
-            "additionalProperties": false,
-            "description": "The process by which an extant governed business term is proposed to be retired from the business glossary. The term is deprecated once this process reaches its approved boundary.",
-            "properties": {
-                "has_output": {
-                    "description": "What this lifecycle process produced or changed.",
-                    "type": "string"
-                },
-                "has_participant": {
-                    "description": "Who took part in this process.",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ],
-                        "type": "string"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
-                "id": {
-                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
-                    "type": "string"
-                },
-                "label": {
-                    "description": "Words",
-                    "type": "string"
-                },
-                "part_of": {
-                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                }
-            },
-            "required": [
-                "has_output",
-                "id",
-                "label"
-            ],
-            "title": "TermDeprecation",
-            "type": "object"
-        },
-        "TermLifecycleProcess": {
-            "additionalProperties": false,
-            "description": "A governance process that brings a business term into, or changes it within, the business glossary.",
-            "properties": {
-                "has_output": {
-                    "description": "What this lifecycle process produced or changed.",
-                    "type": "string"
-                },
-                "has_participant": {
-                    "description": "Who took part in this process.",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ],
-                        "type": "string"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
-                "id": {
-                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
-                    "type": "string"
-                },
-                "label": {
-                    "description": "Words",
-                    "type": "string"
-                },
-                "part_of": {
-                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                }
-            },
-            "required": [
-                "has_output",
-                "id",
-                "label"
-            ],
-            "title": "TermLifecycleProcess",
-            "type": "object"
-        },
-        "TermModification": {
-            "additionalProperties": false,
-            "description": "The process by which an extant governed business term is proposed to be modified, validated, and approved for publishing in the business glossary.",
-            "properties": {
-                "has_output": {
-                    "description": "What this lifecycle process produced or changed.",
-                    "type": "string"
-                },
-                "has_participant": {
-                    "description": "Who took part in this process.",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ],
-                        "type": "string"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
-                "id": {
-                    "description": "The term's globally unique, persistent IRI. Its stable identity.",
-                    "type": "string"
-                },
-                "label": {
-                    "description": "Words",
-                    "type": "string"
-                },
-                "part_of": {
-                    "description": "Parthood (BFO part of). Transitive: a subject area that is part of a domain that is part of a glossary is part of that glossary too. Each class narrows the range with slot_usage (a term is part of a glossary, a subject area is part of a domain, a governance process is part of a broader process, and so on).",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                }
-            },
-            "required": [
-                "has_output",
-                "id",
-                "label"
-            ],
-            "title": "TermModification",
             "type": "object"
         }
     },
@@ -2261,9 +2248,9 @@
             ]
         },
         "data_set_certifications": {
-            "description": "Certifications of data sets; their status boundaries go in status_boundaries.",
+            "description": "The former list of data set certifications; still read into lifecycle_processes.",
             "items": {
-                "$ref": "#/$defs/DataSetCertification"
+                "$ref": "#/$defs/Creation"
             },
             "type": [
                 "array",
@@ -2280,7 +2267,7 @@
             ]
         },
         "data_stores": {
-            "description": "Systems that carry data sets. Lists of this kind need DGO 0.2.0 or later.",
+            "description": "Systems that carry data sets.",
             "items": {
                 "$ref": "#/$defs/DataStore"
             },
@@ -2335,6 +2322,26 @@
                     },
                     {
                         "$ref": "#/$defs/SubjectMatterExpert"
+                    }
+                ]
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "lifecycle_processes": {
+            "description": "Creations, modifications and deprecations of glossary terms and data sets; `type` picks the kind and `has_output` names what it governs. A data set is certified by a creation of it. Their status boundaries go in status_boundaries.",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/$defs/Creation"
+                    },
+                    {
+                        "$ref": "#/$defs/Modification"
+                    },
+                    {
+                        "$ref": "#/$defs/Deprecation"
                     }
                 ]
             },
@@ -2412,7 +2419,7 @@
             ]
         },
         "status_boundaries": {
-            "description": "Dated status boundaries of term lifecycle processes and data set certifications; `type` picks the kind. Quote the dates.",
+            "description": "Dated status boundaries of lifecycle processes; `type` picks the kind. Quote the dates.",
             "items": {
                 "anyOf": [
                     {
@@ -2447,8 +2454,9 @@
             ]
         },
         "term_creations": {
+            "description": "The former list of term creations; still read into lifecycle_processes.",
             "items": {
-                "$ref": "#/$defs/TermCreation"
+                "$ref": "#/$defs/Creation"
             },
             "type": [
                 "array",
@@ -2456,8 +2464,9 @@
             ]
         },
         "term_deprecations": {
+            "description": "The former list of term deprecations; still read into lifecycle_processes.",
             "items": {
-                "$ref": "#/$defs/TermDeprecation"
+                "$ref": "#/$defs/Deprecation"
             },
             "type": [
                 "array",
@@ -2465,8 +2474,9 @@
             ]
         },
         "term_modifications": {
+            "description": "The former list of term modifications; still read into lifecycle_processes.",
             "items": {
-                "$ref": "#/$defs/TermModification"
+                "$ref": "#/$defs/Modification"
             },
             "type": [
                 "array",

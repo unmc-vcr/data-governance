@@ -21,8 +21,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:sponsored-project-creation
+    type: creation
     label: Creation of "Sponsored Project"
     has_output: term:sponsored-project
     part_of: gov:research-data-governance

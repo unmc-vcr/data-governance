@@ -18,8 +18,9 @@ glossary_terms:
       - type: subject matter expert
         role_of: office:sponsored-programs-office
 
-term_creations:
+lifecycle_processes:
   - id: term:grant-id-creation
+    type: creation
     label: Creation of "Grant ID (GID)"
     has_output: term:grant-id
     part_of: gov:research-data-governance
